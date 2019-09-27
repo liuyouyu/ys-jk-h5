@@ -21,11 +21,11 @@ mcMethod.url = {
 };
 console.log(mcMethod.getRequestValue('activityId'));
 mcMethod.info = {
-  companyId: 'root',
-  appCode: 'emp',
-  userId: '5d8d10ed216bb30007ce3864',
-  serviceCode: 'cloudemp',
-  versionId: '1',
+  companyId: mcMethod.getRequestValue('companyId') || 'root',
+  appCode: mcMethod.getRequestValue('appCode') || 'emp',
+  userId: mcMethod.getRequestValue('userId') || '5d8d10ed216bb30007ce3864',
+  serviceCode:mcMethod.getRequestValue('serviceCode') || 'cloudemp',
+  versionId: mcMethod.getRequestValue('versionId')  || '1',
   activityId: mcMethod.getRequestValue('activityId') || ''
 };
 mcMethod.query = {};
