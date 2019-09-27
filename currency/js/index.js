@@ -115,47 +115,50 @@ var templateView = {
       },
       submitHandler(e) {
         var self = this;
-        // mcMethod.query.request({
-        //   url: mcMethod.url.validateCode2,
-        //   queryType: 'GET',
-        //   address: {
-        //     validateCode: self.model.userCode,
-        //     phone: self.model.userPhone,
-        //     codeKey: self.phoneCodeKey
-        //   },
-        //   callback: function (data) {
-        //     if (data){
-        //
-        //     }
-        //     console.log('验证信息:',data);
-        //   }
-        // })
-        console.log('点击提交按钮')
-        var jsonObj = {};
-        for (var i = 0; i < this.fields.length; i++) {
-          if (this.fields[i].category === '') {
-            //自定义信息项
-          } else {
-            // console.log(this.fields[i].category);
-            console.log(this.fields[i]['modelKey']);
-            console.log(this.model[this.fields[i]['modelKey']]);
-            jsonObj[this.fields[i].category] = this.model[this.fields[i]['modelKey']]
-          }
-        }
-        jsonObj['activityId'] = mcMethod.info.activityId
-        jsonObj['PortraitInfoCustomize'] = {
-          title: CONTENTVAR.title,
-          type: '',
-          value: ''
-        }
         mcMethod.query.request({
-          data: jsonObj,
-          url: mcMethod.url.savePortraitInfo,
+          url: mcMethod.url.validateCode2,
+          queryType: 'GET',
+          address: {
+            validateCode: self.model.userCode,
+            phone: self.model.userPhone,
+            codeKey: self.phoneCodeKey
+          },
           callback: function (data) {
-            console.log(data);
+            console.log('校验返回值:',data);
+            if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
+              var jsonObj = {};
+              for (var i = 0; i < self.fields.length; i++) {
+                if (self.fields[i].category === '') {
+                  //自定义信息项
+                } else {
+                  jsonObj[self.fields[i].category] = self.model[self.fields[i]['modelKey']]
+                }
+              }
+              jsonObj['activityId'] = mcMethod.info.activityId
+              jsonObj['PortraitInfoCustomize'] = {
+                title: CONTENTVAR.title,
+                type: '',
+                value: ''
+              }
+              mcMethod.query.request({
+                data: jsonObj,
+                url: mcMethod.url.savePortraitInfo,
+                callback: function (data) {
+                  if (data.code == 0) {
+                    const toast = self.$createToast({
+                      txt: '提交成功!',
+                      type: 'txt',
+                    })
+                    toast.show()
+                  }
+                }
+              })
+            }
+          },
+          errorCallback: function (err) {
+            console.log(err);
           }
         })
-        console.log(jsonObj);
         // for (var i = 0; i < this.model.length; i++) {
         //   this.$refs['form'].validate(this.model[i], (result) => {
         //     console.log(result);
@@ -271,7 +274,6 @@ var templateView = {
           return false;
         }
         var self = this;
-        
         mcMethod.query.request({
           url: mcMethod.url.sendVerificationCode,
           queryType: 'GET',
@@ -291,9 +293,7 @@ var templateView = {
                   clearInterval(auth_timetimer);
                 }
               }, 1000);
-              
             }
-            
           },
           errorCallback: function (err) {
             console.log(err);
@@ -307,7 +307,7 @@ var templateView = {
       }
     },
     mounted: function () {
-      console.log(this.dataInfo);
+      // console.log(this.dataInfo);
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
@@ -338,7 +338,7 @@ var templateView = {
       dataInfo: function (newVal, oldVal) {
         if (newVal) {
           this.dataDetail = newVal
-          console.log('watch:', this.dataDetail);
+          // console.log('watch:', this.dataDetail);
         }
       }
     }
@@ -357,13 +357,13 @@ var templateView = {
       }
     },
     mounted() {
-      console.log('嘉宾》》》》', this.dataInfo);
+      // console.log('嘉宾》》》》', this.dataInfo);
       this.guestInfo = this.dataInfo;
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
         if (newVal) {
-          console.log('嘉宾信息', newVal);
+          // console.log('嘉宾信息', newVal);
           this.guestInfo = newVal
         }
       }
@@ -419,7 +419,6 @@ var INDEXAPP = new Vue({
               //嘉宾信息
               if (data.data.activityGuestInfo && data.data.activityGuestInfo.length > 0) {
                 self.guestData = data.data.activityGuestInfo
-                console.log(self.guestData);
               }
             }
           }
@@ -437,10 +436,6 @@ var INDEXAPP = new Vue({
           activityId: mcMethod.info.activityId
         },
         callback: function (data) {
-          console.log(data);
-        },
-        errorCallback: function (err) {
-          console.log(err);
         }
       })
     }
