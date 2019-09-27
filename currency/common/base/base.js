@@ -17,13 +17,14 @@ mcMethod.url = {
   pvSum: 'api/statisticalAnalysis/v1/pvSum',
   //短信-发送短信验证码
   sendVerificationCode: 'api/message/v1/sendVerificationCode',
-  validateCode2: ''
+  //验证验证码
+  validateCode2: 'api/message/v1/validateCode2'
 };
-console.log(mcMethod.getRequestValue('activityId'));
+
 mcMethod.info = {
   companyId: mcMethod.getRequestValue('companyId') || 'root',
   appCode: mcMethod.getRequestValue('appCode') || 'emp',
-  userId: mcMethod.getRequestValue('userId') || '5d8d10ed216bb30007ce3864',
+  userId: mcMethod.getRequestValue('userId') || '5d8dc8ad05a9b43d88fb3b7f',
   serviceCode:mcMethod.getRequestValue('serviceCode') || 'cloudemp',
   versionId: mcMethod.getRequestValue('versionId')  || '1',
   activityId: mcMethod.getRequestValue('activityId') || ''

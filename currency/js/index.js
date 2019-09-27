@@ -101,6 +101,8 @@ var templateView = {
         sendAuthCode: true,/*布尔值，通过v-show控制显示‘获取按钮’还是‘倒计时’ */
         auth_time: 0, /*倒计时 计数器*/
         valueCode: '',
+        //手机验证相关信息
+        phoneCodeKey: ''
       }
     },
     methods: {
@@ -112,8 +114,21 @@ var templateView = {
         this.$emit('input', selectedVal)
       },
       submitHandler(e) {
+        var self = this;
         // mcMethod.query.request({
+        //   url: mcMethod.url.validateCode2,
+        //   queryType: 'GET',
+        //   address: {
+        //     validateCode: self.model.userCode,
+        //     phone: self.model.userPhone,
+        //     codeKey: self.phoneCodeKey
+        //   },
+        //   callback: function (data) {
+        //     if (data){
         //
+        //     }
+        //     console.log('验证信息:',data);
+        //   }
         // })
         console.log('点击提交按钮')
         var jsonObj = {};
@@ -261,10 +276,12 @@ var templateView = {
           url: mcMethod.url.sendVerificationCode,
           queryType: 'GET',
           address: {
-            phone: phone
+            phone: phone,
+            vCode: ''
           },
           callback: function (data) {
             if (data.code == 0) {
+              self.phoneCodeKey = data.data.codeKey
               self.sendAuthCode = false;
               self.auth_time = 60;
               var auth_timetimer = setInterval(() => {
@@ -274,6 +291,7 @@ var templateView = {
                   clearInterval(auth_timetimer);
                 }
               }, 1000);
+              
             }
             
           },
@@ -283,7 +301,7 @@ var templateView = {
         })
         
       },
-      codeChange(){//验证验证码
+      codeChange() {//验证验证码
       
       
       }
