@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <script src="common/plugins/vue.min.js"></script>
+  <link rel="stylesheet" href="common/plugins/cube.min.css">
+  <script src="common/plugins/cube.min.js"></script>
+  <title>Title</title>
+</head>
+<body>
+<div id="app">
+  <div>
+    <cube-form :model="model" ref="form" @validate="validateHandler">
+      <cube-form-group>
+        <cube-form-item ref="form1" :field="fields[0]"></cube-form-item>
+        <cube-form-item ref="form2" :field="fields[1]">
+          <cube-button @click="showDatePicker">{{model.dateValue || 'Please select date'}}</cube-button>
+        </cube-form-item>
+      </cube-form-group>
+      <cube-form-group>
+        <cube-button type="button" @click="submitHandler">Submit</cube-button>
+      </cube-form-group>
+    </cube-form>
+  </div>
+
+</div>
+</body>
+<script src="common/plugins/moment.js"></script>
+<script src="//cdn.yunshicloud.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="config/config.js"></script>
+<script src="common/base/base.js"></script>
+<script>
+  // province, city, area
+  // select component
+  new Vue({
+    el: '#app',
+    data() {
+      return {
+        validity: {},
+        valid: undefined,
+        model: {
+          inputValue: '',
+          pcaValue: [],
+          dateValue: ''
+        },
+        fields: [
+          {
+            type: 'input',
+            modelKey: 'inputValue',
+            label: 'Input',
+            props: {
+              placeholder: '请输入'
+            },
+            rules: {
+              required: true
+            }
+          },
+          {
+            modelKey: 'dateValue',
+            label: 'Date',
+            rules: {
+              required: true
+            }
+          }
+        ]
+      }
+    },
+    methods: {
+      submitHandler(e) {
+        this.$refs['form1'].validate(function (data) {
+          console.log('validateFlag', data);
+        })
+        this.$refs['form2'].validate(function (data) {
+          console.log('validateFlag2', data);
+        })
+        // console.log('submit>>>>')
+        // console.log(this.$refs['form']);
+        // this.$refs['form'].validate('dateValue', (result) => {
+        //   console.log('校验规则', result);
+        // })
+        // console.log(this.$refs.form);
+        // console.log(this.fields);
+        // for (let i = 0; i < this.fields.length; i++) {
+        //   console.log(this.fields[i]);
+        //   this.$refs['form'].validate(this.fields[i], (result) => {
+        //     console.log('校验规则',result);
+        //     // this.$refs['form'].validate('dateValue', (result) => {
+        //     //   console.log('校验规则', result);
+        //     // })
+        //   })
+        // }
+      },
+      validateHandler(result) {
+        console.log(result);
+        // this.$refs['form'].validateField(result, (result) => {
+        //   console.log('校验规则',result);
+        // })
+        // this.validity = result.validity
+        // this.valid = result.valid
+        console.log('validity', result.validity, result.valid, result.dirty, result.firstInvalidFieldIndex)
+      },
+      showDatePicker() {
+        if (!this.datePicker) {
+          this.datePicker = this.$createDatePicker({
+            title: 'Date Picker',
+            min: new Date(2008, 7, 8),
+            max: new Date(2020, 9, 20),
+            value: new Date(),
+            onSelect: this.selectHandle,
+            onCancel: this.cancelHandle
+          })
+        }
+
+        this.datePicker.show()
+      },
+      selectHandle(date, selectedVal, selectedText) {
+        this.model.dateValue = new Date(selectedVal[0], selectedVal[1] - 1, selectedVal[2]).toDateString()
+        // this.$createDialog({
+        //   type: 'warn',
+        //   content: `Selected Item: <br/> - date: ${date} <br/> - value: ${selectedVal.join(', ')} <br/> - text: ${selectedText.join(' ')}`,
+        //   icon: 'cubeic-alert'
+        // }).show()
+      },
+      cancelHandle() {
+        this.$createToast({
+          type: 'correct',
+          txt: 'Picker canceled',
+          time: 1000
+        }).show()
+      },
+      dateSelectHandler(selectedVal) {
+        this.model.dateValue = new Date(selectedVal[0], selectedVal[1] - 1, selectedVal[2]).toDateString()
+      }
+    }
+  })
+</script>
+
+</html>
