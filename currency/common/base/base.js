@@ -1,13 +1,32 @@
 var mcMethod = mcMethod || {};
+//获取链接中的请求参数的值
+mcMethod.getRequestValue = function (name) {
+  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+  var r = window.location.href.substr(
+    window.location.href.indexOf("?") + 1).match(reg);
+  if (r != null)
+    return decodeURIComponent(r[2]);
+  return null;
+}
+
 mcMethod.url = {
-  queryActivityById: 'api/activity/v1/queryActivityById'
+  queryActivityById: 'api/activity/v1/queryActivityById',
+  //保存form表单相关信息
+  savePortraitInfo: 'api/portraitInfo/v1/savePortraitInfo',
+  //调取pv接口
+  pvSum: 'api/statisticalAnalysis/v1/pvSum',
+  //短信-发送短信验证码
+  sendVerificationCode: 'api/message/v1/sendVerificationCode',
+  validateCode2: ''
 };
+console.log(mcMethod.getRequestValue('activityId'));
 mcMethod.info = {
   companyId: 'root',
   appCode: 'emp',
-  userId: '5d8cf2c205a9b43d88fb3b63',
+  userId: '5d8d10ed216bb30007ce3864',
   serviceCode: 'cloudemp',
-  versionId: '1'
+  versionId: '1',
+  activityId: mcMethod.getRequestValue('activityId') || ''
 };
 mcMethod.query = {};
 mcMethod.query.request = function (option) {
@@ -122,3 +141,5 @@ mcMethod.query.request.prototype.getCommonUrlParam = function (option) {
     address
   
 };
+
+

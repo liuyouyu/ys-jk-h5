@@ -1,3 +1,6 @@
+#app {
+    background-color: #ffffff;
+}
 .content-wrap {
     padding-left: 10px;
     padding-right: 10px;
@@ -71,4 +74,22 @@
 .emp_writing_content {
 
 }
+
 /*文案信息结束*/
+.get_code_wrap {
+    font-size: 14px;
+}
+.get_code {
+    width: 7em;
+    float: left;
+    line-height: 40px;
+    text-align: center;
+    box-sizing: border-box;
+    border: 1px solid #f2f2f2;
+    border-radius: 4px;
+}
+
+.get_code_input {
+    width: calc(100% - 7em);
+    float: left;
+}
