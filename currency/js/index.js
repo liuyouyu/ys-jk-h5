@@ -1,5 +1,6 @@
 var CONTENTVAR = {
-  title: ''
+  title: '',
+  rexPhone: /^1(2|3|4|5|6|7|8|9)\d{9}$/
 }
 var datePick = {
   props: {
@@ -105,7 +106,8 @@ var templateView = {
         auth_time: 0, /*倒计时 计数器*/
         valueCode: '',
         //手机验证相关信息
-        phoneCodeKey: ''
+        phoneCodeKey: '',
+        isPhone: false
       }
     },
     methods: {
@@ -221,7 +223,7 @@ var templateView = {
                 break;
               case 'radio':
                 this.model[item.key] = '';
-                obj['type'] = 'radio-group';
+                obj['type'] = 'select';
                 obj['props'] = {
                   options: item.subitems
                 }
@@ -274,7 +276,7 @@ var templateView = {
       },
       getCode() {
         var phone = this.model.phone;
-        if (!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(phone))) {
+        if (!(CONTENTVAR.rexPhone.test(phone))) {
           const toast = this.$createToast({
             txt: '手机号码有误，请重填写',
             type: 'txt',
@@ -371,18 +373,26 @@ var templateView = {
                 txt: '提交成功!',
                 type: 'txt',
               })
-              toast.show()
+              toast.show();
+              location.reload();
             }
           }
         })
+      },
+      handlePhoneChange(val){
+        if (CONTENTVAR.rexPhone.test(val)){
+          this.isPhone = true
+        }else{
+        }
       }
     },
     mounted: function () {
-    
+      console.log(this.dataInfo);
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
         if (newVal) {
+          console.log(newVal);
           this.formList = newVal
           this.init();
         }
