@@ -64,34 +64,34 @@
                  @validate="validateHandler">
         <cube-form-group>
           <div v-for="item of fields">
-<!--            <cube-form-item v-if="item.category=='phone'"-->
-<!--                            :ref="item.modelKey"-->
-<!--                            :field="item">-->
-<!--              <div>-->
-<!--                <cube-input v-model="model.userPhone" placeholder="请输入手机号"></cube-input>-->
-<!--              </div>-->
-<!--              <div class="get_code_wrap clearfloat">-->
-<!--                <cube-input class="get_code_input fl" v-model="model.userCode" @change="codeChange"-->
-<!--                            placeholder="请输入验证码"></cube-input>-->
-<!--                <span class="get_code fr">-->
-<!--                        <span v-if="sendAuthCode"-->
-<!--                              class="c-right"-->
-<!--                              @click="getCode">获取验证码</span>-->
-<!--                        <span v-if="!sendAuthCode"-->
-<!--                              class="c-right">-->
-<!--                        <span class="auth_text_blue">重新获取{{auth_time}}</span>秒</span>-->
-<!--                  </span>-->
-<!--              </div>-->
-              <!--<cube-input v-model="model.userCode" maxlength="4" placeholder="请输入验证码" ></cube-input>-->
+            <cube-form-item v-if="item.category=='phone'"
+                            :ref="item.modelKey"
+                            :field="item">
+              <div>
+                <cube-input v-model="model.phone" placeholder="请输入手机号"></cube-input>
+              </div>
+              <div class="get_code_wrap clearfloat">
+                <cube-input class="get_code_input fl" v-model="model.userCode" @change="codeChange"
+                            placeholder="请输入验证码"></cube-input>
+                <span class="get_code fr">
+                        <span v-if="sendAuthCode"
+                              class="c-right"
+                              @click="getCode">获取验证码</span>
+                        <span v-if="!sendAuthCode"
+                              class="c-right">
+                        <span class="auth_text_blue">重新获取{{auth_time}}</span>秒</span>
+                  </span>
+              </div>
+              <cube-input v-model="model.userCode" maxlength="4" placeholder="请输入验证码" ></cube-input>
             </cube-form-item>
-            <cube-form-item v-if="item.type"
+            <cube-form-item v-else-if="item.type"
                             :ref="item.modelKey"
                             :field="item">
             </cube-form-item>
             <cube-form-item v-else :field="item">
-              <date-pick :model-key="item.modelKey"
+              <date-picks :modelKey="item.modelKey"
                          @modelKey="handleDatePick">
-              </date-pick>
+              </date-picks>
             </cube-form-item>
             <!--            <cube-form-item v-else :field="item">-->
             <!--              <cube-button class="button-date" @click="showDatePicker(item.modelKey)">{{model[item.modelKey] || '请选择日期'}}</cube-button>-->
@@ -116,9 +116,10 @@
 </template>
 <template class="hide" id="datePick">
   <div>
+    {{modelKey.title}}
     <cube-button class="button-date"
-                 @click="showDatePicker"
-    >{{dateValue || '请选择日期'}}
+                 @click="showDatePicker">
+      {{dateValue || '请选择日期'}}
     </cube-button>
     <date-picker ref="datePicker"></date-picker>
   </div>

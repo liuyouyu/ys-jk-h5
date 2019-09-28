@@ -1,6 +1,7 @@
 #app {
     background-color: #ffffff;
 }
+
 .content-wrap {
     padding-left: 10px;
     padding-right: 10px;
@@ -79,6 +80,7 @@
 .get_code_wrap {
     font-size: 14px;
 }
+
 .get_code {
     width: 7em;
     float: left;
@@ -92,4 +94,34 @@
 .get_code_input {
     width: calc(100% - 7em);
     float: left;
+}
+
+/*自定义form样式*/
+.emp-form-item {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    padding: 0 15px;
+}
+
+.emp-form-label {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    word-wrap: break-word;
+    word-break: break-word;
+}
+
+.emp-form-field {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    font-size: 14px;
 }

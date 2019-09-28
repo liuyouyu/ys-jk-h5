@@ -34,6 +34,9 @@ var datePick = {
         date: this.dateValue,
         modelKey: this.modelKey
       })
+    },
+    cancelHandle(){
+    
     }
   },
   mounted() {
@@ -80,7 +83,7 @@ var templateView = {
       }
     },
     components: {
-      datePick: datePick
+      datePicks: datePick
     },
     template: '#emp_form',
     data: function () {
@@ -114,22 +117,31 @@ var templateView = {
         this.$emit('input', selectedVal)
       },
       submitHandler(e) {
-        // for (var i = 0; i < this.fields.length; i++) {
-        //   if (this.fields[i]['rules'] && this.fields[i]['rules']['required']) {
-        //     console.log(this.$refs[this.fields[i]['modelKey']]);
-        //     if (this.$refs[this.fields[i]['modelKey']] && this.$refs[this.fields[i]['modelKey']].constructor === Array) {
-        //       var modelKeyList = this.$refs[this.fields[i]['modelKey']];
-        //       for (var j = 0; j < modelKeyList.length; j++) {
-        //         console.log(modelKeyList[j]);
-        //         modelKeyList[j].validate(function (data) {
-        //           console.log('校验:', data)
-        //         })
-        //       }
-        //     }
-        //     // console.log(this.$refs[this.fields[i]['modelKey']]);
-        //
-        //   }
-        // }
+        for (var i = 0; i < this.fields.length; i++) {
+          if (this.fields[i]['type']) {
+            if (this.fields[i]['rules'] && this.fields[i]['rules']['required']) {
+              console.log(this.$refs[this.fields[i]['modelKey']]);
+              if (this.$refs[this.fields[i]['modelKey']] && this.$refs[this.fields[i]['modelKey']].constructor === Array) {
+                var modelKeyList = this.$refs[this.fields[i]['modelKey']];
+                for (var j = 0; j < modelKeyList.length; j++) {
+                  modelKeyList[j].validate(function (data) {
+                    // console.log('校验:', data)
+                  })
+                  // console.log(modelKeyList[j]);
+                }
+              }
+              // console.log(this.$refs[this.fields[i]['modelKey']]);
+            }
+          } else {//type类型为undefined的 目前有date
+            // console.log('当前为日期类型')
+            // console.log(this.model.modelKey);
+            console.log('modelKey:',this.fields[i]['modelKey']);
+            console.log('当前值:',this.model[this.fields[i]['modelKey']]);
+            // if (){
+            //
+            // }
+          }
+        }
         var self = this;
         // mcMethod.query.request({
         //   url: mcMethod.url.validateCode2,
@@ -141,56 +153,46 @@ var templateView = {
         //   },
         //   callback: function (data) {
         //     console.log('校验返回值:',data);
-           // if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
-              var jsonObj = {};
-              for (var i = 0; i < self.fields.length; i++) {
-                if (self.fields[i].category === '') {
-                  //自定义信息项
-                } else {
-                  jsonObj[self.fields[i].category] = self.model[self.fields[i]['modelKey']]
-                }
-              }
-              jsonObj['activityId'] = mcMethod.info.activityId
-              jsonObj['PortraitInfoCustomize'] = {
-                title: CONTENTVAR.title,
-                type: '',
-                value: ''
-              }
-              mcMethod.query.request({
-                data: jsonObj,
-                url: mcMethod.url.savePortraitInfo,
-                callback: function (data) {
-                  if (data.code == 0) {
-                    const toast = self.$createToast({
-                      txt: '提交成功!',
-                      type: 'txt',
-                    })
-                    toast.show()
-                  }
-                }
-              })
+        // if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
+        //    var jsonObj = {};
+        //    for (var i = 0; i < self.fields.length; i++) {
+        //      if (self.fields[i].category === '') {
+        //        //自定义信息项
+        //      } else {
+        //        jsonObj[self.fields[i].category] = self.model[self.fields[i]['modelKey']]
+        //      }
+        //    }
+        //    jsonObj['activityId'] = mcMethod.info.activityId
+        //    jsonObj['PortraitInfoCustomize'] = {
+        //      title: CONTENTVAR.title,
+        //      type: '',
+        //      value: ''
+        //    }
+        //    mcMethod.query.request({
+        //      data: jsonObj,
+        //      url: mcMethod.url.savePortraitInfo,
+        //      callback: function (data) {
+        //        if (data.code == 0) {
+        //          const toast = self.$createToast({
+        //            txt: '提交成功!',
+        //            type: 'txt',
+        //          })
+        //          toast.show()
+        //        }
+        //      }
+        //    })
         //     }
         //   },
         //   errorCallback: function (err) {
         //     console.log(err);
         //   }
         // })
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         // for (var i = 0; i < this.model.length; i++) {
         //   this.$refs['form'].validate(this.model[i], (result) => {
         //     console.log(result);
         //   })
         // }
-  
+        
         // console.log(this.model);
         // console.log('submit')
       },
@@ -215,8 +217,7 @@ var templateView = {
             obj['props'] = {
               placeholder: item.typeTitle
             };
-            if (item.required) {
-              console.log(item.required);
+            if (item.required === 'true') {
               obj['rules'] = {
                 required: true
               };
@@ -225,30 +226,41 @@ var templateView = {
                 required: false
               };
             }
-            this.model[item.key] = '';
+            if (item.category == 'phone') {
+              obj['rules']['required'] = false
+            }
             switch (item.type) {
               case 'input':
+                this.model[item.key] = '';
                 obj['type'] = 'input';
                 break;
               case 'radio':
+                this.model[item.key] = '';
                 obj['type'] = 'radio-group';
                 obj['props'] = {
                   options: item.subitems
                 }
                 break;
               case 'date':
+                this.model[item.key] = '';
+                // obj['type'] = 'date';
                 // obj['date'] = 'date';
                 //日期
                 break;
               case 'number':
+                this.model[item.key] = '';
                 //数字
                 obj['type'] = 'input';
+               
+                
                 break;
               case 'textarea':
+                this.model[item.key] = '';
                 //多行输入框
                 obj['type'] = 'textarea';
                 break;
               case 'select':
+                this.model[item.key] = '';
                 //下拉选择框
                 obj['type'] = 'select';
                 obj['props'] = {
@@ -256,6 +268,7 @@ var templateView = {
                 }
                 break;
               case 'checkbox':
+                this.model[item.key] = [];
                 //多选按钮框
                 obj['type'] = 'checkbox-group';
                 obj['props'] = {
@@ -263,15 +276,17 @@ var templateView = {
                 }
                 break;
               default:
+              // obj['type'] = 'input';
             }
             
             this.fields.push(obj)
+            
           }
-          // console.log(this.fields);
-          // console.log(this.model);
+          
         }
       },
       handleDatePick(data) {
+        console.log('当前选中的日期:',data);
         this.model[data.modelKey] = data.date
       },
       getCode() {
@@ -319,7 +334,7 @@ var templateView = {
       }
     },
     mounted: function () {
-      // console.log(this.dataInfo);
+    
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
@@ -350,7 +365,6 @@ var templateView = {
       dataInfo: function (newVal, oldVal) {
         if (newVal) {
           this.dataDetail = newVal
-          // console.log('watch:', this.dataDetail);
         }
       }
     }
@@ -369,13 +383,12 @@ var templateView = {
       }
     },
     mounted() {
-      // console.log('嘉宾》》》》', this.dataInfo);
+      
       this.guestInfo = this.dataInfo;
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
         if (newVal) {
-          // console.log('嘉宾信息', newVal);
           this.guestInfo = newVal
         }
       }
@@ -412,7 +425,7 @@ var INDEXAPP = new Vue({
           },
           callback: function (data) {
             if (data.code === 0 && data.data) {
-              // console.log(data.data);
+              
               //基础信息
               if (data.data.activityInfo) {
                 self.activityInfo = data.data.activityInfo

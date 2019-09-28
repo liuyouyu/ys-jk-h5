@@ -90,7 +90,6 @@ mcMethod.query.request.prototype.init = function (option) {
         self.callback(data);
       },
       error: function (err) {
-        console.log(err);
         self.errorCallback(err);
       }
     });
