@@ -35,7 +35,7 @@ var datePick = {
         modelKey: this.modelKey
       })
     },
-    cancelHandle(){
+    cancelHandle() {
     
     }
   },
@@ -124,8 +124,11 @@ var templateView = {
               if (this.$refs[this.fields[i]['modelKey']] && this.$refs[this.fields[i]['modelKey']].constructor === Array) {
                 var modelKeyList = this.$refs[this.fields[i]['modelKey']];
                 for (var j = 0; j < modelKeyList.length; j++) {
-                  modelKeyList[j].validate(function (data) {
-                    // console.log('校验:', data)
+                  var vaildItem = modelKeyList[j].validate(function (valid) {
+                    console.log('当前的值:', valid);
+                  })
+                  Promise.all([vaildItem]).then((vaildItem) => {
+                    console.log('当前》》》》》', vaildItem);
                   })
                   // console.log(modelKeyList[j]);
                 }
@@ -135,63 +138,45 @@ var templateView = {
           } else {//type类型为undefined的 目前有date
             // console.log('当前为日期类型')
             // console.log(this.model.modelKey);
-            console.log('modelKey:',this.fields[i]['modelKey']);
-            console.log('当前值:',this.model[this.fields[i]['modelKey']]);
+            console.log('modelKey:', this.fields[i]['modelKey']);
+            console.log('当前值:', this.model[this.fields[i]['modelKey']]);
             // if (){
             //
             // }
           }
         }
         var self = this;
-        // mcMethod.query.request({
-        //   url: mcMethod.url.validateCode2,
-        //   queryType: 'GET',
-        //   address: {
-        //     validateCode: self.model.userCode,
-        //     phone: self.model.userPhone,
-        //     codeKey: self.phoneCodeKey
-        //   },
-        //   callback: function (data) {
-        //     console.log('校验返回值:',data);
-        // if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
-        //    var jsonObj = {};
-        //    for (var i = 0; i < self.fields.length; i++) {
-        //      if (self.fields[i].category === '') {
-        //        //自定义信息项
-        //      } else {
-        //        jsonObj[self.fields[i].category] = self.model[self.fields[i]['modelKey']]
-        //      }
-        //    }
-        //    jsonObj['activityId'] = mcMethod.info.activityId
-        //    jsonObj['PortraitInfoCustomize'] = {
-        //      title: CONTENTVAR.title,
-        //      type: '',
-        //      value: ''
-        //    }
-        //    mcMethod.query.request({
-        //      data: jsonObj,
-        //      url: mcMethod.url.savePortraitInfo,
-        //      callback: function (data) {
-        //        if (data.code == 0) {
-        //          const toast = self.$createToast({
-        //            txt: '提交成功!',
-        //            type: 'txt',
-        //          })
-        //          toast.show()
-        //        }
-        //      }
-        //    })
-        //     }
-        //   },
-        //   errorCallback: function (err) {
-        //     console.log(err);
-        //   }
-        // })
-        // for (var i = 0; i < this.model.length; i++) {
-        //   this.$refs['form'].validate(this.model[i], (result) => {
-        //     console.log(result);
-        //   })
-        // }
+        mcMethod.query.request({
+          url: mcMethod.url.validateCode2,
+          queryType: 'GET',
+          address: {
+            validateCode: self.model.userCode,
+            phone: self.model.phone,
+            codeKey: self.phoneCodeKey
+          },
+          callback: function (data) {
+            if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
+              self.getFromData()
+            } else {
+              const toast = self.$createToast({
+                txt: '验证码错误!',
+                type: 'txt',
+              })
+              toast.show()
+            }
+          },
+          errorCallback: function (err) {
+            const toast = self.$createToast({
+              txt: '验证失败，请稍后再试!',
+              type: 'txt',
+            })
+          }
+        })
+        for (var i = 0; i < this.model.length; i++) {
+          this.$refs['form'].validate(this.model[i], (result) => {
+            console.log(result);
+          })
+        }
         
         // console.log(this.model);
         // console.log('submit')
@@ -251,7 +236,6 @@ var templateView = {
                 this.model[item.key] = '';
                 //数字
                 obj['type'] = 'input';
-               
                 
                 break;
               case 'textarea':
@@ -286,13 +270,12 @@ var templateView = {
         }
       },
       handleDatePick(data) {
-        console.log('当前选中的日期:',data);
+        console.log('当前选中的日期:', data);
         this.model[data.modelKey] = data.date
       },
       getCode() {
-        var phone = this.model.userPhone;
+        var phone = this.model.phone;
         if (!(/^1(3|4|5|6|7|8|9)\d{9}$/.test(phone))) {
-          console.log('手机验证码失败!')
           const toast = this.$createToast({
             txt: '手机号码有误，请重填写',
             type: 'txt',
@@ -331,6 +314,68 @@ var templateView = {
       codeChange() {//验证验证码
       
       
+      },
+      //获取当前数据
+      getFromData() {
+        var self = this;
+        var jsonObj = {};
+        jsonObj['PortraitInfoCustomize'] = []
+        // {
+        //   title: CONTENTVAR.title,
+        //   value: ''
+        // }
+        for (var i = 0; i < self.fields.length; i++) {
+          if (self.fields[i].category === '') {
+            //自定义信息项
+            var key = self.fields[i]['modelKey'];
+            var val = self.model[self.fields[i]['modelKey']];
+            var obj = {};
+            obj[key] = val;
+            jsonObj['PortraitInfoCustomize'].push(obj);
+          } else {
+            var category = self.fields[i].category;
+            var modelKey = self.model[self.fields[i]['modelKey']];
+            var categoryVal = '';
+            //处理传给后台的信息
+            switch (category) {
+              case 'gender':
+                if (modelKey === '女') {
+                  categoryVal = 2
+                } else if (modelKey === '男') {
+                  categoryVal = 1
+                }
+                break;
+              case 'marital':
+                if (modelKey === '未婚') {
+                  categoryVal = 0
+                } else if (modelKey === '已婚') {
+                  categoryVal = 1
+                }
+                break;
+              default:
+                categoryVal = modelKey
+            }
+            jsonObj[self.fields[i].category] = categoryVal
+          }
+        }
+        jsonObj['activityId'] = mcMethod.info.activityId;
+        //手机号重新赋值
+        jsonObj['phone'] = self.model.phone;
+        
+        
+        mcMethod.query.request({
+          data: jsonObj,
+          url: mcMethod.url.savePortraitInfo,
+          callback: function (data) {
+            if (data.code == 0) {
+              const toast = self.$createToast({
+                txt: '提交成功!',
+                type: 'txt',
+              })
+              toast.show()
+            }
+          }
+        })
       }
     },
     mounted: function () {
@@ -383,12 +428,13 @@ var templateView = {
       }
     },
     mounted() {
-      
       this.guestInfo = this.dataInfo;
+      console.log('嘉宾信息》》》', this.dataInfo)
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
         if (newVal) {
+          console.log('嘉宾信息》》》',newVal)
           this.guestInfo = newVal
         }
       }
