@@ -262,7 +262,6 @@ var templateView = {
               default:
               // obj['type'] = 'input';
             }
-            
             this.fields.push(obj)
             
           }

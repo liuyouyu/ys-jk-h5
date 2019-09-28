@@ -22,10 +22,10 @@
                  :data-info="item"
                  :key="index"></emp-writing>
   </div>
-  <!--  <div v-if="guestData&&guestData.length>0">-->
-  <!--    <emp-guest v-for="item of guestData"-->
-  <!--               :data-info="item"></emp-guest>-->
-  <!--  </div>-->
+<!--  <div v-if="guestData&&guestData.length>0">-->
+<!--    <emp-guest v-for="item of guestData"-->
+<!--               :data-info="item"></emp-guest>-->
+<!--  </div>-->
   <div v-if="activityForm">
     <emp-form :data-info="activityForm"></emp-form>
   </div>
@@ -82,7 +82,7 @@
                         <span class="auth_text_blue">重新获取{{auth_time}}</span>秒</span>
                   </span>
               </div>
-              <cube-input v-model="model.userCode" maxlength="4" placeholder="请输入验证码" ></cube-input>
+              <cube-input v-model="model.userCode" maxlength="4" placeholder="请输入验证码"></cube-input>
             </cube-form-item>
             <cube-form-item v-else-if="item.type"
                             :ref="item.modelKey"
@@ -90,7 +90,7 @@
             </cube-form-item>
             <cube-form-item v-else :field="item">
               <date-picks :modelKey="item.modelKey"
-                         @modelKey="handleDatePick">
+                          @modelKey="handleDatePick">
               </date-picks>
             </cube-form-item>
             <!--            <cube-form-item v-else :field="item">-->
@@ -110,7 +110,24 @@
 </template>
 <!--嘉宾信息-->
 <template class="hide" id="emp_guest">
-  <div>
+  <div class="emp_guest_wrap">
+    <div class="emp_guest_main">
+      <div class="emp_guest_tx" v-if="guestInfo.headPortrait">
+        <img :src="guestInfo.headPortrait" alt="嘉宾头像">
+      </div>
+      <div class="emp_guest_info emp_guest_name" v-if="guestInfo.guestName">
+        <span v-text="guestInfo.guestName"></span>
+      </div>
+      <!--    <div class="emp_guest_info" v-if="guestInfo.companyName">-->
+      <!--      <span v-text="guestInfo.companyName"></span>-->
+      <!--    </div>-->
+      <!--    <div class="emp_guest_info" v-if="guestInfo.job">-->
+      <!--      <span v-text="guestInfo.job"></span>-->
+      <!--    </div>-->
+      <div class="emp_guest_info" v-if="guestInfo.synopsis">
+        <span v-text="guestInfo.synopsis"></span>
+      </div>
+    </div>
 
   </div>
 </template>
