@@ -177,9 +177,12 @@
     font-size: 14px;
 }
 .submit-button {
-    margin-top: 10px;
+    margin-top: 13px;
+    margin-bottom: 13px;
 }
-
+.submit-button button {
+    padding: 9px 61px;
+}
 .fade-enter-active, .fade-leave-active {
     transition: opacity 1s;
 }
@@ -191,4 +194,7 @@
 }
 .emp_form_wrap .cube-form-item {
     margin-right: 23px;
+}
+.emp_form_wrap .cube-btn-inline{
+
 }
