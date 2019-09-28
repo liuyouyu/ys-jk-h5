@@ -163,3 +163,14 @@
     margin-top: 10px;
 
 }
+
+.emp_form_wrap .cube-form-item{
+    border-bottom: 1px solid #ccc;
+    margin: auto;
+}
+.emp_form_wrap .cube-form-label{
+    text-align: right;
+}
+.submit-button {
+    margin-top: 10px;
+}

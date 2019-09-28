@@ -100,9 +100,12 @@
           </div>
         </cube-form-group>
         <cube-form-group>
-          <cube-button type="button"
-                       @click="submitHandler">提交
-          </cube-button>
+          <div class="tc submit-button">
+            <cube-button type="button"
+                         :inline="true"
+                         @click="submitHandler">提交
+            </cube-button>
+          </div>
         </cube-form-group>
       </cube-form>
     </div>
