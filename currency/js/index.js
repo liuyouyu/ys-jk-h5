@@ -114,18 +114,34 @@ var templateView = {
         this.$emit('input', selectedVal)
       },
       submitHandler(e) {
+        // for (var i = 0; i < this.fields.length; i++) {
+        //   if (this.fields[i]['rules'] && this.fields[i]['rules']['required']) {
+        //     console.log(this.$refs[this.fields[i]['modelKey']]);
+        //     if (this.$refs[this.fields[i]['modelKey']] && this.$refs[this.fields[i]['modelKey']].constructor === Array) {
+        //       var modelKeyList = this.$refs[this.fields[i]['modelKey']];
+        //       for (var j = 0; j < modelKeyList.length; j++) {
+        //         console.log(modelKeyList[j]);
+        //         modelKeyList[j].validate(function (data) {
+        //           console.log('校验:', data)
+        //         })
+        //       }
+        //     }
+        //     // console.log(this.$refs[this.fields[i]['modelKey']]);
+        //
+        //   }
+        // }
         var self = this;
-        mcMethod.query.request({
-          url: mcMethod.url.validateCode2,
-          queryType: 'GET',
-          address: {
-            validateCode: self.model.userCode,
-            phone: self.model.userPhone,
-            codeKey: self.phoneCodeKey
-          },
-          callback: function (data) {
-            console.log('校验返回值:',data);
-            if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
+        // mcMethod.query.request({
+        //   url: mcMethod.url.validateCode2,
+        //   queryType: 'GET',
+        //   address: {
+        //     validateCode: self.model.userCode,
+        //     phone: self.model.userPhone,
+        //     codeKey: self.phoneCodeKey
+        //   },
+        //   callback: function (data) {
+        //     console.log('校验返回值:',data);
+           // if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
               var jsonObj = {};
               for (var i = 0; i < self.fields.length; i++) {
                 if (self.fields[i].category === '') {
@@ -153,32 +169,28 @@ var templateView = {
                   }
                 }
               })
-            }
-          },
-          errorCallback: function (err) {
-            console.log(err);
-          }
-        })
+        //     }
+        //   },
+        //   errorCallback: function (err) {
+        //     console.log(err);
+        //   }
+        // })
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         // for (var i = 0; i < this.model.length; i++) {
         //   this.$refs['form'].validate(this.model[i], (result) => {
         //     console.log(result);
         //   })
         // }
-        // for (var i = 0; i < this.fields.length; i++) {
-        //   if (this.fields[i]['rules'] && this.fields[i]['rules']['required']) {
-        //     if (this.$refs[this.fields[i]['modelKey']].constructor === Array) {
-        //       var modelKeyList = this.$refs[this.fields[i]['modelKey']];
-        //       for (var j = 0; j < modelKeyList.length; j++) {
-        //         console.log(modelKeyList[j]);
-        //         modelKeyList[j].validate(function (data) {
-        //           console.log('校验:', data)
-        //         })
-        //       }
-        //     }
-        //     // console.log(this.$refs[this.fields[i]['modelKey']]);
-        //
-        //   }
-        // }
+  
         // console.log(this.model);
         // console.log('submit')
       },
