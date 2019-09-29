@@ -372,9 +372,16 @@ var templateView = {
               const toast = self.$createToast({
                 txt: '提交成功!',
                 type: 'txt',
+                time: '2000',
+                $events: {
+                  timeout: () => {
+                    location.reload();
+                  }
+                }
               })
               toast.show();
-              location.reload();
+            }else {
+            
             }
           }
         })
