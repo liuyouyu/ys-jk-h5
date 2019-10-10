@@ -1,0 +1,23 @@
+{
+  "id": "1436797",
+  "name": "汽车新零售h5通用模板",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "759632",
+      "name": "地点",
+      "font_class": "didian",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "6186649",
+      "name": "时间",
+      "font_class": "shijian",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    }
+  ]
+}
