@@ -485,6 +485,61 @@ var templateView = {
         }
       }
     }
+  },
+  'empVideo': {
+    template: '#emp_video',
+    props: {
+      dataInfo: {
+        type: Object,
+        default: {}
+      }
+    },
+    data: function () {
+      return {
+
+      }
+    },
+  },
+  'empImg': {
+    template: '#emp_img',
+    props: {
+      dataInfo: {
+        type: Object,
+        default: {}
+      }
+    },
+    data: function () {
+      return {
+
+      }
+    },
+  },
+  'empCarouselImg': {
+    template: '#emp_carouselImg',
+    props: {
+      dataInfo: {
+        type: Object,
+        default: {}
+      }
+    },
+    data: function () {
+      return {
+        items: [
+          {
+            url: 'http://www.didichuxing.com/',
+            image: '//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide01.png'
+          },
+          {
+            url: 'http://www.didichuxing.com/',
+            image: '//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide02.png'
+          },
+          {
+            url: 'http://www.didichuxing.com/',
+            image: '//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide03.png'
+          }
+        ]
+      }
+    },
   }
 }
 
@@ -494,7 +549,10 @@ var INDEXAPP = new Vue({
     userInfo: templateView.userInfo,
     empForm: templateView.empForm,
     empWriting: templateView.emp_writing,
-    empGuest: templateView.emp_guest
+    empGuest: templateView.emp_guest,
+    empVideo: templateView.empVideo,
+    empImg: templateView.empImg,
+    empCarouselImg: templateView.empCarouselImg
   },
   data: {
     activityDetails: [],

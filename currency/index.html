@@ -11,12 +11,21 @@
   <script src="common/plugins/cube.min.js"></script>
   <link rel="stylesheet" href="common/font/iconfont.css">
   <link rel="stylesheet" href="common/base/base.css">
-  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/h5Template.css">
   <title></title>
 </head>
 <body>
 <div id="app">
   <user-info :data-info="activityInfo"></user-info>
+<!--  <div>-->
+<!--    <emp-Img></emp-Img>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <emp-carousel-img></emp-carousel-img>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <emp-video></emp-video>-->
+<!--  </div>-->
   <div v-if="writingList&&writingList.length>0">
     <emp-writing v-for="(item,index) of writingList"
                  :data-info="item"
@@ -29,7 +38,6 @@
   <div v-if="activityForm">
     <emp-form :data-info="activityForm"></emp-form>
   </div>
-
 </div>
 <!--基础信息-->
 <template class="hide" id="emp_user_info">
@@ -52,6 +60,29 @@
   <div class="emp_writing_wrap content-wrap">
     <h2 class="emp_writing_title">{{dataDetail.title}}</h2>
     <div class="emp_writing_content" v-html="dataDetail.content"></div>
+  </div>
+</template>
+<!--视频-->
+<template class="hide" id="emp_video">
+  <div class="emp_myVideo" >
+    <video id="my-video" src="https://baikebcs.bdimg.com/baike-other/big-buck-bunny.mp4" width="400" height="300" controls>
+    </video>
+  </div>
+</template>
+<!--图片-->
+<template class="hide" id="emp_img">
+  <div class="user_info_poster">
+    <img src="./img/pic.jpg" alt="图片">
+  </div>
+</template>
+<!--图集轮播-->
+<template class="hide" id="emp_carouselImg">
+  <div>
+    <cube-slide ref="slide" :data="items">
+      <cube-slide-item v-for="(item, index) in items" :key="index" >
+          <img :src="item.image">
+      </cube-slide-item>
+    </cube-slide>
   </div>
 </template>
 <!--form-->
@@ -151,8 +182,9 @@
 </template>
 <script src="common/plugins/moment.js"></script>
 <script src="//cdn.yunshicloud.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://unpkg.com/larkplayer@latest/dist/larkplayer.js"></script>
 <script src="config/config.js"></script>
 <script src="common/base/base.js"></script>
-<script src="js/index.js"></script>
+<script src="js/h5Template.js"></script>
 </body>
 </html>

@@ -29,6 +29,7 @@
   <div v-if="activityForm">
     <emp-form :data-info="activityForm"></emp-form>
   </div>
+
 </div>
 <!--基础信息-->
 <template class="hide" id="emp_user_info">
@@ -53,13 +54,6 @@
     <div class="emp_writing_content" v-html="dataDetail.content"></div>
   </div>
 </template>
-<!--视频-->
-<!--<template class="hide" id="emp_video">-->
-<!--  <div class="emp_myVideo" >-->
-<!--    <video id="my-video" src="https://baikebcs.bdimg.com/baike-other/big-buck-bunny.mp4" width="400" height="300" controls>-->
-<!--    </video>-->
-<!--  </div>-->
-<!--</template>-->
 <!--form-->
 <template class="hide" id="emp_form">
   <div class="emp_form_wrap">
@@ -157,7 +151,6 @@
 </template>
 <script src="common/plugins/moment.js"></script>
 <script src="//cdn.yunshicloud.com/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://unpkg.com/larkplayer@latest/dist/larkplayer.js"></script>
 <script src="config/config.js"></script>
 <script src="common/base/base.js"></script>
 <script src="js/index.js"></script>
