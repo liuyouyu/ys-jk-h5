@@ -108,7 +108,8 @@ var templateView = {
         valueCode: '',
         //手机验证相关信息
         phoneCodeKey: '',
-        isPhone: false
+        isPhone: false,
+        isLink: 0,//0不跳转 ； 1 跳转
       }
     },
     methods: {
@@ -190,10 +191,16 @@ var templateView = {
         // console.log('validity', result.validity, result.valid, result.dirty, result.firstInvalidFieldIndex)
       },
       init() {
-        console.log(this.formList,"from表单");
         if (this.formList
           && this.formList.items
           && this.formList.items.length > 0) {
+          var fromData = this.formList.items
+          for (var i = 0; i < fromData.length ; i ++){
+            if(fromData[i].category == "link"){
+              fromData.splice(i,1)
+              this.isLink = 1
+            }
+          }
           for (var i = 0; i < this.formList.items.length; i++) {
             var item = this.formList.items[i];
             //解析from表单
@@ -429,7 +436,7 @@ var templateView = {
     watch: {
       dataInfo: function (newVal, oldVal) {
         if (newVal) {
-          console.log(newVal);
+          console.log(newVal,"监听from表单数据？？？？、、、");
           this.formList = newVal
           this.init();
         }
@@ -490,56 +497,69 @@ var templateView = {
     template: '#emp_video',
     props: {
       dataInfo: {
-        type: Object,
-        default: {}
+        type: Array,
+        default: []
       }
     },
     data: function () {
       return {
-
+        videoDetails:''
       }
     },
+    mounted() {
+      this.videoDetails = this.dataInfo;
+      console.log(this.videoDetails,"视频数据");
+    },
+    dataInfo: function (newVal, oldVal) {
+      if (newVal) {
+        this.videoDetails = newVal
+      }
+    }
   },
   'empImg': {
     template: '#emp_img',
     props: {
       dataInfo: {
-        type: Object,
-        default: {}
+        type: Array,
+        default: []
       }
     },
     data: function () {
       return {
-
+        picDetail:''
       }
     },
+    mounted() {
+      this.picDetail = this.dataInfo;
+    },
+    dataInfo: function (newVal, oldVal) {
+      if (newVal) {
+        this.picDetail = newVal
+      }
+    }
   },
   'empCarouselImg': {
     template: '#emp_carouselImg',
     props: {
       dataInfo: {
-        type: Object,
-        default: {}
+        type: Array,
+        default: []
       }
     },
     data: function () {
       return {
-        items: [
-          {
-            url: 'http://www.didichuxing.com/',
-            image: '//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide01.png'
-          },
-          {
-            url: 'http://www.didichuxing.com/',
-            image: '//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide02.png'
-          },
-          {
-            url: 'http://www.didichuxing.com/',
-            image: '//webapp.didistatic.com/static/webapp/shield/cube-ui-examples-slide03.png'
-          }
-        ]
+        imgDetails:''
       }
     },
+    mounted() {
+      this.imgDetails = this.dataInfo;
+      console.log(this.imgDetails,"轮播数据");
+    },
+    dataInfo: function (newVal, oldVal) {
+      if (newVal) {
+        this.imgDetails = newVal
+      }
+    }
   }
 }
 
@@ -560,8 +580,10 @@ var INDEXAPP = new Vue({
     activityGuestInfo: [],
     activityInfo: {},
     writingList: [],
-    
-    guestData: []
+    guestData: [],
+    picData: [],//图片
+    PicImgsData : [],//图集
+    videoData : []//视频
   },
   methods: {
     queryActivityById: function () {
@@ -575,26 +597,48 @@ var INDEXAPP = new Vue({
           },
           callback: function (data) {
             if (data.code === 0 && data.data) {
-              console.log(data,"数据？？？？？？、、、、");
+              console.log(data.data,"数据？？？？？？、、、、");
               //基础信息
               if (data.data.activityInfo) {
                 self.activityInfo = data.data.activityInfo
                 CONTENTVAR.title = data.data.activityInfo.title
               }
-              //form表单
-              if (data.data.activityForm) {
-                self.activityForm = data.data.activityForm
-              } else {
-                self.activityForm = ''
+              var dataInfo = data.data.modelExt
+              var writArray = [],guestArray = [],picArray = [],imgsArray = [],videoArray = []
+              for( var i = 0; i < dataInfo.length; i++) {
+                // 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6
+                if(dataInfo[i].templateType == 1) {
+                  self.activityForm = dataInfo[i]
+                } else if(dataInfo[i].templateType == 2) {
+                    writArray.push(dataInfo[i])
+                    self.writingList = writArray
+                }else if(dataInfo[i].templateType == 3) {
+                  guestArray.push(dataInfo[i])
+                  self.guestData = guestArray
+                }else if(dataInfo[i].templateType == 4) {
+                  picArray.push(dataInfo[i])
+                  self.picData = picArray
+                }else if(dataInfo[i].templateType == 5) {
+                  imgsArray .push(dataInfo[i])
+                  self.PicImgsData = imgsArray
+                }else if(dataInfo[i].templateType == 6) {
+                  videoArray .push(dataInfo[i])
+                  self.videoData = videoArray
+                }
               }
-              //文案信息
-              if (data.data.activityDetails && data.data.activityDetails.length > 0) {
-                self.writingList = data.data.activityDetails;
-              }
+              // if (data.data.activityForm) {
+              //   self.activityForm = data.data.activityForm
+              // } else {
+              //   self.activityForm = ''
+              // }
+              // 文案信息
+              // if (data.data.activityDetails && data.data.activityDetails.length > 0) {
+              //   self.writingList = data.data.activityDetails;
+              // }
               //嘉宾信息
-              if (data.data.activityGuestInfo && data.data.activityGuestInfo.length > 0) {
-                self.guestData = data.data.activityGuestInfo
-              }
+              // if (data.data.activityGuestInfo && data.data.activityGuestInfo.length > 0) {
+              //   self.guestData = data.data.activityGuestInfo
+              // }
             }
           }
         })

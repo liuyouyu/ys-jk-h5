@@ -17,15 +17,24 @@
 <body>
 <div id="app">
   <user-info :data-info="activityInfo"></user-info>
-<!--  <div>-->
-<!--    <emp-Img></emp-Img>-->
-<!--  </div>-->
-<!--  <div>-->
-<!--    <emp-carousel-img></emp-carousel-img>-->
-<!--  </div>-->
-<!--  <div>-->
-<!--    <emp-video></emp-video>-->
-<!--  </div>-->
+<!--图片-->
+  <div v-if="picData&&picData.length>0">
+    <emp-Img v-for="(picItem,index) of picData"
+             :data-info="picItem"
+             :key="index"></emp-Img>
+  </div>
+<!--轮播-->
+  <div v-if="PicImgsData&&PicImgsData.length>0">
+    <emp-carousel-img v-for="(imgsitem,index) of PicImgsData"
+                      :data-info="imgsitem"
+                      :key="index"></emp-carousel-img>
+  </div>
+<!--视频-->
+  <div v-if="videoData&&videoData.length>0">
+    <emp-video v-for="(videoitem,index) of videoData"
+               :data-info="videoitem"
+               :key="index"></emp-video>
+  </div>
   <div v-if="writingList&&writingList.length>0">
     <emp-writing v-for="(item,index) of writingList"
                  :data-info="item"
@@ -65,22 +74,22 @@
 <!--视频-->
 <template class="hide" id="emp_video">
   <div class="emp_myVideo" >
-    <video id="my-video" src="https://baikebcs.bdimg.com/baike-other/big-buck-bunny.mp4" width="400" height="300" controls>
+    <video id="my-video" :src="videoDetails.picture" width="400" height="300" controls>
     </video>
   </div>
 </template>
 <!--图片-->
 <template class="hide" id="emp_img">
   <div class="user_info_poster">
-    <img src="./img/pic.jpg" alt="图片">
+    <img :src="picDetail.picture" alt="图片">
   </div>
 </template>
 <!--图集轮播-->
 <template class="hide" id="emp_carouselImg">
   <div>
-    <cube-slide ref="slide" :data="items">
-      <cube-slide-item v-for="(item, index) in items" :key="index" >
-          <img :src="item.image">
+    <cube-slide :data="imgDetails.picture">
+      <cube-slide-item v-for="(item, index) in imgDetails.picture" :key="index" >
+          <img class="emp_imgs" :src="item" alt="img">
       </cube-slide-item>
     </cube-slide>
   </div>

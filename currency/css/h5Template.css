@@ -236,3 +236,10 @@
 .emp_form_wrap .submit-button button{
     padding: 14px 109px;
 }
+.emp_imgs {
+    max-width: 100%;
+    max-height: 100%;
+    /*position: absolute;*/
+    /*left: 50%;*/
+    /*top: 50%;*/
+}
