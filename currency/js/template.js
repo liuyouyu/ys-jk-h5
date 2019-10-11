@@ -537,6 +537,10 @@ var templateView = {
     mounted() {
       this.videoDetails = this.dataInfo;
       console.log(this.videoDetails,"视频数据");
+      console.log(document.getElementById('my-video'),"??????????");
+      var payler = larkplayer('my-video', {
+        controls: true,
+      })
     },
     dataInfo: function (newVal, oldVal) {
       if (newVal) {

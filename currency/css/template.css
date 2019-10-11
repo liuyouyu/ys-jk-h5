@@ -266,5 +266,11 @@
     background: #0E357A;
 }
 .emp_myVideo {
-    height: 300px;
+    height: 280px;
+}
+.lark-control-bar,.lark-progress-bar--simple {
+    display: none!important;
+}
+.larkplayer video {
+    height: 280px!important;
 }
