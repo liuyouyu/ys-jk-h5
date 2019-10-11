@@ -18,7 +18,11 @@ mcMethod.url = {
   //短信-发送短信验证码
   sendVerificationCode: 'api/message/v1/sendVerificationCode',
   //验证验证码
-  validateCode2: 'api/message/v1/validateCode2'
+  validateCode2: 'api/message/v1/validateCode2',
+  //H5-查询发布库文稿列表
+  queryCatalogue:'api/release/catalogue/v1/queryCatalogue',
+  //H5-根据Id查询发布库文稿详情
+  queryCatalogueById:'api/release/catalogue/v1/queryCatalogueById'
 };
 
 mcMethod.info = {

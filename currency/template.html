@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="common/font/iconfont.css">
   <link rel="stylesheet" href="common/base/base.css">
   <link rel="stylesheet" href="css/template.css">
+  <!-- 引入文稿组件样式 -->
+  <link rel="stylesheet" href="common/components/catalogue/catalogue.css">
   <title></title>
 </head>
 <body>
@@ -47,6 +49,9 @@
   <div v-if="activityForm">
     <emp-form :data-info="activityForm"></emp-form>
   </div>
+  <!-- 推荐内容 -->
+  <catalogue :isshow=CONFIG.showCatalogue :showlist='8'></catalogue>
+
 </div>
 <!--基础信息-->
 <template class="hide" id="emp_user_info">
@@ -195,5 +200,7 @@
 <script src="config/config.js"></script>
 <script src="common/base/base.js"></script>
 <script src="js/template.js"></script>
+<!-- 文稿组件 -->
+<script src="common/components/catalogue/catalogue.js"></script>
 </body>
 </html>
