@@ -5,10 +5,10 @@ Vue.component('catalogue', {
     <div class='catalogue-tit'><span></span>推荐内容</div>
     <div v-for='item in catalogueData' class='c-item background'>
       <div @click='openDetail(item.url)' class='c-box'>
-        <div class='c-img'>
+        <div v-if='item.thumbnail' class='c-img'>
           <img :src="item.thumbnail" alt="图片丢了"/>
         </div>
-        <div class='c-info'>
+        <div class='c-info' :style="item.thumbnail?'':'width:73%'" >
           <div class='c-title'>{{item.title}}</div>
           <div class='c-author'>{{item.utime}}</div>
         </div>
