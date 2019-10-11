@@ -46,7 +46,7 @@ Vue.component('catalogue', {
         type: 'GET',
         url: 'http://test-cdapi.yunshicloud.com/api/release/catalogue/v1/queryCatalogue',
         data: {
-          companyId:'458120B51A324F5F',
+          companyId:'5e4bdb4eb2584b9d9d00d4044232d52a',
           versionId:'1',
           serviceCode:'cloudemp',
           pageSize:_this.showList,
@@ -65,7 +65,7 @@ Vue.component('catalogue', {
     },
     openDetail(url){  // 如果没有地址不跳转文章详情
       if(url){
-        window.location.href = 'url'
+        window.location.href = url
       }else{
         return
       }

@@ -110,6 +110,7 @@ var templateView = {
         phoneCodeKey: '',
         isPhone: false,
         isLink: 0,//0不跳转 ； 1 跳转
+        linkUrl: {},
       }
     },
     methods: {
@@ -127,7 +128,7 @@ var templateView = {
             if (this.fields[i]['rules'] && this.fields[i]['rules']['required']) {
               if (this.$refs[this.fields[i]['modelKey']] && this.$refs[this.fields[i]['modelKey']].constructor === Array) {
                 var modelKeyList = this.$refs[this.fields[i]['modelKey']];
-                console.log(modelKeyList,'modelKeyList<<<<<<<<<');
+                console.log(this.$refs[this.fields[i]['modelKey']],'modelKeyList<<<<<<<<<');
                 for (var j = 0; j < modelKeyList.length; j++) {
                   var vaildItem = modelKeyList[j].validate()
                   Promise.all([vaildItem]).then((vaildItem) => {
@@ -215,10 +216,12 @@ var templateView = {
           var fromData = this.formList.items
           for (var i = 0; i < fromData.length ; i ++){
             if(fromData[i].category == "link"){
+              this.linkUrl = fromData[i]
               fromData.splice(i,1)
               this.isLink = 1
             }
           }
+          console.log(this.linkUrl,"??????????this.linkUrl");
           for (var i = 0; i < this.formList.items.length; i++) {
             var item = this.formList.items[i];
             //解析from表单
@@ -417,7 +420,7 @@ var templateView = {
         //手机号重新赋值
         jsonObj['phone'] = self.model.phone;
 
-        
+        console.log(jsonObj,"jsonObj参数？？？？、、");
         mcMethod.query.request({
           data: jsonObj,
           url: mcMethod.url.savePortraitInfo,
@@ -429,7 +432,12 @@ var templateView = {
                 time: '2000',
                 $events: {
                   timeout: () => {
-                    location.reload();
+                    if(self.linkUrl != {} && self.linkUrl.typetitle != ""){
+                      var url = self.linkUrl.typetitle
+                      window.location.href = url
+                    }else {
+                      location.reload();
+                    }
                   }
                 }
               })
