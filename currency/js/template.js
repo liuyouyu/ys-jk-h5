@@ -118,7 +118,7 @@ var templateView = {
         phoneCodeKey: '',
         isPhone: false,
         isLink: 0,//0不跳转 ； 1 跳转
-        linkUrl: {},
+        islinkUrl: {},
         birData:''
       }
     },
@@ -225,12 +225,12 @@ var templateView = {
           var fromData = this.formList.items
           for (var i = 0; i < fromData.length ; i ++){
             if(fromData[i].category == "link"){
-              this.linkUrl = fromData[i]
+              this.islinkUrl = fromData[i]
               fromData.splice(i,1)
               this.isLink = 1
             }
           }
-          console.log(this.linkUrl,"??????????this.linkUrl");
+          console.log(this.islinkUrl,"??????????this.islinkUrl");
           for (var i = 0; i < this.formList.items.length; i++) {
             var item = this.formList.items[i];
             //解析from表单
@@ -446,10 +446,13 @@ var templateView = {
                 time: '2000',
                 $events: {
                   timeout: () => {
-                    if(self.linkUrl != {} && self.linkUrl.typetitle != ""){
-                      var url = self.linkUrl.typetitle
+                    console.log(self.islinkUrl,self.islinkUrl.typetitle != undefined,self.islinkUrl.typetitle !== '',"111111111")
+                    if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] !== ''){
+                      var url = self.islinkUrl.typetitle
+                      self.islinkUrl = {}
                       window.location.href = url
                     }else {
+                      console.log("3333333333333")
                       location.reload();
                     }
                   }
