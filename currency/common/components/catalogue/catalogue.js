@@ -2,17 +2,17 @@ Vue.component('catalogue', {
 
   template : `
     <div v-if= 'isShow' class='catalogue'>
-      <div class='catalogue-tit'><span></span>推荐内容</div>
-      <div v-for='item in catalogueData' class='c-item'>
-        <div @click='openDetail(item.url)' class='c-box'>
-          <div class='c-img'>
-            <img :src="item.thumbnail" alt="图片丢了"/>
-          </div>
-          <div class='c-info'>
-            <div class='c-title'>{{item.title}}</div>
-            <div class='c-author'>{{item.utime}}</div>
-          </div>
+    <div class='catalogue-tit'><span></span>推荐内容</div>
+    <div v-for='item in catalogueData' class='c-item background'>
+      <div @click='openDetail(item.url)' class='c-box'>
+        <div class='c-img'>
+          <img :src="item.thumbnail" alt="图片丢了"/>
         </div>
+        <div class='c-info'>
+          <div class='c-title'>{{item.title}}</div>
+          <div class='c-author'>{{item.utime}}</div>
+        </div>
+      </div>
       </div>
     </div>
   `,
@@ -46,7 +46,8 @@ Vue.component('catalogue', {
         type: 'GET',
         url: 'http://test-cdapi.yunshicloud.com/api/release/catalogue/v1/queryCatalogue',
         data: {
-          companyId:'5e4bdb4eb2584b9d9d00d4044232d52a',
+          // companyId:'5e4bdb4eb2584b9d9d00d4044232d52a',
+          companyId:'7674F33E470D459E',
           versionId:'1',
           serviceCode:'cloudemp',
           pageSize:_this.showList,
