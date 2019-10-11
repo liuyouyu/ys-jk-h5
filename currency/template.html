@@ -16,36 +16,36 @@
 </head>
 <body>
 <div id="app">
-  <user-info :data-info="activityInfo"></user-info>
-<!--图片-->
-  <div v-if="picData&&picData.length>0">
-    <emp-Img v-for="(picItem,index) of picData"
-             :data-info="picItem"
-             :key="index"></emp-Img>
-  </div>
-<!--轮播-->
-  <div v-if="PicImgsData&&PicImgsData.length>0">
-    <emp-carousel-img v-for="(imgsitem,index) of PicImgsData"
-                      :data-info="imgsitem"
-                      :key="index"></emp-carousel-img>
-  </div>
-<!--视频-->
-  <div v-if="videoData&&videoData.length>0">
-    <emp-video v-for="(videoitem,index) of videoData"
-               :data-info="videoitem"
-               :key="index"></emp-video>
-  </div>
-  <div v-if="writingList&&writingList.length>0">
-    <emp-writing v-for="(item,index) of writingList"
-                 :data-info="item"
-                 :key="index"></emp-writing>
-  </div>
-  <!--  <div v-if="guestData&&guestData.length>0">-->
-  <!--    <emp-guest v-for="item of guestData"-->
-  <!--               :data-info="item"></emp-guest>-->
-  <!--  </div>-->
-  <div v-if="activityForm">
-    <emp-form :data-info="activityForm"></emp-form>
+<!--  <user-info :data-info="activityInfo"></user-info>-->
+<!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
+  <div v-if="activityData.length">
+    <div v-for="items in activityData" :key="items.index">
+      <div v-if="items.templateType == 1">
+          <emp-form :data-info="items"></emp-form>
+      </div>
+      <div v-else-if="items.templateType == 2">
+          <emp-writing :data-info="items"></emp-writing>
+      </div>
+      <div v-else-if="items.templateType == 3">
+        <!--  <div v-if="guestData&&guestData.length>0">-->
+        <!--    <emp-guest v-for="item of guestData"-->
+        <!--               :data-info="item"></emp-guest>-->
+        <!--  </div>-->
+      </div>
+      <div v-else-if="items.templateType == 4">
+          <emp-Img :data-info="items"></emp-Img>
+      </div>
+      <div v-else-if="items.templateType == 5">
+        <!--轮播-->
+        <div class="emp_carousel">
+          <emp-carousel-img :data-info="items"></emp-carousel-img>
+        </div>
+      </div>
+      <div v-else-if="items.templateType == 6">
+        <!--视频-->
+          <emp-video :data-info="items"></emp-video>
+      </div>
+    </div>
   </div>
 </div>
 <!--基础信息-->
@@ -109,12 +109,13 @@
             <cube-form-item v-if="item.category=='phone'"
                             :ref="item.modelKey"
                             :field="item">
+              <span class="emp_required">*</span>
               <div>
                 <cube-input v-model="model.phone" @input="handlePhoneChange" placeholder="请输入手机号"></cube-input>
               </div>
               <transition name="fade">
                 <div class="get_code_wrap clearfloat" v-if="isPhone">
-                  <cube-input class="get_code_input fl" v-model="model.userCode" @change="codeChange"
+                  <cube-input class="get_code_input fl" v-model="model.userCode" @input="codeChange"
                               placeholder="请输入验证码"></cube-input>
                   <span class="get_code fr">
                         <span v-if="sendAuthCode"

@@ -237,9 +237,14 @@
     padding: 14px 109px;
 }
 .emp_imgs {
-    max-width: 100%;
-    max-height: 100%;
-    /*position: absolute;*/
-    /*left: 50%;*/
-    /*top: 50%;*/
+  width: 100%;
+  max-height: 222px;
+  vertical-align: middle;
+}
+.emp_required{
+  position: absolute;
+  left: -49px;
+  top: 10px;
+  z-index: 9;
+  color: #e64340;
 }
