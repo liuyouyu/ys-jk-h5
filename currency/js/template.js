@@ -1,3 +1,4 @@
+
 var CONTENTVAR = {
   title: '',
   rexPhone: /^1(2|3|4|5|6|7|8|9)\d{9}$/
@@ -64,7 +65,6 @@ var templateView = {
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
-        console.log(newVal,"心智？")
         if (newVal) {
           this.userInfo = newVal
         }
@@ -93,11 +93,11 @@ var templateView = {
         formList: '',
         selected: [],
         validity: {},
-        valid: undefined,
         model: {
           userPhone: '',
           userCode: ''
         },
+        valid: undefined,
         fields: [],
         options: {
           scrollToInvalidField: true,
@@ -121,23 +121,23 @@ var templateView = {
         this.$emit('input', selectedVal)
       },
       submitHandler(e) {
+        console.log(this.fields,'this.fields');
         for (var i = 0; i < this.fields.length; i++) {
           if (this.fields[i]['type']) {
             if (this.fields[i]['rules'] && this.fields[i]['rules']['required']) {
-              console.log(this.$refs[this.fields[i]['modelKey']]);
               if (this.$refs[this.fields[i]['modelKey']] && this.$refs[this.fields[i]['modelKey']].constructor === Array) {
                 var modelKeyList = this.$refs[this.fields[i]['modelKey']];
+                console.log(modelKeyList,'modelKeyList<<<<<<<<<');
                 for (var j = 0; j < modelKeyList.length; j++) {
-                  var vaildItem = modelKeyList[j].validate(function (valid) {
-                    console.log('当前的值:', valid);
-                  })
+                  var vaildItem = modelKeyList[j].validate()
                   Promise.all([vaildItem]).then((vaildItem) => {
                     console.log('当前》》》》》', vaildItem);
                   })
-                  // console.log(modelKeyList[j]);
                 }
               }
               // console.log(this.$refs[this.fields[i]['modelKey']]);
+            }else {
+
             }
           } else {//type类型为undefined的 目前有date
             // console.log('当前为日期类型')
@@ -150,6 +150,20 @@ var templateView = {
           }
         }
         var self = this;
+        if (!CONTENTVAR.rexPhone.test(this.model.phone)){
+          const toast = self.$createToast({
+            txt: '请输入有效手机号!',
+            type: 'txt',
+          })
+          toast.show()
+        }
+        if(this.model.userCode == '' && this.isPhone == true){
+          const toast = self.$createToast({
+            txt: '请输入验证码!',
+            type: 'txt',
+          })
+          toast.show()
+        }
         mcMethod.query.request({
           url: mcMethod.url.validateCode2,
           queryType: 'GET',
@@ -162,11 +176,14 @@ var templateView = {
             if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
               self.getFromData()
             } else {
-              const toast = self.$createToast({
-                txt: '验证码错误!',
-                type: 'txt',
-              })
-              toast.show()
+              console.log(1111111111)
+              if(self.model.userCode != ''){
+                const toast = self.$createToast({
+                  txt: '验证码错误!',
+                  type: 'txt',
+                })
+                toast.show()
+              }
             }
           },
           errorCallback: function (err) {
@@ -182,10 +199,11 @@ var templateView = {
           })
         }
         
-        // console.log(this.model);
+        console.log(this.model,'this.model<<<<<<<<<,');
         // console.log('submit')
       },
       validateHandler(result) {
+        console.log(result.validity,"result??????????")
         this.validity = result.validity
         this.valid = result.valid
         // console.log('validity', result.validity, result.valid, result.dirty, result.firstInvalidFieldIndex)
@@ -212,7 +230,7 @@ var templateView = {
             obj['props'] = {
               placeholder: item.typeTitle
             };
-            if (item.required === 'true') {
+            if (item.required === true) {
               obj['rules'] = {
                 required: true
               };
@@ -320,9 +338,8 @@ var templateView = {
         })
         
       },
-      codeChange() {//验证验证码
-      
-      
+      codeChange(val) {//验证验证码
+        console.log(val,"?????????");
       },
       //获取当前数据
       getFromData() {
@@ -427,11 +444,14 @@ var templateView = {
         if (CONTENTVAR.rexPhone.test(val)){
           this.isPhone = true
         }else{
+
         }
       }
     },
     mounted: function () {
-      console.log(this.dataInfo);
+      console.log(this.dataInfo,"表单数据");
+      this.formList = this.dataInfo
+      this.init()
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
@@ -447,8 +467,8 @@ var templateView = {
     template: '#emp_writing',
     props: {
       dataInfo: {
-        type: Array,
-        default: []
+        type: Object,
+        default: {}
       }
     },
     data: function () {
@@ -471,8 +491,8 @@ var templateView = {
     template: '#emp_guest',
     props: {
       dataInfo: {
-        type: Array,
-        default: []
+        type: Object,
+        default: {}
       }
     },
     data: function () {
@@ -497,8 +517,8 @@ var templateView = {
     template: '#emp_video',
     props: {
       dataInfo: {
-        type: Array,
-        default: []
+        type: Object,
+        default: {}
       }
     },
     data: function () {
@@ -520,8 +540,8 @@ var templateView = {
     template: '#emp_img',
     props: {
       dataInfo: {
-        type: Array,
-        default: []
+        type: Object,
+        default: {}
       }
     },
     data: function () {
@@ -542,8 +562,8 @@ var templateView = {
     template: '#emp_carouselImg',
     props: {
       dataInfo: {
-        type: Array,
-        default: []
+        type: Object,
+        default: {}
       }
     },
     data: function () {
@@ -553,7 +573,6 @@ var templateView = {
     },
     mounted() {
       this.imgDetails = this.dataInfo;
-      console.log(this.imgDetails,"轮播数据");
     },
     dataInfo: function (newVal, oldVal) {
       if (newVal) {
@@ -575,6 +594,7 @@ var INDEXAPP = new Vue({
     empCarouselImg: templateView.empCarouselImg
   },
   data: {
+    activityData:[],
     activityDetails: [],
     activityForm: {},
     activityGuestInfo: [],
@@ -598,47 +618,12 @@ var INDEXAPP = new Vue({
           callback: function (data) {
             if (data.code === 0 && data.data) {
               console.log(data.data,"数据？？？？？？、、、、");
+              self.activityData = data.data.modelExt
               //基础信息
               if (data.data.activityInfo) {
                 self.activityInfo = data.data.activityInfo
                 CONTENTVAR.title = data.data.activityInfo.title
               }
-              var dataInfo = data.data.modelExt
-              var writArray = [],guestArray = [],picArray = [],imgsArray = [],videoArray = []
-              for( var i = 0; i < dataInfo.length; i++) {
-                // 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6
-                if(dataInfo[i].templateType == 1) {
-                  self.activityForm = dataInfo[i]
-                } else if(dataInfo[i].templateType == 2) {
-                    writArray.push(dataInfo[i])
-                    self.writingList = writArray
-                }else if(dataInfo[i].templateType == 3) {
-                  guestArray.push(dataInfo[i])
-                  self.guestData = guestArray
-                }else if(dataInfo[i].templateType == 4) {
-                  picArray.push(dataInfo[i])
-                  self.picData = picArray
-                }else if(dataInfo[i].templateType == 5) {
-                  imgsArray .push(dataInfo[i])
-                  self.PicImgsData = imgsArray
-                }else if(dataInfo[i].templateType == 6) {
-                  videoArray .push(dataInfo[i])
-                  self.videoData = videoArray
-                }
-              }
-              // if (data.data.activityForm) {
-              //   self.activityForm = data.data.activityForm
-              // } else {
-              //   self.activityForm = ''
-              // }
-              // 文案信息
-              // if (data.data.activityDetails && data.data.activityDetails.length > 0) {
-              //   self.writingList = data.data.activityDetails;
-              // }
-              //嘉宾信息
-              // if (data.data.activityGuestInfo && data.data.activityGuestInfo.length > 0) {
-              //   self.guestData = data.data.activityGuestInfo
-              // }
             }
           }
         })
