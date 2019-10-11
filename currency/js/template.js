@@ -32,10 +32,7 @@ var datePick = {
     },
     selectHandle(date, selectedVal, selectedText) {
       this.dateValue = moment(new Date(selectedVal[0], selectedVal[1] - 1, selectedVal[2])).format('YYYY-MM-DD')
-      this.$emit('modelKey', {
-        date: this.dateValue,
-        modelKey: this.modelKey
-      })
+
     },
     cancelHandle() {
     
@@ -43,6 +40,17 @@ var datePick = {
   },
   mounted() {
   
+  },
+  watch: {
+    dateValue(newVal, oldVal){
+      if (newVal) {
+        console.log('shuju',newVal);
+        this.$emit('modelkey', {
+          date: this.dateValue,
+          modelkey: this.modelKey
+        })
+      }
+    }
   }
 }
 
@@ -111,6 +119,7 @@ var templateView = {
         isPhone: false,
         isLink: 0,//0不跳转 ； 1 跳转
         linkUrl: {},
+        birData:''
       }
     },
     methods: {
@@ -300,8 +309,10 @@ var templateView = {
         }
       },
       handleDatePick(data) {
-        console.log('当前选中的日期:', data);
+        console.log('当前选中的日期:>>>>>>>', data);
         this.model[data.modelKey] = data.date
+        this.birData = this.model[data.modelKey]
+        console.log(this.birData,"????????");
       },
       getCode() {
         var phone = this.model.phone;
@@ -409,6 +420,9 @@ var templateView = {
                 } else if (modelKey === '20000以上') {
                   categoryVal = 20000
                 }
+                break;
+              case 'birthday':
+                categoryVal = self.birData
                 break;
               default:
                 categoryVal = modelKey
