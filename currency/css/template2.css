@@ -58,6 +58,8 @@ body {
     color: inherit;
     background: none;
     border: none;
+    font-size: 14px;
+    color: #cccccc;
 }
 
 .button-date:active {
@@ -244,16 +246,16 @@ body {
     padding: 14px 24px;
 }
 .emp_imgs {
-  width: 100%;
-  max-height: 222px;
-  vertical-align: middle;
+    width: 100%;
+    max-height: 222px;
+    vertical-align: middle;
 }
 .emp_required{
-  position: absolute;
-  left: -49px;
-  top: 10px;
-  z-index: 9;
-  color: #e64340;
+    position: absolute;
+    left: -49px;
+    top: 10px;
+    z-index: 9;
+    color: #e64340;
 }
 .emp_interval {
     margin-top: 30px;
@@ -267,7 +269,7 @@ body {
     border-radius: 50%;
 }
 .cube-btn {
-    padding: 9px 16px;
+    padding: 9px 16px 9px 9px;
 }
 .submit-button .cube-btn {
     background: #0E357A;
@@ -297,4 +299,58 @@ body {
     -webkit-font-smoothing: antialiased;
     -webkit-text-stroke-width: .2px;
     color: #e64340;
+}
+
+/* 样式修改 */
+.cube-form-group-content{
+    position: relative;
+    left: -11px;
+}
+.cube-form-field{
+    border-radius: 4px;
+    /* overflow: hidden; */
+}
+.cube-input{
+    border-radius: 4px;
+}
+.cube-btn-inline{
+    border-radius: 4px;
+}
+
+.emp_form_wrap .cube-form {
+    background: #320056;
+}
+.cube-form_standard .cube-input input {
+    background:rgba(50,0,86,1);
+}
+.emp_form_wrap .cube-form-field {
+    box-shadow: 0px 0px 6px 1px rgba(249,186,255,1);
+    border: 2px solid rgba(164,15,175,1);
+    margin: 10px 0;
+}
+.cube-input-field {
+    border-radius: 0;
+}
+.emp_form_wrap .cube-form-label {
+    color: #CCCCCC;
+}
+.submit-button .cube-btn {
+    background: #FFCA3E;
+    box-shadow:0px 3px 13px 0px rgba(255,218,62,1);
+    color: #320056;
+}
+.emp_form_wrap .cube-form_standard .cube-input input {
+    box-shadow: 0px 0px 10px 1px #F9BAFF inset;
+    color: #CCCCCC;
+}
+.emp_form_wrap .get_code_wrap .emp_tempInput input{
+    padding: 11px 9px;
+
+}
+.get_code {
+    line-height: 42px;
+    border: none;
+    border-radius: 0px;
+    box-shadow: 0px 0px 10px 1px #F9BAFF inset;
+    color: #ccc;
 }
