@@ -18,12 +18,12 @@
 </head>
 <body>
 <div id="app" style="webkit-overflow-scrolling: touch;overflow-y: scroll;">
-    <!--  <user-info :data-info="activityInfo"></user-info>-->
+<!--      <user-info :data-info="activityInfo"></user-info>-->
     <!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
     <div v-if="activityData.length">
         <div v-for="items in activityData" :key="items.index">
             <div v-if="items.templateType == 1">
-                <emp-form :data-info="items"></emp-form>
+                <emp-form :data-info="items" :isdisable="isDisable" ></emp-form>
             </div>
             <div v-else-if="items.templateType == 2">
                 <emp-writing :data-info="items"></emp-writing>
@@ -155,11 +155,11 @@
         <cube-form-group>
           <div class="tc submit-button">
             <cube-button type="button"
-                         v-if="isSubmit"
+                         v-if="isSubmit && isdisable"
                          :inline="true"
                          @click="submitHandler">确认提交
             </cube-button>
-            <cube-button type="button" :disabled="true" :inline="true" v-else>
+            <cube-button type="button" :disabled="true" :inline="true" v-else style="background: #ccc">
               确认提交
             </cube-button>
           </div>
@@ -207,7 +207,11 @@
 <script src="//cdn.yunshicloud.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://unpkg.com/larkplayer@latest/dist/larkplayer.js"></script>
 <script src="https://unpkg.com/larkplayer-ui@latest/dist/larkplayer-ui.js"></script>
+<script src="//cdn.yunshicloud.com/axios/0.18.0/axios.min.js?$$tempflag$$"></script>
+<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?$$tempflag$$"></script>
 <script src="config/config.js"></script>
+<script src="common/common/common.js"></script>
+<script src="common/plugins/xyAuth.js"></script>
 <script src="common/base/base.js"></script>
 <script src="js/template.js"></script>
 <!-- 文稿组件 -->
