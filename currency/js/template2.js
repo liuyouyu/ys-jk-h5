@@ -2,7 +2,8 @@
 var CONTENTVAR = {
   title: '',
   rexPhone: /^1(2|3|4|5|6|7|8|9)\d{9}$/,
-  regEmail: /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
+  regEmail: /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/,
+  isActivityTemplateId: 0 //当前页面是否是模板，是:1 不是: 0
 }
 var datePick = {
   props: {
@@ -40,11 +41,11 @@ var datePick = {
       this.isshowwaring = false
     },
     cancelHandle() {
-    
+
     }
   },
   mounted() {
-  
+
   },
   watch: {
     dateValue(newVal, oldVal){
@@ -125,7 +126,8 @@ var templateView = {
         isLink: 0,//0不跳转 ； 1 跳转
         islinkUrl: {},
         birData:'',
-        iswaring:false
+        iswaring:false,
+        isSubmit: true
       }
     },
     methods: {
@@ -236,7 +238,7 @@ var templateView = {
             console.log(result);
           })
         }
-        
+
         console.log(this.model,'this.model<<<<<<<<<,');
         // console.log('submit')
       },
@@ -304,7 +306,7 @@ var templateView = {
                 this.model[item.key] = '';
                 //数字
                 obj['type'] = 'input';
-                
+
                 break;
               case 'textarea':
                 this.model[item.key] = '';
@@ -331,9 +333,9 @@ var templateView = {
               // obj['type'] = 'input';
             }
             this.fields.push(obj)
-            
+
           }
-          
+
         }
       },
       handleDatePick(data) {
@@ -343,8 +345,7 @@ var templateView = {
         console.log(this.birData,"????????");
       },
       getCode() {
-        self.sendAuthCode = false
-        var phone = this.model.phxlone;
+        var phone = this.model.phone;
         if (!(CONTENTVAR.rexPhone.test(phone))) {
           const toast = this.$createToast({
             txt: '手机号码有误，请重填写',
@@ -369,17 +370,17 @@ var templateView = {
               var auth_timetimer = setInterval(() => {
                 self.auth_time--;
                 if (self.auth_time <= 0) {
-                  self.sendAuthCode = true
-                  clearInterval(auth_timetimer)
+                  self.sendAuthCode = true;
+                  clearInterval(auth_timetimer);
                 }
-              }, 1000)
+              }, 1000);
             }
           },
           errorCallback: function (err) {
             console.log(err);
           }
         })
-        
+
       },
       codeChange(val) {//验证验证码
         console.log(val,"?????????");
@@ -476,10 +477,12 @@ var templateView = {
                   timeout: () => {
                     console.log(self.islinkUrl,self.islinkUrl.typetitle != undefined,self.islinkUrl.typetitle != '',"111111111")
                     if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] != ''){
+                      console.log("2222222")
                       var url = self.islinkUrl.typetitle
                       self.islinkUrl = {}
                       window.location.href = url
                     }else {
+                      console.log("3333333333333")
                       location.reload();
                     }
                   }
@@ -487,7 +490,7 @@ var templateView = {
               })
               toast.show();
             }else {
-            
+
             }
           }
         })
@@ -502,6 +505,11 @@ var templateView = {
       }
     },
     mounted: function () {
+      if (CONTENTVAR.isActivityTemplateId === 1){
+        this.isSubmit = false
+      }else {
+        this.isSubmit = true
+      }
       this.formList = this.dataInfo
       this.init()
     },
@@ -685,9 +693,9 @@ var INDEXAPP = new Vue({
           }
         })
       } else {
-      
+
       }
-      
+
     },
     pvSum: function () {
       mcMethod.query.request({
@@ -699,13 +707,44 @@ var INDEXAPP = new Vue({
         callback: function (data) {
         }
       })
+    },
+    findActivityTemplateById: function () {
+      var self = this;
+      if (mcMethod.info.activityTemplateId) {
+        mcMethod.query.request({
+          queryType: 'GET',
+          url: mcMethod.url.findActivityTemplateById,
+          address: {
+            id: mcMethod.info.activityTemplateId
+          },
+          callback: function (data) {
+            if (data.code === 0 && data.data) {
+              var data = data.data.templateContent
+              self.activityData = data.modelExt
+              //基础信息
+              if (data.activityInfo) {
+                self.activityInfo = data.activityInfo
+                CONTENTVAR.title = data.activityInfo.title
+              }
+            }
+          }
+        })
+      } else {
+
+      }
     }
   },
   created: function () {
     this.pvSum()
-    this.queryActivityById()
+    if (mcMethod.info.activityTemplateId != '' && mcMethod.info.activityId == ''){
+      CONTENTVAR.isActivityTemplateId = 1
+      this.findActivityTemplateById()
+    }else {
+      CONTENTVAR.isActivityTemplateId = 0
+      this.queryActivityById()
+    }
+
   },
   mounted: function () {
-
   }
 })
