@@ -8,7 +8,7 @@ Vue.component('catalogue', {
         <div v-if='item.thumbnail' class='c-img'>
           <img :src="item.thumbnail" alt="图片丢了"/>
         </div>
-        <div class='c-info' :style="item.thumbnail?'':'width:73%'" >
+        <div class='c-info' :style="item.thumbnail?'':'width:100%'" >
           <div class='c-title'>{{item.title}}</div>
           <div class='c-author'>{{item.utime}}</div>
         </div>
