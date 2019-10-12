@@ -98,7 +98,8 @@ body {
 .get_code {
     width: 7em;
     float: left;
-    line-height: 40px;
+    line-height: 33px;
+    height: 33px;
     text-align: center;
     box-sizing: border-box;
     border: 1px solid #f2f2f2;
@@ -215,7 +216,7 @@ body {
 }
 
 .emp_form_wrap .cube-form-item {
-    margin-right: 23px;
+    /* margin-right: 23px; */
 }
 
 .emp_form_wrap .cube-btn-inline {
@@ -313,5 +314,8 @@ body {
   /* left: 7px; */
 }
 .cube-form-item{
-  padding: 0px 55px 0 15px;
+  padding: 0px 70px;
+}
+.dateShowStyle{
+  color: inherit;
 }

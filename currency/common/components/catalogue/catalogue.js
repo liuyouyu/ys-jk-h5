@@ -2,19 +2,22 @@ Vue.component('catalogue', {
 
   template : `
     <div v-if= 'isShow' class='catalogue'>
+      <div class="emp_interval">
+        <img src="./common/img/interval.png" alt="">
+      </div>
     <div class='catalogue-tit'><span></span>推荐内容</div>
-    <div v-for='item in catalogueData' class='c-item background'>
-      <div @click='openDetail(item.url)' class='c-box'>
-        <div v-if='item.thumbnail' class='c-img'>
-          <img :src="item.thumbnail" alt="图片丢了"/>
-        </div>
-        <div class='c-info' :style="item.thumbnail?'':'width:100%'" >
-          <div class='c-title'>{{item.title}}</div>
-          <div class='c-author'>{{item.utime}}</div>
+      <div v-for='item in catalogueData' class='c-item background'>
+        <div @click='openDetail(item.url)' class='c-box'>
+          <div v-if='item.thumbnail' class='c-img'>
+            <img :src="item.thumbnail" alt="图片丢了"/>
+          </div>
+          <div class='c-info' :style="item.thumbnail?'':'width:100%'" >
+            <div class='c-title'>{{item.title}}</div>
+            <div class='c-author'>{{item.utime}}</div>
+          </div>
         </div>
       </div>
-      </div>
-    </div>
+  </div>
   `,
 
   props:{
@@ -46,8 +49,8 @@ Vue.component('catalogue', {
         type: 'GET',
         url: 'http://test-cdapi.yunshicloud.com/api/release/catalogue/v1/queryCatalogue',
         data: {
-          // companyId:'5e4bdb4eb2584b9d9d00d4044232d52a',
-          companyId:'7674F33E470D459E',
+          // companyId:'7674F33E470D459E',
+          companyId:'mcMethod.info.companyId',
           versionId:'1',
           serviceCode:'cloudemp',
           pageSize:_this.showList,
@@ -56,8 +59,12 @@ Vue.component('catalogue', {
         contentType: "application/json ; charset=utf-8",
         dataType: "json",
         success: function (data) {
-          console.log('文稿信息',data.data);
-          _this.catalogueData = data.data
+          console.log('文稿信息',data.data.length);
+          if(data.data.length!=0){
+            _this.catalogueData = data.data
+          }else{
+            _this.isShow = false
+          }
         },
         error: function (err) {
           console.log('错误',err);
