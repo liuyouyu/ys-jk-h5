@@ -105,7 +105,7 @@
 <template class="hide" id="emp_form">
   <div class="emp_form_wrap">
     <div v-if="formList&&formList.sortMax">
-      <h2 v-if="formList.title" class="emp_writing_title" v-text="formList.title"></h2>
+<!--      <h2 v-if="formList.title" class="emp_writing_title" v-text="formList.title"></h2>-->
 <!--      <h2 class="emp_writing_title">表单的标题</h2>-->
       <cube-form :model="model"
                  :options="options"
@@ -122,7 +122,7 @@
               </div>
               <transition name="fade">
                 <div class="get_code_wrap clearfloat" v-if="isPhone">
-                  <cube-input class="get_code_input fl" v-model="model.userCode" @input="codeChange"
+                  <cube-input class="get_code_input fl emp_tempInput" v-model="model.userCode" @input="codeChange"
                               placeholder="请输入验证码"></cube-input>
                   <span class="get_code fr">
                         <span v-if="sendAuthCode"
@@ -132,7 +132,7 @@
                               class="c-right">
                         <span class="auth_text_blue">重新获取{{auth_time}}</span>秒</span>
                   </span>
-                  <cube-input v-model="model.userCode" maxlength="4" placeholder="请输入验证码"></cube-input>
+<!--                  <cube-input v-model="model.userCode" maxlength="4" placeholder="请输入验证码"></cube-input>-->
                 </div>
               </transition>
             </cube-form-item>
