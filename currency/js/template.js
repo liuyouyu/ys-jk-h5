@@ -32,10 +32,7 @@ var datePick = {
     },
     selectHandle(date, selectedVal, selectedText) {
       this.dateValue = moment(new Date(selectedVal[0], selectedVal[1] - 1, selectedVal[2])).format('YYYY-MM-DD')
-      this.$emit('modelKey', {
-        date: this.dateValue,
-        modelKey: this.modelKey
-      })
+
     },
     cancelHandle() {
     
@@ -43,6 +40,17 @@ var datePick = {
   },
   mounted() {
   
+  },
+  watch: {
+    dateValue(newVal, oldVal){
+      if (newVal) {
+        console.log('shuju',newVal);
+        this.$emit('modelkey', {
+          date: this.dateValue,
+          modelkey: this.modelKey
+        })
+      }
+    }
   }
 }
 
@@ -110,7 +118,8 @@ var templateView = {
         phoneCodeKey: '',
         isPhone: false,
         isLink: 0,//0不跳转 ； 1 跳转
-        linkUrl: {},
+        islinkUrl: {},
+        birData:''
       }
     },
     methods: {
@@ -216,12 +225,12 @@ var templateView = {
           var fromData = this.formList.items
           for (var i = 0; i < fromData.length ; i ++){
             if(fromData[i].category == "link"){
-              this.linkUrl = fromData[i]
+              this.islinkUrl = fromData[i]
               fromData.splice(i,1)
               this.isLink = 1
             }
           }
-          console.log(this.linkUrl,"??????????this.linkUrl");
+          console.log(this.islinkUrl,"??????????this.islinkUrl");
           for (var i = 0; i < this.formList.items.length; i++) {
             var item = this.formList.items[i];
             //解析from表单
@@ -300,8 +309,10 @@ var templateView = {
         }
       },
       handleDatePick(data) {
-        console.log('当前选中的日期:', data);
+        console.log('当前选中的日期:>>>>>>>', data);
         this.model[data.modelKey] = data.date
+        this.birData = this.model[data.modelKey]
+        console.log(this.birData,"????????");
       },
       getCode() {
         var phone = this.model.phone;
@@ -410,6 +421,9 @@ var templateView = {
                   categoryVal = 20000
                 }
                 break;
+              case 'birthday':
+                categoryVal = self.birData
+                break;
               default:
                 categoryVal = modelKey
             }
@@ -432,10 +446,13 @@ var templateView = {
                 time: '2000',
                 $events: {
                   timeout: () => {
-                    if(self.linkUrl != {} && self.linkUrl.typetitle != ""){
-                      var url = self.linkUrl.typetitle
+                    console.log(self.islinkUrl,self.islinkUrl.typetitle != undefined,self.islinkUrl.typetitle !== '',"111111111")
+                    if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] !== ''){
+                      var url = self.islinkUrl.typetitle
+                      self.islinkUrl = {}
                       window.location.href = url
                     }else {
+                      console.log("3333333333333")
                       location.reload();
                     }
                   }
@@ -537,6 +554,10 @@ var templateView = {
     mounted() {
       this.videoDetails = this.dataInfo;
       console.log(this.videoDetails,"视频数据");
+      console.log(document.getElementById('my-video'),"??????????");
+      var payler = larkplayer('my-video', {
+        controls: true,
+      })
     },
     dataInfo: function (newVal, oldVal) {
       if (newVal) {

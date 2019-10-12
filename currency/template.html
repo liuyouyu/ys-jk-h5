@@ -17,7 +17,7 @@
   <title></title>
 </head>
 <body>
-<div id="app">
+<div id="app" style="overflow-x: hidden">
 <!--  <user-info :data-info="activityInfo"></user-info>-->
 <!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
   <div v-if="activityData.length">
@@ -48,10 +48,12 @@
           <emp-video :data-info="items"></emp-video>
       </div>
     </div>
+    <div class="emp_interval">
+      <img src="./common/img/interval.png" alt="">
+    </div>
   </div>
   <!-- 推荐内容 -->
-  <catalogue :isshow=CONFIG.showCatalogue :showlist='8'></catalogue>
-
+  <catalogue :isshow=CONFIG.showCatalogue :showlist='8' ></catalogue>
 </div>
 <!--基础信息-->
 <template class="hide" id="emp_user_info">
@@ -79,13 +81,13 @@
 <!--视频-->
 <template class="hide" id="emp_video">
   <div class="emp_myVideo" >
-    <video id="my-video" :src="videoDetails.picture" width="400" height="300" controls>
-    </video>
+      <video id="my-video" :poster="videoDetails.posterUrl" :src="videoDetails.picture" webkit-playsinline playsinline x-webkit-airplay x5-playsinline="true"   x5-video-player-type="h5"   duration="{$videoList['time_length']}" width="100%" height="280px">
+      </video>
   </div>
 </template>
 <!--图片-->
 <template class="hide" id="emp_img">
-  <div class="user_info_poster">
+  <div class="emp_picImg">
     <img :src="picDetail.picture" alt="图片">
   </div>
 </template>
@@ -141,7 +143,7 @@
             </cube-form-item>
             <cube-form-item v-else :field="item">
               <date-picks :modelKey="item.modelKey"
-                          @modelKey="handleDatePick">
+                          @modelkey="handleDatePick">
               </date-picks>
             </cube-form-item>
             <!--            <cube-form-item v-else :field="item">-->
@@ -198,6 +200,7 @@
 <script src="common/plugins/moment.js"></script>
 <script src="//cdn.yunshicloud.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://unpkg.com/larkplayer@latest/dist/larkplayer.js"></script>
+<script src="https://unpkg.com/larkplayer-ui@latest/dist/larkplayer-ui.js"></script>
 <script src="config/config.js"></script>
 <script src="common/base/base.js"></script>
 <script src="js/template.js"></script>
