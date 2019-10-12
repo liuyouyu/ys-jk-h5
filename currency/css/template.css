@@ -274,3 +274,6 @@
 .larkplayer video {
     height: 280px!important;
 }
+.emp_picImg img {
+  width: 100%;
+}
