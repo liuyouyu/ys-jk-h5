@@ -2,6 +2,7 @@
   width: 100%;
   min-width: 375px;
   margin-bottom: 20px;
+  overflow: hidden;
 }
 .catalogue-tit{
   margin: 30px 0 20px 10px;
@@ -70,5 +71,5 @@
   color: #CACFD8;
   position: absolute;
   bottom: -5px;
-  right: 0;
+  right: 20px;
 }
