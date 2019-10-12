@@ -1,19 +1,24 @@
 
 var CONTENTVAR = {
   title: '',
-  rexPhone: /^1(2|3|4|5|6|7|8|9)\d{9}$/
+  rexPhone: /^1(2|3|4|5|6|7|8|9)\d{9}$/,
+  regEmail: /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
 }
 var datePick = {
   props: {
     modelKey: {
       type: String,
       default: ''
+    },
+    isshowwaring: {
+      type: Boolean,
+      default: ''
     }
   },
   template: '#datePick',
   data: function () {
     return {
-      dateValue: ''
+      dateValue: '',
     }
   },
   methods: {
@@ -32,7 +37,7 @@ var datePick = {
     },
     selectHandle(date, selectedVal, selectedText) {
       this.dateValue = moment(new Date(selectedVal[0], selectedVal[1] - 1, selectedVal[2])).format('YYYY-MM-DD')
-
+      this.isshowwaring = false
     },
     cancelHandle() {
     
@@ -119,7 +124,8 @@ var templateView = {
         isPhone: false,
         isLink: 0,//0不跳转 ； 1 跳转
         islinkUrl: {},
-        birData:''
+        birData:'',
+        iswaring:false
       }
     },
     methods: {
@@ -136,8 +142,19 @@ var templateView = {
           if (this.fields[i]['type']) {
             if (this.fields[i]['rules'] && this.fields[i]['rules']['required']) {
               if (this.$refs[this.fields[i]['modelKey']] && this.$refs[this.fields[i]['modelKey']].constructor === Array) {
+                console.log(this.fields[i],'this.fields[i]<<<<<<<<<<');
+                if(this.fields[i].category == "email"){
+                  var val = this.model[this.fields[i]['modelKey']]
+                  if (!CONTENTVAR.regEmail.test(val)){
+                    const toast = this.$createToast({
+                      txt: '请输入有效邮箱!',
+                      type: 'txt',
+                    })
+                    toast.show()
+                    return
+                  }
+                }
                 var modelKeyList = this.$refs[this.fields[i]['modelKey']];
-                console.log(this.$refs[this.fields[i]['modelKey']],'modelKeyList<<<<<<<<<');
                 for (var j = 0; j < modelKeyList.length; j++) {
                   var vaildItem = modelKeyList[j].validate()
                   Promise.all([vaildItem]).then((vaildItem) => {
@@ -150,13 +167,16 @@ var templateView = {
 
             }
           } else {//type类型为undefined的 目前有date
-            // console.log('当前为日期类型')
-            // console.log(this.model.modelKey);
+            console.log(this.fields[i],'当前为日期类型')
+            console.log(this.model.modelKey,this.birData,"birData生日日期数值");
             console.log('modelKey:', this.fields[i]['modelKey']);
             console.log('当前值:', this.model[this.fields[i]['modelKey']]);
-            // if (){
-            //
-            // }
+            if (this.birData == ''){
+              console.log("空值")
+              this.iswaring = true
+            }else {
+              console.log("不为空空值")
+            }
           }
         }
         var self = this;
@@ -448,12 +468,13 @@ var templateView = {
                   timeout: () => {
                     console.log(self.islinkUrl,self.islinkUrl.typetitle != undefined,self.islinkUrl.typetitle !== '',"111111111")
                     if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] !== ''){
+                      console.log("2222222")
                       var url = self.islinkUrl.typetitle
                       self.islinkUrl = {}
-                      window.location.href = url
+                      // window.location.href = url
                     }else {
                       console.log("3333333333333")
-                      location.reload();
+                      // location.reload();
                     }
                   }
                 }

@@ -142,7 +142,7 @@
                             :field="item">
             </cube-form-item>
             <cube-form-item v-else :field="item">
-              <date-picks :modelKey="item.modelKey"
+              <date-picks :modelKey="item.modelKey" :isshowwaring="iswaring"
                           @modelkey="handleDatePick">
               </date-picks>
             </cube-form-item>
@@ -194,6 +194,7 @@
                  @click="showDatePicker">
       {{dateValue || '请选择日期'}}
     </cube-button>
+      <span class="emp_waring" v-if="isshowwaring"></span>
     <date-picker ref="datePicker"></date-picker>
   </div>
 </template>
