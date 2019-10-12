@@ -3,7 +3,8 @@ var CONTENTVAR = {
   title: '',
   rexPhone: /^1(2|3|4|5|6|7|8|9)\d{9}$/,
   regEmail: /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/,
-  isActivityTemplateId: 0 //当前页面是否是模板，是:1 不是: 0
+  isActivityTemplateId: 0, //当前页面是否是模板，是:1 不是: 0
+  ispvSum: '',//当前模板状态 0草稿，1已发布，2已结束
 }
 var datePick = {
   props: {
@@ -96,6 +97,10 @@ var templateView = {
       dataInfo: {
         type: Object,
         default: {}
+      },
+      isdisable: {
+        type: Boolean,
+        default: true
       }
     },
     components: {
@@ -127,7 +132,7 @@ var templateView = {
         islinkUrl: {},
         birData:'',
         iswaring:false,
-        isSubmit: true
+        isSubmit: true,
       }
     },
     methods: {
@@ -587,13 +592,10 @@ var templateView = {
     },
     mounted() {
       this.videoDetails = this.dataInfo;
-      console.log(this.videoDetails,"视频数据");
-      console.log(document.getElementById('my-video'),"??????????");
       var player = larkplayer('my-video', {
         controls:false,
         playsinline:true,
       })
-      console.log('有控制条吗',player.controls(['controls']));
     },
     dataInfo: function (newVal, oldVal) {
       if (newVal) {
@@ -646,7 +648,6 @@ var templateView = {
     }
   }
 }
-
 var INDEXAPP = new Vue({
   el: '#app',
   components: {
@@ -668,7 +669,8 @@ var INDEXAPP = new Vue({
     guestData: [],
     picData: [],//图片
     PicImgsData : [],//图集
-    videoData : []//视频
+    videoData : [],//视频
+    isDisable: true//判断是否提交
   },
   methods: {
     queryActivityById: function () {
@@ -683,7 +685,29 @@ var INDEXAPP = new Vue({
           callback: function (data) {
             if (data.code === 0 && data.data) {
               console.log(data.data,"数据？？？？？？、、、、");
+              console.log(data.data.activityStatus,"数据？？？？？？、、、、");
               self.activityData = data.data.modelExt
+              document.title = data.data.activityInfo.title
+              CONTENTVAR.ispvSum = data.data.activityStatus
+              if(data.data.activityStatus == "0" || data.data.activityStatus == "2" ) {
+                console.log("1111111111")
+                self.isDisable = false
+                if(data.data.activityStatus == 2){
+                  self.$createDialog({
+                    type: 'alert',
+                    icon: 'cubeic-alert',
+                    showClose: false,
+                    title: '活动已结束',
+                    onClose: () => {
+                      this.$createToast({
+                        type: 'warn',
+                        time: 1000,
+                        txt: '点击关闭按钮'
+                      }).show()
+                    }
+                  }).show()
+                }
+              }
               //基础信息
               if (data.data.activityInfo) {
                 self.activityInfo = data.data.activityInfo
@@ -695,7 +719,6 @@ var INDEXAPP = new Vue({
       } else {
 
       }
-
     },
     pvSum: function () {
       mcMethod.query.request({
@@ -732,19 +755,49 @@ var INDEXAPP = new Vue({
       } else {
 
       }
-    }
+    },
+    // 微信分享
+    queryAuthorizeTenantInfo: function () {
+      var that = this;
+      var url = config.apiHost + "api/ffWxCheck/v1/queryAuthorizeTenantInfo?companyId="+mcMethod.info.appCode.companyId+"&appCode="+mcMethod.info.appCode+"&userId="+mcMethod.info.userId+"&serviceCode="+mcMethod.info.serviceCode;
+      url = dazzleUtil.replaceUrlCommonParam(url);
+      axios.get(url).then(function(res) {
+        var data = that.checkReturn(res);
+        console.log(data,"data<<");
+        if(data !== false && data.data && data.code == 0) {
+          xyAuth.init({
+            appId: data.data.appId,
+            componentAppId: data.data.componentAppId,
+            domain: config.apiHost
+          });
+        }
+      }).catch(function(e) {
+      });
+    },
+    //统一验证返回状态
+    checkReturn: function(res) {
+      if(res.status === 200) {
+        if(res.data.code === 0 || res.data.code === 2) {
+          return res.data;
+        }
+      }
+      return false;
+    },
   },
   created: function () {
-    this.pvSum()
-    if (mcMethod.info.activityTemplateId != '' && mcMethod.info.activityId == ''){
+    if (mcMethod.info.activityTemplateId != '' && mcMethod.info.activityId == ''){//活动模板
       CONTENTVAR.isActivityTemplateId = 1
       this.findActivityTemplateById()
-    }else {
+      this.pvSum()
+    }else {//正式访问的
       CONTENTVAR.isActivityTemplateId = 0
       this.queryActivityById()
+      if(CONTENTVAR.ispvSum == "1") {
+        this.pvSum()
+      }
     }
-
   },
   mounted: function () {
+    this.queryAuthorizeTenantInfo()
   }
 })

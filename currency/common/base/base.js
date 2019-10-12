@@ -24,7 +24,7 @@ mcMethod.url = {
   //H5-根据Id查询发布库文稿详情
   queryCatalogueById:'api/release/catalogue/v1/queryCatalogueById',
   //活动模板-根据模板Id查询模板详情
-  findActivityTemplateById: 'api/activityTemplate/v1/findActivityTemplateById'
+  findActivityTemplateById: 'api/activityTemplate/v1/findActivityTemplateById',
 };
 
 mcMethod.info = {
