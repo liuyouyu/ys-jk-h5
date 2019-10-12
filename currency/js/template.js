@@ -178,6 +178,19 @@ var templateView = {
               console.log("不为空空值")
             }
           }
+          if(this.fields[i].category == "email"){
+            var val = this.model[this.fields[i]['modelKey']]
+            if(val !== "") {
+              if (!CONTENTVAR.regEmail.test(val)){
+                const toast = this.$createToast({
+                  txt: '请输入有效邮箱!',
+                  type: 'txt',
+                })
+                toast.show()
+                return
+              }
+            }
+          }
         }
         var self = this;
         if (!CONTENTVAR.rexPhone.test(this.model.phone)){
@@ -489,6 +502,7 @@ var templateView = {
       handlePhoneChange(val){
         if (CONTENTVAR.rexPhone.test(val)){
           this.isPhone = true
+          this.iswaring = false
         }else{
 
         }
