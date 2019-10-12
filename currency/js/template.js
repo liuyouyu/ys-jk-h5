@@ -142,7 +142,6 @@ var templateView = {
           if (this.fields[i]['type']) {
             if (this.fields[i]['rules'] && this.fields[i]['rules']['required']) {
               if (this.$refs[this.fields[i]['modelKey']] && this.$refs[this.fields[i]['modelKey']].constructor === Array) {
-                console.log(this.fields[i],'this.fields[i]<<<<<<<<<<');
                 if(this.fields[i].category == "email"){
                   var val = this.model[this.fields[i]['modelKey']]
                   if (!CONTENTVAR.regEmail.test(val)){
@@ -158,7 +157,7 @@ var templateView = {
                 for (var j = 0; j < modelKeyList.length; j++) {
                   var vaildItem = modelKeyList[j].validate()
                   Promise.all([vaildItem]).then((vaildItem) => {
-                    console.log('当前》》》》》', vaildItem);
+                    // console.log('当前》》》》》', vaildItem);
                   })
                 }
               }
@@ -167,10 +166,6 @@ var templateView = {
 
             }
           } else {//type类型为undefined的 目前有date
-            console.log(this.fields[i],'当前为日期类型')
-            console.log(this.model.modelKey,this.birData,"birData生日日期数值");
-            console.log('modelKey:', this.fields[i]['modelKey']);
-            console.log('当前值:', this.model[this.fields[i]['modelKey']]);
             if (this.fields[i]['rules'] && this.fields[i]['rules']['required']) {
               if (this.birData == ''){
                 this.iswaring = true
@@ -220,7 +215,6 @@ var templateView = {
             if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
               self.getFromData()
             } else {
-              console.log(1111111111)
               if(self.model.userCode != ''){
                 const toast = self.$createToast({
                   txt: '验证码错误!',
@@ -468,7 +462,6 @@ var templateView = {
         //手机号重新赋值
         jsonObj['phone'] = self.model.phone;
 
-        console.log(jsonObj,"jsonObj参数？？？？、、");
         mcMethod.query.request({
           data: jsonObj,
           url: mcMethod.url.savePortraitInfo,
@@ -480,15 +473,15 @@ var templateView = {
                 time: '2000',
                 $events: {
                   timeout: () => {
-                    console.log(self.islinkUrl,self.islinkUrl.typetitle != undefined,self.islinkUrl.typetitle !== '',"111111111")
-                    if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] !== ''){
+                    console.log(self.islinkUrl,self.islinkUrl.typetitle != undefined,self.islinkUrl.typetitle != '',"111111111")
+                    if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] != ''){
                       console.log("2222222")
                       var url = self.islinkUrl.typetitle
                       self.islinkUrl = {}
-                      // window.location.href = url
+                      window.location.href = url
                     }else {
                       console.log("3333333333333")
-                      // location.reload();
+                      location.reload();
                     }
                   }
                 }
@@ -510,14 +503,12 @@ var templateView = {
       }
     },
     mounted: function () {
-      console.log(this.dataInfo,"表单数据");
       this.formList = this.dataInfo
       this.init()
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
         if (newVal) {
-          console.log(newVal,"监听from表单数据？？？？、、、");
           this.formList = newVal
           this.init();
         }

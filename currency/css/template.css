@@ -1,8 +1,5 @@
 body {
-    -webkit-overflow-scrolling: touch;
-    overflow-scrolling: touch;
     overflow-x: hidden;
-    overflow-y: auto;
 }
 #app {
     background-color: #ffffff;
