@@ -22,7 +22,9 @@ mcMethod.url = {
   //H5-查询发布库文稿列表
   queryCatalogue:'api/release/catalogue/v1/queryCatalogue',
   //H5-根据Id查询发布库文稿详情
-  queryCatalogueById:'api/release/catalogue/v1/queryCatalogueById'
+  queryCatalogueById:'api/release/catalogue/v1/queryCatalogueById',
+  //活动模板-根据模板Id查询模板详情
+  findActivityTemplateById: 'api/activityTemplate/v1/findActivityTemplateById'
 };
 
 mcMethod.info = {
@@ -31,7 +33,9 @@ mcMethod.info = {
   userId: mcMethod.getRequestValue('userId') || '5d8dc8ad05a9b43d88fb3b7f',
   serviceCode:mcMethod.getRequestValue('serviceCode') || 'cloudemp',
   versionId: mcMethod.getRequestValue('versionId')  || '1',
-  activityId: mcMethod.getRequestValue('activityId') || ''
+  activityId: mcMethod.getRequestValue('activityId') || '',
+  activityTemplateId: mcMethod.getRequestValue('activityTemplateId') || '',
+  
 };
 mcMethod.query = {};
 mcMethod.query.request = function (option) {

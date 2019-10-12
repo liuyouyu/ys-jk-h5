@@ -155,8 +155,12 @@
         <cube-form-group>
           <div class="tc submit-button">
             <cube-button type="button"
+                         v-if="isSubmit"
                          :inline="true"
                          @click="submitHandler">确认提交
+            </cube-button>
+            <cube-button type="button" :disabled="true" :inline="true" v-else>
+              确认提交
             </cube-button>
           </div>
         </cube-form-group>

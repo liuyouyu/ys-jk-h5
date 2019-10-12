@@ -2,7 +2,8 @@
 var CONTENTVAR = {
   title: '',
   rexPhone: /^1(2|3|4|5|6|7|8|9)\d{9}$/,
-  regEmail: /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
+  regEmail: /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/,
+  isActivityTemplateId: 0 //当前页面是否是模板，是:1 不是: 0
 }
 var datePick = {
   props: {
@@ -125,7 +126,8 @@ var templateView = {
         isLink: 0,//0不跳转 ； 1 跳转
         islinkUrl: {},
         birData:'',
-        iswaring:false
+        iswaring:false,
+        isSubmit: true
       }
     },
     methods: {
@@ -503,6 +505,11 @@ var templateView = {
       }
     },
     mounted: function () {
+      if (CONTENTVAR.isActivityTemplateId === 1){
+        this.isSubmit = false
+      }else {
+        this.isSubmit = true
+      }
       this.formList = this.dataInfo
       this.init()
     },
@@ -700,11 +707,43 @@ var INDEXAPP = new Vue({
         callback: function (data) {
         }
       })
+    },
+    findActivityTemplateById: function () {
+      var self = this;
+      if (mcMethod.info.activityTemplateId) {
+        mcMethod.query.request({
+          queryType: 'GET',
+          url: mcMethod.url.findActivityTemplateById,
+          address: {
+            id: mcMethod.info.activityTemplateId
+          },
+          callback: function (data) {
+            if (data.code === 0 && data.data) {
+              var data = data.data.templateContent
+              self.activityData = data.modelExt
+              //基础信息
+              if (data.activityInfo) {
+                self.activityInfo = data.activityInfo
+                CONTENTVAR.title = data.activityInfo.title
+              }
+            }
+          }
+        })
+      } else {
+    
+      }
     }
   },
   created: function () {
     this.pvSum()
-    this.queryActivityById()
+    if (mcMethod.info.activityTemplateId != '' && mcMethod.info.activityId == ''){
+      CONTENTVAR.isActivityTemplateId = 1
+      this.findActivityTemplateById()
+    }else {
+      CONTENTVAR.isActivityTemplateId = 0
+      this.queryActivityById()
+    }
+    
   },
   mounted: function () {
   }
