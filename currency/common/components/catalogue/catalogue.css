@@ -1,6 +1,6 @@
 .catalogue{
   width: 100%;
-  min-width: 375px;
+  min-width: 300px;
   margin-bottom: 20px;
   overflow: hidden;
 }
@@ -71,5 +71,5 @@
   color: #CACFD8;
   position: absolute;
   bottom: -5px;
-  right: 20px;
+  right: 5px;
 }

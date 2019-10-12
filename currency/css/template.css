@@ -188,6 +188,7 @@ body {
 .emp_form_wrap .cube-form-label {
     justify-content: flex-end;
     font-size: 14px;
+    width: 80px;
 }
 
 .submit-button {
@@ -209,7 +210,8 @@ body {
 }
 
 .emp_form_wrap .cube-form_standard .cube-form-field {
-    min-width: 75%;
+    min-width: 70%;
+    border-radius: 4px;
 }
 
 .emp_form_wrap .cube-form-item {
@@ -302,17 +304,14 @@ body {
 }
 
 /* 样式修改 */
-.cube-form-group-content{
-  position: relative;
-  left: -11px;
-}
-.cube-form-field{
-  border-radius: 4px;
-  /* overflow: hidden; */
-} 
 .cube-input{
   border-radius: 4px;
 }
 .cube-btn-inline{
   border-radius: 4px;
+  /* position: relative; */
+  /* left: 7px; */
+}
+.cube-form-item{
+  padding: 0px 55px 0 15px;
 }
