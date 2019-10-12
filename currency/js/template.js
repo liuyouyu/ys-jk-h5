@@ -171,11 +171,12 @@ var templateView = {
             console.log(this.model.modelKey,this.birData,"birData生日日期数值");
             console.log('modelKey:', this.fields[i]['modelKey']);
             console.log('当前值:', this.model[this.fields[i]['modelKey']]);
-            if (this.birData == ''){
-              console.log("空值")
-              this.iswaring = true
-            }else {
-              console.log("不为空空值")
+            if (this.fields[i]['rules'] && this.fields[i]['rules']['required']) {
+              if (this.birData == ''){
+                this.iswaring = true
+              }else {
+                this.iswaring = false
+              }
             }
           }
           if(this.fields[i].category == "email"){
