@@ -268,14 +268,11 @@ body {
 .submit-button .cube-btn {
     background: #0E357A;
 }
-.emp_myVideo {
-    height: 280px;
-}
+/*.emp_myVideo {*/
+/*    height: 280px;*/
+/*}*/
 .lark-control-bar,.lark-progress-bar--simple {
     display: none!important;
-}
-.larkplayer video {
-    height: 280px!important;
 }
 .emp_picImg img {
     width: 100%;
