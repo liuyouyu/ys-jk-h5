@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <script src="common/plugins/vue.min.js"></script>
+  <link rel="stylesheet" href="common/plugins/cube.min.css">
+  <script src="common/plugins/cube.min.js"></script>
+  <link rel="stylesheet" href="common/font/iconfont.css">
+  <link rel="stylesheet" href="common/base/base.css">
+  <link rel="stylesheet" href="css/template.css">
+  <!-- 引入文稿组件样式 -->
+  <link rel="stylesheet" href="common/components/catalogue/catalogue.css">
+  <title></title>
+</head>
+<body>
+<div id="app" style="webkit-overflow-scrolling: touch;overflow-y: scroll;">
+    <!--  <user-info :data-info="activityInfo"></user-info>-->
+    <!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
+    <div v-if="activityData.length">
+        <div v-for="items in activityData" :key="items.index">
+            <div v-if="items.templateType == 1">
+                <emp-form :data-info="items"></emp-form>
+            </div>
+            <div v-else-if="items.templateType == 2">
+                <emp-writing :data-info="items"></emp-writing>
+            </div>
+            <div v-else-if="items.templateType == 3">
+                <!--  <div v-if="guestData&&guestData.length>0">-->
+                <!--    <emp-guest v-for="item of guestData"-->
+                <!--               :data-info="item"></emp-guest>-->
+                <!--  </div>-->
+            </div>
+            <div v-else-if="items.templateType == 4">
+                <emp-Img :data-info="items"></emp-Img>
+            </div>
+            <div v-else-if="items.templateType == 5">
+                <!--轮播-->
+                <div class="emp_carousel">
+                    <emp-carousel-img :data-info="items"></emp-carousel-img>
+                </div>
+            </div>
+            <div v-else-if="items.templateType == 6">
+                <!--视频-->
+                <emp-video :data-info="items"></emp-video>
+            </div>
+        </div>
+        <div class="emp_interval">
+            <img src="./common/img/interval.png" alt="">
+        </div>
+    </div>
+    <!-- 推荐内容 -->
+    <catalogue :isshow=CONFIG.showCatalogue :showlist='8' ></catalogue>
+</div>
+<!--基础信息-->
+<template class="hide" id="emp_user_info">
+  <div class="user_info_wrap">
+    <div v-if="userInfo&&userInfo.title">
+      <div class="user_info_poster">
+        <img :src="userInfo.eventPoster"
+             alt="活动海报">
+      </div>
+      <div class="content-wrap">
+        <h2 class="user_title" v-text="userInfo.title"></h2>
+        <p class="user_basics"><i class="iconfont icon-shijian"></i><span>{{timeInfo}}</span></p>
+        <p class="user_basics"><i class="iconfont icon-didian"></i>{{userInfo.address}}</p>
+      </div>
+    </div>
+  </div>
+</template>
+<!--文案-->
+<template class="hide" id="emp_writing">
+  <div class="emp_writing_wrap content-wrap">
+    <h2 class="emp_writing_title">{{dataDetail.title}}</h2>
+    <div class="emp_writing_content" v-html="dataDetail.content"></div>
+  </div>
+</template>
+<!--视频-->
+<template class="hide" id="emp_video">
+  <div class="emp_myVideo" >
+      <video id="my-video" :poster="videoDetails.posterUrl" :src="videoDetails.picture" webkit-playsinline playsinline x-webkit-airplay x5-playsinline="true"  duration="{$videoList['time_length']}" width="100%" height="280px">
+      </video>
+  </div>
+</template>
+<!--图片-->
+<template class="hide" id="emp_img">
+  <div class="emp_picImg">
+    <img :src="picDetail.picture" alt="图片">
+  </div>
+</template>
+<!--图集轮播-->
+<template class="hide" id="emp_carouselImg">
+  <div>
+    <cube-slide :data="imgDetails.picture">
+      <cube-slide-item v-for="(item, index) in imgDetails.picture" :key="index" >
+          <img class="emp_imgs" :src="item" alt="img">
+      </cube-slide-item>
+    </cube-slide>
+  </div>
+</template>
+<!--form-->
+<template class="hide" id="emp_form">
+  <div class="emp_form_wrap">
+    <div v-if="formList&&formList.sortMax">
+      <h2 v-if="formList.title" class="emp_writing_title" v-text="formList.title"></h2>
+<!--      <h2 class="emp_writing_title">表单的标题</h2>-->
+      <cube-form :model="model"
+                 :options="options"
+                 ref="form"
+                 @validate="validateHandler">
+        <cube-form-group>
+          <div v-for="item of fields">
+            <cube-form-item v-if="item.category=='phone'"
+                            :ref="item.modelKey"
+                            :field="item">
+              <span class="emp_required">*</span>
+              <div>
+                <cube-input v-model="model.phone" @input="handlePhoneChange" placeholder="请输入手机号"></cube-input>
+              </div>
+              <transition name="fade">
+                <div class="get_code_wrap clearfloat" v-if="isPhone">
+                  <cube-input class="get_code_input fl" v-model="model.userCode" @input="codeChange"
+                              placeholder="请输入验证码"></cube-input>
+                  <span class="get_code fr">
+                        <span v-if="sendAuthCode"
+                              class="c-right"
+                              @click="getCode">获取验证码</span>
+                        <span v-if="!sendAuthCode"
+                              class="c-right">
+                        <span class="auth_text_blue">重新获取{{auth_time}}</span>秒</span>
+                  </span>
+                  <cube-input v-model="model.userCode" maxlength="4" placeholder="请输入验证码"></cube-input>
+                </div>
+              </transition>
+            </cube-form-item>
+
+            <cube-form-item v-else-if="item.type"
+                            :ref="item.modelKey"
+                            :field="item">
+            </cube-form-item>
+            <cube-form-item v-else :field="item">
+              <date-picks :modelKey="item.modelKey" :isshowwaring="iswaring"
+                          @modelkey="handleDatePick">
+              </date-picks>
+            </cube-form-item>
+            <!--            <cube-form-item v-else :field="item">-->
+            <!--              <cube-button class="button-date" @click="showDatePicker(item.modelKey)">{{model[item.modelKey] || '请选择日期'}}</cube-button>-->
+            <!--              <date-picker ref="datePicker"></date-picker>-->
+            <!--            </cube-form-item>-->
+          </div>
+        </cube-form-group>
+        <cube-form-group>
+          <div class="tc submit-button">
+            <cube-button type="button"
+                         v-if="isSubmit"
+                         :inline="true"
+                         @click="submitHandler">确认提交
+            </cube-button>
+            <cube-button type="button" :disabled="true" :inline="true" v-else>
+              确认提交
+            </cube-button>
+          </div>
+        </cube-form-group>
+      </cube-form>
+    </div>
+  </div>
+</template>
+<!--嘉宾信息-->
+<template class="hide" id="emp_guest">
+  <div class="emp_guest_wrap">
+    <div class="emp_guest_main">
+      <div class="emp_guest_tx" v-if="guestInfo.headPortrait">
+        <img :src="guestInfo.headPortrait" alt="嘉宾头像">
+      </div>
+      <div class="emp_guest_info emp_guest_name" v-if="guestInfo.guestName">
+        <span v-text="guestInfo.guestName"></span>
+      </div>
+      <!--    <div class="emp_guest_info" v-if="guestInfo.companyName">-->
+      <!--      <span v-text="guestInfo.companyName"></span>-->
+      <!--    </div>-->
+      <!--    <div class="emp_guest_info" v-if="guestInfo.job">-->
+      <!--      <span v-text="guestInfo.job"></span>-->
+      <!--    </div>-->
+      <div class="emp_guest_info" v-if="guestInfo.synopsis">
+        <span v-text="guestInfo.synopsis"></span>
+      </div>
+    </div>
+
+  </div>
+</template>
+<template class="hide" id="datePick">
+  <div>
+    {{modelKey.title}}
+    <cube-button class="button-date"
+                 @click="showDatePicker">
+      {{dateValue || '请选择日期'}}
+    </cube-button>
+      <span class="emp_waring" v-if="isshowwaring"></span>
+    <date-picker ref="datePicker"></date-picker>
+  </div>
+</template>
+<script src="common/plugins/moment.js"></script>
+<script src="common/plugins/bscroll.min.js"></script>
+<script src="//cdn.yunshicloud.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://unpkg.com/larkplayer@latest/dist/larkplayer.js"></script>
+<script src="https://unpkg.com/larkplayer-ui@latest/dist/larkplayer-ui.js"></script>
+<script src="config/config.js"></script>
+<script src="common/base/base.js"></script>
+<script src="js/template.js"></script>
+<!-- 文稿组件 -->
+<script src="common/components/catalogue/catalogue.js"></script>
+</body>
+</html>
