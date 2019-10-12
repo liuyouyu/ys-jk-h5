@@ -18,42 +18,42 @@
 </head>
 <body>
 <div id="app" style="overflow-x: hidden">
-<!--  <user-info :data-info="activityInfo"></user-info>-->
-<!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
-  <div v-if="activityData.length">
-    <div v-for="items in activityData" :key="items.index">
-      <div v-if="items.templateType == 1">
-          <emp-form :data-info="items"></emp-form>
-      </div>
-      <div v-else-if="items.templateType == 2">
-          <emp-writing :data-info="items"></emp-writing>
-      </div>
-      <div v-else-if="items.templateType == 3">
-        <!--  <div v-if="guestData&&guestData.length>0">-->
-        <!--    <emp-guest v-for="item of guestData"-->
-        <!--               :data-info="item"></emp-guest>-->
-        <!--  </div>-->
-      </div>
-      <div v-else-if="items.templateType == 4">
-          <emp-Img :data-info="items"></emp-Img>
-      </div>
-      <div v-else-if="items.templateType == 5">
-        <!--轮播-->
-        <div class="emp_carousel">
-          <emp-carousel-img :data-info="items"></emp-carousel-img>
+    <!--  <user-info :data-info="activityInfo"></user-info>-->
+    <!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
+    <div v-if="activityData.length">
+        <div v-for="items in activityData" :key="items.index">
+            <div v-if="items.templateType == 1">
+                <emp-form :data-info="items"></emp-form>
+            </div>
+            <div v-else-if="items.templateType == 2">
+                <emp-writing :data-info="items"></emp-writing>
+            </div>
+            <div v-else-if="items.templateType == 3">
+                <!--  <div v-if="guestData&&guestData.length>0">-->
+                <!--    <emp-guest v-for="item of guestData"-->
+                <!--               :data-info="item"></emp-guest>-->
+                <!--  </div>-->
+            </div>
+            <div v-else-if="items.templateType == 4">
+                <emp-Img :data-info="items"></emp-Img>
+            </div>
+            <div v-else-if="items.templateType == 5">
+                <!--轮播-->
+                <div class="emp_carousel">
+                    <emp-carousel-img :data-info="items"></emp-carousel-img>
+                </div>
+            </div>
+            <div v-else-if="items.templateType == 6">
+                <!--视频-->
+                <emp-video :data-info="items"></emp-video>
+            </div>
         </div>
-      </div>
-      <div v-else-if="items.templateType == 6">
-        <!--视频-->
-          <emp-video :data-info="items"></emp-video>
-      </div>
+        <div class="emp_interval">
+            <img src="./common/img/interval.png" alt="">
+        </div>
     </div>
-    <div class="emp_interval">
-      <img src="./common/img/interval.png" alt="">
-    </div>
-  </div>
-  <!-- 推荐内容 -->
-  <catalogue :isshow=CONFIG.showCatalogue :showlist='8' ></catalogue>
+    <!-- 推荐内容 -->
+    <catalogue :isshow=CONFIG.showCatalogue :showlist='8' ></catalogue>
 </div>
 <!--基础信息-->
 <template class="hide" id="emp_user_info">
@@ -199,6 +199,7 @@
   </div>
 </template>
 <script src="common/plugins/moment.js"></script>
+<script src="common/plugins/bscroll.min.js"></script>
 <script src="//cdn.yunshicloud.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://unpkg.com/larkplayer@latest/dist/larkplayer.js"></script>
 <script src="https://unpkg.com/larkplayer-ui@latest/dist/larkplayer-ui.js"></script>

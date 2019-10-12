@@ -713,6 +713,5 @@ var INDEXAPP = new Vue({
     this.queryActivityById()
   },
   mounted: function () {
-  
   }
 })
