@@ -590,9 +590,11 @@ var templateView = {
       this.videoDetails = this.dataInfo;
       console.log(this.videoDetails,"视频数据");
       console.log(document.getElementById('my-video'),"??????????");
-      var payler = larkplayer('my-video', {
-        controls: true,
+      var player = larkplayer('my-video', {
+        controls:false,
+        playsinline:true,
       })
+      console.log('有控制条吗',player.controls(['controls']));
     },
     dataInfo: function (newVal, oldVal) {
       if (newVal) {
