@@ -21,7 +21,7 @@ if(!xyAuth) {
 		//第三方公众平台id
 		componentAppId: "",
 		//接口域名
-		domain: config.apiHost,
+		domain: CONFIG.apiHost,
 		//微信授权链接
 		authUrl: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_userinfo&state=STATE&component_appid=COMPONENT_APPID#wechat_redirect",
 		//分享信息
@@ -565,7 +565,7 @@ if(!xyAuth) {
 				}
 				var that = this;
 				var params= {}
-				var url = config.apiHost + 'api/xy/toc/'+ docType +'/v1/addActionLogByShare' + "?companyId=COMPANYID&userId=USERID&serviceCode=SERVICECODE";
+				var url = CONFIG.apiHost + 'api/xy/toc/'+ docType +'/v1/addActionLogByShare' + "?companyId=COMPANYID&userId=USERID&serviceCode=SERVICECODE";
 				url = dazzleUtil.replaceUrlCommonParam(url);
 				url += '&appCode=' + 'XYWZ';
 				url += '&source=' + source;
