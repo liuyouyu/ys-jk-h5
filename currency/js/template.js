@@ -816,7 +816,7 @@ var INDEXAPP = new Vue({
             shareInfo: {
               title: $('title').text(),
               desc: _desc,
-              imgUrl: _posterUrl
+              imgUrl: 'http://test-poss.yunshicloud.com/458120B51A324F5F/QMTNRK_YUNSHI/9297AD0F774B4624BB6274E4093DAE05/0000/DE323263E4C94C60880727CA643016E6.jpg'
             }
           });
         }
@@ -847,6 +847,7 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
+    console.log('活动分享的', this.activityInfo.eventPoster);
     this.queryAuthorizeTenantInfo()
   }
 })
