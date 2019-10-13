@@ -732,6 +732,9 @@ var INDEXAPP = new Vue({
               self.activityData = data.data.modelExt
               document.title = data.data.activityInfo.title
               CONTENTVAR.ispvSum = data.data.activityStatus
+              if(CONTENTVAR.ispvSum == 1) {
+                self.pvSum()
+              }
               if(data.data.activityStatus == "0" || data.data.activityStatus == "2" ) {
                 self.isDisable = false
                 if(data.data.activityStatus == 2){
@@ -839,14 +842,9 @@ var INDEXAPP = new Vue({
     if (mcMethod.info.activityTemplateId != '' && mcMethod.info.activityId == ''){//活动模板
       CONTENTVAR.isActivityTemplateId = 1
       this.findActivityTemplateById()
-      this.pvSum()
     }else {//正式访问的
       CONTENTVAR.isActivityTemplateId = 0
       this.queryActivityById()
-      if(CONTENTVAR.ispvSum == "1") {
-        this.pvSum()
-      }
-      
     }
   },
   mounted: function () {
