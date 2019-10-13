@@ -715,7 +715,8 @@ var INDEXAPP = new Vue({
     picData: [],//图片
     PicImgsData : [],//图集
     videoData : [],//视频
-    isDisable: true//判断是否提交
+    isDisable: true,//判断是否提交
+    selfActivityInfo: ''
   },
   methods: {
     queryActivityById: function () {
@@ -804,16 +805,22 @@ var INDEXAPP = new Vue({
    // 微信分享
     queryAuthorizeTenantInfo: function () {
       var that = this;
-      var url = CONFIG.apiHost + "api/ffWxCheck/v1/queryAuthorizeTenantInfo?companyId="+mcMethod.info.companyId+"&appCode="+mcMethod.info.appCode+"&userId="+mcMethod.info.userId+"&serviceCode="+mcMethod.info.serviceCode;
+      var url = CONFIG.apiHost + mcMethod.url.queryAuthorizeTenantInfo + "?companyId="+mcMethod.info.companyId+"&appCode="+mcMethod.info.appCode+"&userId="+mcMethod.info.userId+"&serviceCode="+mcMethod.info.serviceCode;
       url = dazzleUtil.replaceUrlCommonParam(url);
       axios.get(url).then(function(res) {
         var data = that.checkReturn(res);
-        console.log(data,"data<<");
         if(data !== false && data.data && data.code == 0) {
+          var _desc = that.selfActivityInfo.synopsis
+          var _posterUrl = that.selfActivityInfo.posterUrl
           xyAuth.init({
             appId: data.data.appId,
             componentAppId: data.data.componentAppId,
-            domain: CONFIG.apiHost
+            domain: CONFIG.apiHost,
+            shareInfo: {
+              title: $('title').text(),
+              desc: _desc,
+              imgUrl: _posterUrl
+            }
           });
         }
       }).catch(function(e) {

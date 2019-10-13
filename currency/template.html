@@ -23,7 +23,7 @@
     <div v-if="activityData.length">
         <div v-for="items in activityData" :key="items.index">
             <div v-if="items.templateType == 1">
-                <emp-form :data-info="items" :isdisable="isDisable" ></emp-form>
+                <emp-form :data-info="items" :isdisable="isDisable"></emp-form>
             </div>
             <div v-else-if="items.templateType == 2">
                 <emp-writing :data-info="items"></emp-writing>

@@ -25,6 +25,8 @@ mcMethod.url = {
   queryCatalogueById:'api/release/catalogue/v1/queryCatalogueById',
   //活动模板-根据模板Id查询模板详情
   findActivityTemplateById: 'api/activityTemplate/v1/findActivityTemplateById',
+  //微信分享接口
+  queryAuthorizeTenantInfo: 'api/ffWxCheck/v1/queryAuthorizeTenantInfo'
 };
 
 mcMethod.info = {
@@ -34,9 +36,9 @@ mcMethod.info = {
   serviceCode:mcMethod.getRequestValue('serviceCode') || 'cloudemp',
   versionId: mcMethod.getRequestValue('versionId')  || '1',
   activityId: mcMethod.getRequestValue('activityId') || '',
-  activityTemplateId: mcMethod.getRequestValue('activityTemplateId') || '',
-  
+  activityTemplateId: mcMethod.getRequestValue('activityTemplateId') || ''
 };
+
 mcMethod.query = {};
 mcMethod.query.request = function (option) {
   if (this instanceof mcMethod.query.request) {

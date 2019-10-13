@@ -25,7 +25,8 @@ if(!xyAuth) {
 		//微信授权链接
 		authUrl: "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=snsapi_userinfo&state=STATE&component_appid=COMPONENT_APPID#wechat_redirect",
 		//分享信息
-		shareInfo: {},
+		shareInfo: {
+		},
 		/**
 		 * 初始化方法
 		 */
