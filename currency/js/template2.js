@@ -51,7 +51,6 @@ var datePick = {
   watch: {
     dateValue(newVal, oldVal){
       if (newVal) {
-        console.log('shuju',newVal);
         this.$emit('modelkey', {
           date: this.dateValue,
           modelkey: this.modelKey
@@ -144,7 +143,6 @@ var templateView = {
         this.$emit('input', selectedVal)
       },
       submitHandler(e) {
-        console.log(this.fields,'this.fields');
         for (var i = 0; i < this.fields.length; i++) {
           if (this.fields[i]['type']) {
             if (this.fields[i]['rules'] && this.fields[i]['rules']['required']) {
@@ -243,12 +241,10 @@ var templateView = {
             console.log(result);
           })
         }
-
-        console.log(this.model,'this.model<<<<<<<<<,');
+        
         // console.log('submit')
       },
       validateHandler(result) {
-        console.log(result.validity,"result??????????")
         this.validity = result.validity
         this.valid = result.valid
         // console.log('validity', result.validity, result.valid, result.dirty, result.firstInvalidFieldIndex)
@@ -265,7 +261,6 @@ var templateView = {
               this.isLink = 1
             }
           }
-          console.log(this.islinkUrl,"??????????this.islinkUrl");
           for (var i = 0; i < this.formList.items.length; i++) {
             var item = this.formList.items[i];
             //解析from表单
@@ -344,10 +339,8 @@ var templateView = {
         }
       },
       handleDatePick(data) {
-        console.log('当前选中的日期:>>>>>>>', data);
         this.model[data.modelKey] = data.date
         this.birData = this.model[data.modelKey]
-        console.log(this.birData,"????????");
       },
       getCode() {
         var phone = this.model.phone;
@@ -688,7 +681,6 @@ var INDEXAPP = new Vue({
               document.title = data.data.activityInfo.title
               CONTENTVAR.ispvSum = data.data.activityStatus
               if(data.data.activityStatus == "0" || data.data.activityStatus == "2" ) {
-                console.log("1111111111")
                 self.isDisable = false
                 if(data.data.activityStatus == 2){
                   self.$createDialog({
