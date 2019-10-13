@@ -729,13 +729,10 @@ var INDEXAPP = new Vue({
           },
           callback: function (data) {
             if (data.code === 0 && data.data) {
-              console.log(data.data,"数据？？？？？？、、、、");
-              console.log(data.data.activityStatus,"数据？？？？？？、、、、");
               self.activityData = data.data.modelExt
               document.title = data.data.activityInfo.title
               CONTENTVAR.ispvSum = data.data.activityStatus
               if(data.data.activityStatus == "0" || data.data.activityStatus == "2" ) {
-                console.log("1111111111")
                 self.isDisable = false
                 if(data.data.activityStatus == 2){
                   self.$createDialog({
@@ -756,6 +753,7 @@ var INDEXAPP = new Vue({
               //基础信息
               if (data.data.activityInfo) {
                 self.activityInfo = data.data.activityInfo
+                console.log(data.data.activityInfo);
                 CONTENTVAR.title = data.data.activityInfo.title
               }
             }
@@ -849,7 +847,6 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
-    var VConsole = new VConsole()
     this.queryAuthorizeTenantInfo()
   }
 })
