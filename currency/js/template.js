@@ -812,13 +812,14 @@ var INDEXAPP = new Vue({
           xyAuth.init({
             appId: data.data.appId,
             componentAppId: data.data.componentAppId,
-            domain: CONFIG.apiHost,
-            shareInfo: {
-              title: $('title').text(),
-              desc: _desc,
-              imgUrl: 'http://test-poss.yunshicloud.com/458120B51A324F5F/QMTNRK_YUNSHI/9297AD0F774B4624BB6274E4093DAE05/0000/DE323263E4C94C60880727CA643016E6.jpg'
-            }
+            domain: CONFIG.apiHost
           });
+          xyAuth.setShareInfo({
+            title: $('title').text(),
+            desc: _desc,
+            imgUrl: _posterUrl
+          });
+          
         }
       }).catch(function(e) {
       });
@@ -844,10 +845,10 @@ var INDEXAPP = new Vue({
       if(CONTENTVAR.ispvSum == "1") {
         this.pvSum()
       }
+      this.queryAuthorizeTenantInfo()
     }
   },
   mounted: function () {
-    console.log('活动分享的', this.activityInfo.eventPoster);
-    this.queryAuthorizeTenantInfo()
+ 
   }
 })
