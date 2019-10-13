@@ -100,7 +100,7 @@ if(!xyAuth) {
 					link: xyAuth.shareInfo.link,
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
-						xyAuth.addShareNum();
+						// xyAuth.addShareNum();
 					}, // 已分享;
 					cancel: function(res) {}, // 已取消
 					fail: function(res) {}, // 失败
@@ -111,7 +111,7 @@ if(!xyAuth) {
 					link: xyAuth.shareInfo.link,
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
-						xyAuth.addShareNum();
+						// xyAuth.addShareNum();
 					}, // 已分享;
 					cancel: function(res) {}, // 已取消'
 					fail: function(res) {}, // 失败
