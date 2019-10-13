@@ -810,8 +810,8 @@ var INDEXAPP = new Vue({
       axios.get(url).then(function(res) {
         var data = that.checkReturn(res);
         if(data !== false && data.data && data.code == 0) {
-          var _desc = that.selfActivityInfo.synopsis
-          var _posterUrl = that.selfActivityInfo.eventPoster
+          var _desc = that.activityInfo.synopsis
+          var _posterUrl = that.activityInfo.eventPoster
           xyAuth.init({
             appId: data.data.appId,
             componentAppId: data.data.componentAppId,
@@ -850,7 +850,7 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
+    var VConsole = new VConsole()
     this.queryAuthorizeTenantInfo()
-    console.log('缩略图>>>>>>', this.selfActivityInfo);
   }
 })

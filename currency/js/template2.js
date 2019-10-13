@@ -670,7 +670,8 @@ var INDEXAPP = new Vue({
     picData: [],//图片
     PicImgsData : [],//图集
     videoData : [],//视频
-    isDisable: true//判断是否提交
+    isDisable: true,//判断是否提交
+    selfActivityInfo: ''
   },
   methods: {
     queryActivityById: function () {
@@ -684,8 +685,6 @@ var INDEXAPP = new Vue({
           },
           callback: function (data) {
             if (data.code === 0 && data.data) {
-              console.log(data.data,"数据？？？？？？、、、、");
-              console.log(data.data.activityStatus,"数据？？？？？？、、、、");
               self.activityData = data.data.modelExt
               document.title = data.data.activityInfo.title
               CONTENTVAR.ispvSum = data.data.activityStatus
@@ -764,8 +763,8 @@ var INDEXAPP = new Vue({
       axios.get(url).then(function(res) {
         var data = that.checkReturn(res);
         if(data !== false && data.data && data.code == 0) {
-          var _desc = that.selfActivityInfo.synopsis
-          var _posterUrl = that.selfActivityInfo.eventPoster
+          var _desc = that.activityInfo.synopsis
+          var _posterUrl = that.activityInfo.eventPoster
           xyAuth.init({
             appId: data.data.appId,
             componentAppId: data.data.componentAppId,
