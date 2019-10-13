@@ -47,14 +47,14 @@ Vue.component('catalogue', {
       _this = this
       $.ajax({
         type: 'GET',
-        url: 'http://test-cdapi.yunshicloud.com/api/release/catalogue/v1/queryCatalogue',
+        url: CONFIG.apiHost + mcMethod.url.queryCatalogue,
         data: {
           // companyId:'7674F33E470D459E',
-          companyId:'mcMethod.info.companyId',
-          versionId:'1',
-          serviceCode:'cloudemp',
-          pageSize:_this.showList,
-          pageNumber:'1'
+          companyId: mcMethod.info.companyId,
+          versionId: mcMethod.info.versionId,
+          serviceCode:mcMethod.info.serviceCode,
+          pageSize: _this.showList,
+          pageNumber: '1'
         },
         contentType: "application/json ; charset=utf-8",
         dataType: "json",
