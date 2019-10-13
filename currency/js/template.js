@@ -715,8 +715,7 @@ var INDEXAPP = new Vue({
     picData: [],//图片
     PicImgsData : [],//图集
     videoData : [],//视频
-    isDisable: true,//判断是否提交
-    selfActivityInfo: ''
+    isDisable: true//判断是否提交
   },
   methods: {
     queryActivityById: function () {
