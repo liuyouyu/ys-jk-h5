@@ -755,6 +755,7 @@ var INDEXAPP = new Vue({
                 self.activityInfo = data.data.activityInfo
                 console.log(data.data.activityInfo);
                 CONTENTVAR.title = data.data.activityInfo.title
+                self.queryAuthorizeTenantInfo()
               }
             }
           }
@@ -845,7 +846,7 @@ var INDEXAPP = new Vue({
       if(CONTENTVAR.ispvSum == "1") {
         this.pvSum()
       }
-      this.queryAuthorizeTenantInfo()
+      
     }
   },
   mounted: function () {
