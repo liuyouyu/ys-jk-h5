@@ -768,12 +768,7 @@ var INDEXAPP = new Vue({
           xyAuth.init({
             appId: data.data.appId,
             componentAppId: data.data.componentAppId,
-            domain: CONFIG.apiHost,
-            shareInfo: {
-              title: $('title').text(),
-              desc: _desc,
-              imgUrl: _posterUrl
-            }
+            domain: CONFIG.apiHost
           });
           xyAuth.setShareInfo({
             title: $('title').text(),
