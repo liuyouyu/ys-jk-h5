@@ -804,7 +804,7 @@ var INDEXAPP = new Vue({
    // 微信分享
     queryAuthorizeTenantInfo: function () {
       var that = this;
-      var url = CONFIG.apiHost + "api/ffWxCheck/v1/queryAuthorizeTenantInfo?companyId="+mcMethod.info.appCode.companyId+"&appCode="+mcMethod.info.appCode+"&userId="+mcMethod.info.userId+"&serviceCode="+mcMethod.info.serviceCode;
+      var url = CONFIG.apiHost + "api/ffWxCheck/v1/queryAuthorizeTenantInfo?companyId="+mcMethod.info.companyId+"&appCode="+mcMethod.info.appCode+"&userId="+mcMethod.info.userId+"&serviceCode="+mcMethod.info.serviceCode;
       url = dazzleUtil.replaceUrlCommonParam(url);
       axios.get(url).then(function(res) {
         var data = that.checkReturn(res);
