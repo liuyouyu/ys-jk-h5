@@ -763,7 +763,8 @@ var INDEXAPP = new Vue({
         var data = that.checkReturn(res);
         if(data !== false && data.data && data.code == 0) {
           var _desc = that.activityInfo.synopsis
-          var _posterUrl = that.activityInfo.eventPoster
+          var _posterUrl = that.activityInfo.eventPoster + '?x-oss-process=style/320w_100q.src'
+          console.log('分享缩略图的地址:',_posterUrl);
           xyAuth.init({
             appId: data.data.appId,
             componentAppId: data.data.componentAppId,
