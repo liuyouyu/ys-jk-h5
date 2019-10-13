@@ -764,7 +764,7 @@ var INDEXAPP = new Vue({
         if(data !== false && data.data && data.code == 0) {
           var _desc = that.activityInfo.synopsis
           var _posterUrl = that.activityInfo.eventPoster + '?x-oss-process=style/320w_100q.src'
-          console.log('分享缩略图的地址:',_posterUrl);
+         
           xyAuth.init({
             appId: data.data.appId,
             componentAppId: data.data.componentAppId,
@@ -774,6 +774,11 @@ var INDEXAPP = new Vue({
               desc: _desc,
               imgUrl: _posterUrl
             }
+          });
+          xyAuth.setShareInfo({
+            title: $('title').text(),
+            desc: _desc,
+            imgUrl: _posterUrl
           });
         }
       }).catch(function(e) {
@@ -800,9 +805,10 @@ var INDEXAPP = new Vue({
       if(CONTENTVAR.ispvSum == "1") {
         this.pvSum()
       }
+      this.queryAuthorizeTenantInfo()
     }
   },
   mounted: function () {
-    this.queryAuthorizeTenantInfo()
+  
   }
 })
