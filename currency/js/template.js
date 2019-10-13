@@ -811,7 +811,7 @@ var INDEXAPP = new Vue({
         var data = that.checkReturn(res);
         if(data !== false && data.data && data.code == 0) {
           var _desc = that.selfActivityInfo.synopsis
-          var _posterUrl = that.selfActivityInfo.posterUrl
+          var _posterUrl = that.selfActivityInfo.eventPoster
           xyAuth.init({
             appId: data.data.appId,
             componentAppId: data.data.componentAppId,
@@ -851,5 +851,6 @@ var INDEXAPP = new Vue({
   },
   mounted: function () {
     this.queryAuthorizeTenantInfo()
+    console.log('缩略图>>>>>>', this.selfActivityInfo);
   }
 })
