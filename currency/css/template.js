@@ -726,8 +726,7 @@ var INDEXAPP = new Vue({
       scrollY:true,
       // bounce:false
       bounceTime:500,
-      click: true,
-      mouseWheel:true
+      click: true
     }
   },
   methods: {
@@ -861,9 +860,6 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
-    setTimeout(() => {
-      this.$refs.scroll.refresh()
-    },3000)
     window.onload = () => {
       this.$refs.scroll.refresh()
     }

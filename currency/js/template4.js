@@ -726,7 +726,8 @@ var INDEXAPP = new Vue({
       scrollY:true,
       // bounce:false
       bounceTime:500,
-      click: true
+      click: true,
+      mouseWheel:true
     }
   },
   methods: {

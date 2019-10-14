@@ -726,7 +726,8 @@ var INDEXAPP = new Vue({
       scrollY:true,
       // bounce:false
       bounceTime:500,
-      click: true
+      click: true,
+      mouseWheel:true
     }
   },
   methods: {
@@ -860,11 +861,13 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
-    setTimeout(() => {
+    setInterval(() => {
       this.$refs.scroll.refresh()
-    },3000)
+      console.log('重新计算高度');
+    },1000)
     window.onload = () => {
       this.$refs.scroll.refresh()
+      console.log('onload加载完成');
     }
   }
 })
