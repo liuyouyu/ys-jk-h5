@@ -333,3 +333,6 @@ body {
 .submit-button .cube-btn-inline {
   font-size: 13px;
 }
+.cube-dialog-btn_highlight {
+    color: #409eff;
+}

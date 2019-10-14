@@ -347,3 +347,6 @@ body {
   border-color: #909090;
   border: 0;
 }
+.cube-dialog-btn_highlight {
+    color: #409eff;
+}

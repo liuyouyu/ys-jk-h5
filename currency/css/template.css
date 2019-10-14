@@ -219,11 +219,6 @@ body {
 .emp_form_wrap .cube-form-item {
     /* margin-right: 23px; */
 }
-
-.emp_form_wrap .cube-btn-inline {
-
-}
-
 .emp_form_wrap .cube-form_standard .cube-input input {
     padding: 7px 9px;
 }
@@ -320,4 +315,7 @@ body {
 }
 .dateShowStyle{
   color: inherit;
+}
+.cube-dialog-btn_highlight {
+    color: #409eff;
 }
