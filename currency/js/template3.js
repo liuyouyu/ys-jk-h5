@@ -856,6 +856,9 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
+    setTimeout(() => {
+      this.$refs.scroll.refresh()
+    },3000)
     window.onload = () => {
       this.$refs.scroll.refresh()
     }

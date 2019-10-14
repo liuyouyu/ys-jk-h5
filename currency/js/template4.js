@@ -133,7 +133,7 @@ var templateView = {
         islinkUrl: {},
         birData:'',
         isSubmit: true , // 控制提交
-
+        
         iswaring:false,
         phoneWaring:false , // 手机号不正确警告
         emailWaring:false , // 邮箱不正确警告
@@ -185,7 +185,7 @@ var templateView = {
                   toast.show()
                   return
                 }
-
+                
               }
               // console.log(this.$refs[this.fields[i]['modelKey']]);
             }else {
@@ -815,7 +815,7 @@ var INDEXAPP = new Vue({
 
       }
     },
-    // 微信分享
+   // 微信分享
     queryAuthorizeTenantInfo: function () {
       var that = this;
       var url = CONFIG.apiHost + mcMethod.url.queryAuthorizeTenantInfo + "?companyId="+mcMethod.info.companyId+"&appCode="+mcMethod.info.appCode+"&userId="+mcMethod.info.userId+"&serviceCode="+mcMethod.info.serviceCode;
@@ -835,7 +835,7 @@ var INDEXAPP = new Vue({
             desc: _desc,
             imgUrl: _posterUrl
           });
-
+          
         }
       }).catch(function(e) {
       });
@@ -862,6 +862,7 @@ var INDEXAPP = new Vue({
   mounted: function () {
     setTimeout(() => {
       this.$refs.scroll.refresh()
+      console.log('重新计算高度');
     },3000)
     window.onload = () => {
       this.$refs.scroll.refresh()
