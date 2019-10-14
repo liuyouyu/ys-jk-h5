@@ -18,9 +18,7 @@
 </head>
 <body>
 <div id="app">
-  <cube-scroll
-  ref="scroll"
-  :options="scrollOptions">
+  <div class="content">
     <!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
     <div v-if="activityData.length">
         <div v-for="items in activityData" :key="items.index">
@@ -53,7 +51,7 @@
         <!-- 推荐内容 -->
         <catalogue :isshow=CONFIG.showCatalogue :showlist='8' ></catalogue>
     </div>
-  </cube-scroll>
+  </div>
 </div>
 <!--基础信息-->
 <template class="hide" id="emp_user_info">
@@ -94,7 +92,7 @@
 <!--图集轮播-->
 <template class="hide" id="emp_carouselImg">
   <div>
-    <cube-slide :data="imgDetails.picture">
+    <cube-slide :options='scrollOptions' :data="imgDetails.picture">
       <cube-slide-item v-for="(item, index) in imgDetails.picture" :key="index" >
           <img class="emp_imgs" :src="item" alt="img">
       </cube-slide-item>

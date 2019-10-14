@@ -684,7 +684,10 @@ var templateView = {
     },
     data: function () {
       return {
-        imgDetails:''
+        imgDetails:'',
+        scrollOptions:{
+          eventPassthrough:'vertical'
+        }
       }
     },
     mounted() {
@@ -722,13 +725,6 @@ var INDEXAPP = new Vue({
     PicImgsData : [],//图集
     videoData : [],//视频
     isDisable: true,//判断是否提交
-    scrollOptions:{
-      scrollY:true,
-      // bounce:false
-      bounceTime:500,
-      click: true,
-      mouseWheel:true
-    }
   },
   methods: {
     queryActivityById: function () {
@@ -861,11 +857,13 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
-    setTimeout(() => {
-      this.$refs.scroll.refresh()
-    },3000)
-    window.onload = () => {
-      this.$refs.scroll.refresh()
-    }
+    //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法 
+    window.addEventListener("resize", function () {
+      if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
+          window.setTimeout(function () {
+              document.activeElement.scrollIntoViewIfNeeded();
+          }, 0);
+      }
+    })
   }
 })
