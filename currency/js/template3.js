@@ -369,7 +369,7 @@ var templateView = {
             }
             switch(item.category){
               case 'name' : obj.props.placeholder ='姓名';break;
-              case 'phone' : obj.props.placeholder ='手机号';break;
+              case 'phone' : obj.props.placeholder ='电话';break;
               case 'verification' : obj.props.placeholder ='验证码';break;
               case 'email' : obj.props.placeholder ='邮箱';break;
               case 'gender' : obj.props['placeholder'] ='性别';break;

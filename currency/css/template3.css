@@ -192,7 +192,7 @@ body {
 }
 
 .emp_form_wrap .cube-form-field {
-    border: 1px solid #4a4c5b;
+    border: 1px solid #909090;
     /*margin: auto;*/
 }
 
@@ -205,10 +205,12 @@ body {
 .submit-button {
     margin-top: 13px;
     margin-bottom: 13px;
+    padding: 0 23px;
 }
 
 .submit-button button {
     padding: 9px 61px;
+    width: 100%;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -256,7 +258,7 @@ body {
     padding-bottom: 7px;
 }
 .emp_form_wrap .submit-button button{
-    padding: 14px 24px;
+    padding: 11.5px 24px;
 }
 .emp_imgs {
   width: 100%;
@@ -285,7 +287,7 @@ body {
   padding: 9px 16px 9px 9px;
 }
 .submit-button .cube-btn {
-    background: #0E357A;
+    background: #191919;
 }
 /*.emp_myVideo {*/
 /*    height: 280px;*/
@@ -313,7 +315,9 @@ body {
     -webkit-text-stroke-width: .2px;
     color: #e64340;
 }
-
+.cube-form {
+  padding-top: 20px;
+}
 /* 样式修改 */
 .cube-input{
   border-radius: 4px;
@@ -324,8 +328,17 @@ body {
   /* left: 7px; */
 }
 .cube-form-item{
-  padding: 0px 70px;
+  padding: 0px 23px;
 }
 .dateShowStyle{
   color: inherit;
+}
+.hint-text{
+  text-align: left;
+  color: #505050;
+  font-size: 13px;
+  margin-top: 13px;
+}
+.submit-button .cube-btn-inline {
+  font-size: 13px;
 }

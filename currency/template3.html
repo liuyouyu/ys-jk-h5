@@ -162,11 +162,12 @@
             <cube-button type="button"
                          v-if="isSubmit && isdisable"
                          :inline="true"
-                         @click="submitHandler">确认提交
+                         @click="submitHandler">点击领取
             </cube-button>
             <cube-button type="button" :disabled="true" :inline="true" v-else style="background: #ccc">
-              确认提交
+              点击领取
             </cube-button>
+            <div class='hint-text'>信息提交成功后，我们将在24小时内联系您，请耐心等待</div>
           </div>
         </cube-form-group>
       </cube-form>
