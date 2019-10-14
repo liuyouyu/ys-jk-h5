@@ -28,7 +28,7 @@ var datePick = {
     showDatePicker() {
       if (!this.datePicker) {
         this.datePicker = this.$createDatePicker({
-          title: '日期选择',
+          title: '请选择出生年月',
           min: new Date(1900, 1, 1),
           max: new Date(2100, 12, 31),
           value: new Date(),
@@ -40,7 +40,7 @@ var datePick = {
     },
     selectHandle(date, selectedVal, selectedText) {
       this.dateValue = moment(new Date(selectedVal[0], selectedVal[1] - 1, selectedVal[2])).format('YYYY-MM-DD')
-      this.isshowwaring = false
+      // this.isshowwaring = false
     },
     cancelHandle() {
 
@@ -642,9 +642,11 @@ var templateView = {
         playsinline:true,
       })
     },
-    dataInfo: function (newVal, oldVal) {
-      if (newVal) {
-        this.videoDetails = newVal
+    watch: {
+      dataInfo: function (newVal, oldVal) {
+        if (newVal) {
+          this.videoDetails = newVal
+        }
       }
     }
   },
@@ -664,9 +666,11 @@ var templateView = {
     mounted() {
       this.picDetail = this.dataInfo;
     },
-    dataInfo: function (newVal, oldVal) {
-      if (newVal) {
-        this.picDetail = newVal
+    watch: {
+      dataInfo: function (newVal, oldVal) {
+        if (newVal) {
+          this.picDetail = newVal
+        }
       }
     }
   },
@@ -692,7 +696,7 @@ var templateView = {
           this.imgDetails = newVal
         }
       }
-    },
+    }
   }
 }
 var INDEXAPP = new Vue({

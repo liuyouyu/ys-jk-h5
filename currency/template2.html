@@ -11,7 +11,7 @@
     <script src="common/plugins/cube.min.js"></script>
     <link rel="stylesheet" href="common/font/iconfont.css">
     <link rel="stylesheet" href="common/base/base.css">
-    <link rel="stylesheet" href="css/template.css">
+    <link rel="stylesheet" href="css/template2.css">
     <!-- 引入文稿组件样式 -->
     <link rel="stylesheet" href="common/components/catalogue/catalogue.css">
     <title></title>
@@ -23,7 +23,7 @@
     <div v-if="activityData.length">
         <div v-for="items in activityData" :key="items.index">
             <div v-if="items.templateType == 1">
-                <emp-form :data-info="items" :isdisable="isDisable" ></emp-form>
+                <emp-form :data-info="items" :isdisable="isDisable"></emp-form>
             </div>
             <div v-else-if="items.templateType == 2">
                 <emp-writing :data-info="items"></emp-writing>
@@ -48,9 +48,9 @@
                 <emp-video :data-info="items"></emp-video>
             </div>
         </div>
-        <div class="emp_interval">
-            <img src="./common/img/interval.png" alt="">
-        </div>
+<!--        <div class="emp_interval">-->
+<!--            <img :src="srcUrl" alt="">-->
+<!--        </div>-->
     </div>
     <!-- 推荐内容 -->
     <catalogue :isshow=CONFIG.showCatalogue :showlist='8' ></catalogue>
@@ -113,18 +113,24 @@
                        @validate="validateHandler">
                 <cube-form-group>
                     <div v-for="item of fields">
+                        <!-- 手机号 -->
                         <cube-form-item v-if="item.category=='phone'"
                                         :ref="item.modelKey"
                                         :field="item">
-                            <span class="emp_required">*</span>
+                            <!-- <span class="emp_required">*</span> -->
                             <div>
-                                <cube-input v-model="model.phone" @input="handlePhoneChange" placeholder="请输入手机号"></cube-input>
+                                <cube-input v-model="model.phone" @input="handlePhoneChange" placeholder='手机号'></cube-input>
+                                <span class="emp_waring" v-if="phoneWaring"></span>
                             </div>
-                            <transition name="fade">
-                                <div class="get_code_wrap clearfloat" v-if="isPhone">
-                                    <cube-input class="get_code_input fl emp_tempInput" maxlength="4" v-model="model.userCode" @input="codeChange"
-                                                placeholder="请输入验证码"></cube-input>
-                                    <span class="get_code fr">
+                        </cube-form-item>
+                        <!-- 短信验证码 -->
+                        <cube-form-item v-else-if="item.category=='verification'"
+                                        :ref="item.modelKey"
+                                        :field="item">
+                            <!-- <span class="emp_required">*</span> -->
+                            <div class="get_code_wrap clearfloat" >
+                                <cube-input class="get_code_input fl emp_tempInput" maxlength="4" v-model="model.userCode" placeholder='验证码' @input="codeChange"></cube-input>
+                                <span class="get_code fr">
                         <span v-if="sendAuthCode"
                               class="c-right"
                               @click="getCode">获取验证码</span>
@@ -132,17 +138,18 @@
                               class="c-right">
                         <span class="auth_text_blue">重新获取{{auth_time}}</span>秒</span>
                   </span>
-                                    <!--                  <cube-input v-model="model.userCode" maxlength="4" placeholder="请输入验证码"></cube-input>-->
-                                </div>
+                                <!--                  <cube-input v-model="model.userCode" maxlength="4" placeholder="请输入验证码"></cube-input>-->
+                            </div>
                             </transition>
                         </cube-form-item>
 
                         <cube-form-item v-else-if="item.type"
                                         :ref="item.modelKey"
                                         :field="item">
+                            <!-- <span class="emp_waring" v-if="item.category=='email'&&emailWaring"></span> -->
                         </cube-form-item>
                         <cube-form-item v-else :field="item">
-                            <date-picks :modelKey="item.modelKey" :isshowwaring="iswaring"
+                            <date-picks :modelKey="item.modelKey" :tit='item.props.placeholder' :isshowwaring="iswaring"
                                         @modelkey="handleDatePick">
                             </date-picks>
                         </cube-form-item>
@@ -194,9 +201,9 @@
 <template class="hide" id="datePick">
     <div>
         {{modelKey.title}}
-        <cube-button class="button-date"
+        <cube-button :class="dateValue?'dateShowStyle':''" class="button-date"
                      @click="showDatePicker">
-            {{dateValue || '请选择日期'}}
+            {{dateValue || tit}}
         </cube-button>
         <span class="emp_waring" v-if="isshowwaring"></span>
         <date-picker ref="datePicker"></date-picker>
@@ -210,11 +217,12 @@
 <script src="//cdn.yunshicloud.com/axios/0.18.0/axios.min.js?$$tempflag$$"></script>
 <script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?$$tempflag$$"></script>
 <script src="config/config.js"></script>
+<!-- 文稿组件 -->
+<script src="common/components/catalogue/catalogue.js"></script>
 <script src="common/common/common.js"></script>
 <script src="common/plugins/xyAuth.js"></script>
 <script src="common/base/base.js"></script>
-<script src="js/template.js"></script>
-<!-- 文稿组件 -->
-<script src="common/components/catalogue/catalogue.js"></script>
+<script src="js/template2.js"></script>
+
 </body>
 </html>

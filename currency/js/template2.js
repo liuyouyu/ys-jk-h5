@@ -8,6 +8,7 @@ var CONTENTVAR = {
 }
 var datePick = {
   props: {
+    tit:'',
     modelKey: {
       type: String,
       default: ''
@@ -39,7 +40,7 @@ var datePick = {
     },
     selectHandle(date, selectedVal, selectedText) {
       this.dateValue = moment(new Date(selectedVal[0], selectedVal[1] - 1, selectedVal[2])).format('YYYY-MM-DD')
-      this.isshowwaring = false
+      // this.isshowwaring = false
     },
     cancelHandle() {
 
@@ -51,6 +52,7 @@ var datePick = {
   watch: {
     dateValue(newVal, oldVal){
       if (newVal) {
+        console.log('shuju',newVal);
         this.$emit('modelkey', {
           date: this.dateValue,
           modelkey: this.modelKey
@@ -130,8 +132,11 @@ var templateView = {
         isLink: 0,//0不跳转 ； 1 跳转
         islinkUrl: {},
         birData:'',
+        isSubmit: true , // 控制提交
+
         iswaring:false,
-        isSubmit: true,
+        phoneWaring:false , // 手机号不正确警告
+        emailWaring:false , // 邮箱不正确警告
       }
     },
     methods: {
@@ -143,21 +148,11 @@ var templateView = {
         this.$emit('input', selectedVal)
       },
       submitHandler(e) {
+        console.log(this.fields,'this.fields');
         for (var i = 0; i < this.fields.length; i++) {
           if (this.fields[i]['type']) {
             if (this.fields[i]['rules'] && this.fields[i]['rules']['required']) {
               if (this.$refs[this.fields[i]['modelKey']] && this.$refs[this.fields[i]['modelKey']].constructor === Array) {
-                if(this.fields[i].category == "email"){
-                  var val = this.model[this.fields[i]['modelKey']]
-                  if (!CONTENTVAR.regEmail.test(val)){
-                    const toast = this.$createToast({
-                      txt: '请输入有效邮箱!',
-                      type: 'txt',
-                    })
-                    toast.show()
-                    return
-                  }
-                }
                 var modelKeyList = this.$refs[this.fields[i]['modelKey']];
                 for (var j = 0; j < modelKeyList.length; j++) {
                   var vaildItem = modelKeyList[j].validate()
@@ -165,6 +160,32 @@ var templateView = {
                     // console.log('当前》》》》》', vaildItem);
                   })
                 }
+                var val = this.model[this.fields[i]['modelKey']]
+                if(val!=''){
+                  console.log(val,'数据不为空',this.model,this.fields[i]);
+                  if(this.fields[i].category == "email"){
+                    if (!CONTENTVAR.regEmail.test(val)||val==''){
+                      const toast = this.$createToast({
+                        txt: '请输入有效邮箱!',
+                        type: 'txt',
+                      })
+                      toast.show()
+                      this.emailWaring = true
+                      return
+                    }else{
+                      continue
+                    }
+                  }
+                }else{
+                  console.log(val,'数据空',this.model,this.fields[i]);
+                  const toast = this.$createToast({
+                    txt: '请输入'+this.fields[i].props.placeholder + '!',
+                    type: 'txt',
+                  })
+                  toast.show()
+                  return
+                }
+
               }
               // console.log(this.$refs[this.fields[i]['modelKey']]);
             }else {
@@ -179,19 +200,19 @@ var templateView = {
               }
             }
           }
-          if(this.fields[i].category == "email"){
-            var val = this.model[this.fields[i]['modelKey']]
-            if(val !== "") {
-              if (!CONTENTVAR.regEmail.test(val)){
-                const toast = this.$createToast({
-                  txt: '请输入有效邮箱!',
-                  type: 'txt',
-                })
-                toast.show()
-                return
-              }
-            }
-          }
+          // if(this.fields[i].category == "email"){
+          //   var val = this.model[this.fields[i]['modelKey']]
+          //   if(val !== "") {
+          //     if (!CONTENTVAR.regEmail.test(val)){
+          //       const toast = this.$createToast({
+          //         txt: '请输入有效邮箱!',
+          //         type: 'txt',
+          //       })
+          //       toast.show()
+          //       return
+          //     }
+          //   }
+          // }
         }
         var self = this;
         if (!CONTENTVAR.rexPhone.test(this.model.phone)){
@@ -200,6 +221,7 @@ var templateView = {
             type: 'txt',
           })
           toast.show()
+          this.phoneWaring = true
         }
         if(this.model.userCode == '' && this.isPhone == true){
           const toast = self.$createToast({
@@ -207,6 +229,7 @@ var templateView = {
             type: 'txt',
           })
           toast.show()
+          this.phoneWaring = false
         }
         mcMethod.query.request({
           url: mcMethod.url.validateCode2,
@@ -241,10 +264,12 @@ var templateView = {
             console.log(result);
           })
         }
-        
+
+        // console.log(this.model,'this.model<<<<<<<<<,');
         // console.log('submit')
       },
       validateHandler(result) {
+        // console.log(result.validity,"result??????????")
         this.validity = result.validity
         this.valid = result.valid
         // console.log('validity', result.validity, result.valid, result.dirty, result.firstInvalidFieldIndex)
@@ -261,13 +286,14 @@ var templateView = {
               this.isLink = 1
             }
           }
+          // console.log(this.islinkUrl,"??????????this.islinkUrl");
           for (var i = 0; i < this.formList.items.length; i++) {
             var item = this.formList.items[i];
             //解析from表单
             var obj = {};
             //绑定的key
             obj['modelKey'] = item.key;
-            obj['label'] = item.title;
+            // obj['label'] = item.title+item.category;
             obj['category'] = item.category;
             obj['props'] = {
               placeholder: item.typeTitle
@@ -293,7 +319,8 @@ var templateView = {
                 this.model[item.key] = '';
                 obj['type'] = 'select';
                 obj['props'] = {
-                  options: item.subitems
+                  options: item.subitems,
+                  placeholder: item.typeTitle
                 }
                 break;
               case 'date':
@@ -333,14 +360,37 @@ var templateView = {
               // obj['type'] = 'input';
             }
             this.fields.push(obj)
+            if(obj.category == 'phone'){
+              this.fields.push({
+                category:'verification',
+                // label:'验证码',
+                modelKey:'I_66666'
+              })
+            }
+            switch(item.category){
+              case 'name' : obj.props.placeholder ='姓名';break;
+              case 'phone' : obj.props.placeholder ='手机号';break;
+              case 'verification' : obj.props.placeholder ='验证码';break;
+              case 'email' : obj.props.placeholder ='邮箱';break;
+              case 'gender' : obj.props['placeholder'] ='性别';break;
+              case 'age' : obj.props.placeholder ='年龄';break;
+              case 'birthday' : obj.props.placeholder ='出生年月';break;
+              case 'salary' : obj.props.placeholder ='月收入';break;
+              case 'city' : obj.props.placeholder ='所在城市';break;
+              case 'wechat' : obj.props.placeholder ='微信';break;
+              case 'qq' : obj.props.placeholder ='QQ';break;
+            }
 
           }
 
         }
       },
       handleDatePick(data) {
+        console.log('当前选中的日期:>>>>>>>', data);
         this.model[data.modelKey] = data.date
         this.birData = this.model[data.modelKey]
+        console.log(this.birData,"????????");
+
       },
       getCode() {
         var phone = this.model.phone;
@@ -496,9 +546,10 @@ var templateView = {
       handlePhoneChange(val){
         if (CONTENTVAR.rexPhone.test(val)){
           this.isPhone = true
-          this.iswaring = false
+          // this.iswaring = false
+          this.phoneWaring = false
         }else{
-
+          this.phoneWaring = true
         }
       }
     },
@@ -510,6 +561,7 @@ var templateView = {
       }
       this.formList = this.dataInfo
       this.init()
+      console.log(this.fields,'this.fields');
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
@@ -663,7 +715,8 @@ var INDEXAPP = new Vue({
     picData: [],//图片
     PicImgsData : [],//图集
     videoData : [],//视频
-    isDisable: true//判断是否提交
+    isDisable: true,//判断是否提交
+    srcUrl:'./common/img/interval.png'
   },
   methods: {
     queryActivityById: function () {
@@ -680,9 +733,7 @@ var INDEXAPP = new Vue({
               self.activityData = data.data.modelExt
               document.title = data.data.activityInfo.title
               CONTENTVAR.ispvSum = data.data.activityStatus
-              console.log('???????模板2？？？？？？？？',CONTENTVAR.ispvSum);
               if(CONTENTVAR.ispvSum == 1) {
-                console.log('模板2？？？？？？？？')
                 self.pvSum()
               }
               if(data.data.activityStatus == "0" || data.data.activityStatus == "2" ) {
@@ -706,6 +757,7 @@ var INDEXAPP = new Vue({
               //基础信息
               if (data.data.activityInfo) {
                 self.activityInfo = data.data.activityInfo
+                console.log(data.data.activityInfo);
                 CONTENTVAR.title = data.data.activityInfo.title
                 self.queryAuthorizeTenantInfo()
               }
@@ -762,7 +814,6 @@ var INDEXAPP = new Vue({
         if(data !== false && data.data && data.code == 0) {
           var _desc = that.activityInfo.synopsis
           var _posterUrl = that.activityInfo.eventPoster + '?x-oss-process=style/320w_100q.src'
-         
           xyAuth.init({
             appId: data.data.appId,
             componentAppId: data.data.componentAppId,
@@ -773,6 +824,7 @@ var INDEXAPP = new Vue({
             desc: _desc,
             imgUrl: _posterUrl
           });
+
         }
       }).catch(function(e) {
       });
@@ -791,13 +843,12 @@ var INDEXAPP = new Vue({
     if (mcMethod.info.activityTemplateId != '' && mcMethod.info.activityId == ''){//活动模板
       CONTENTVAR.isActivityTemplateId = 1
       this.findActivityTemplateById()
-      this.pvSum()
     }else {//正式访问的
       CONTENTVAR.isActivityTemplateId = 0
       this.queryActivityById()
     }
   },
   mounted: function () {
-    console.log('調用模板2ye')
+
   }
 })
