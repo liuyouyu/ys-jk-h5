@@ -86,7 +86,7 @@
 <!--图片-->
 <template class="hide" id="emp_img">
   <div class="emp_picImg">
-    <img :src="picDetail.picture" alt="图片">
+      <img v-lazy="picDetail.picture" :key="picDetail.picture" alt="图片">
   </div>
 </template>
 <!--图集轮播-->

@@ -7,6 +7,7 @@
   <meta http-equiv="Pragma" content="no-cache"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <script src="common/plugins/vue.min.js"></script>
+  <script src="common/plugins/vue-lazyload.js"></script>
   <link rel="stylesheet" href="common/plugins/cube.min.css">
   <script src="common/plugins/cube.min.js"></script>
   <link rel="stylesheet" href="common/font/iconfont.css">
@@ -86,7 +87,7 @@
 <!--图片-->
 <template class="hide" id="emp_img">
   <div class="emp_picImg">
-    <img :src="picDetail.picture" alt="图片">
+    <img v-lazy="picDetail.picture" :key="picDetail.picture" alt="图片">
   </div>
 </template>
 <!--图集轮播-->
@@ -219,6 +220,11 @@
 <script src="common/plugins/xyAuth.js"></script>
 <script src="common/base/base.js"></script>
 <script src="js/template.js"></script>
+
+<script>
+  Vue.use(VueLazyload,{
+  })
+</script>
 
 </body>
 </html>

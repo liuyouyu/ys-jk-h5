@@ -85,9 +85,9 @@
 </template>
 <!--图片-->
 <template class="hide" id="emp_img">
-    <div class="emp_picImg">
-        <img :src="picDetail.picture" alt="图片">
-    </div>
+  <div class="emp_picImg">
+      <img v-lazy="picDetail.picture" :key="picDetail.picture" alt="图片">
+  </div>
 </template>
 <!--图集轮播-->
 <template class="hide" id="emp_carouselImg">

@@ -692,6 +692,7 @@ var templateView = {
     },
     mounted() {
       this.imgDetails = this.dataInfo;
+      // Vue.use(VueLazyload)
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
