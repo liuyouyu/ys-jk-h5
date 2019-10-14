@@ -856,6 +856,8 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
- 
+    window.onload = () => {
+      this.$refs.scroll.refresh()
+    }
   }
 })
