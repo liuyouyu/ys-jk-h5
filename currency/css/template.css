@@ -1,12 +1,22 @@
-*{
-    -webkit-overflow-scrolling: touch;
-    overflow-scrolling: touch;
+/* *{
+   
+} */
+html{
+  height: 100%;
 }
 body {
-    overflow-x: hidden;
+    /* overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch; */
+    height: 100%;
+    overflow: hidden;
+}
+.cube-scroll-wrapper{
+  height: 100%;
 }
 #app {
     background-color: #ffffff;
+    height: 100%;
 }
 
 .content-wrap {

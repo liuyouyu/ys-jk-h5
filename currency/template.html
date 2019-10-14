@@ -17,8 +17,10 @@
   <title></title>
 </head>
 <body>
-<div id="app" style="webkit-overflow-scrolling: touch;overflow-y: scroll;">
-<!--      <user-info :data-info="activityInfo"></user-info>-->
+<div id="app">
+  <cube-scroll
+  ref="scroll"
+  :options="scrollOptions">
     <!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
     <div v-if="activityData.length">
         <div v-for="items in activityData" :key="items.index">
@@ -48,9 +50,10 @@
                 <emp-video :data-info="items"></emp-video>
             </div>
         </div>
+        <!-- 推荐内容 -->
+        <catalogue :isshow=CONFIG.showCatalogue :showlist='8' ></catalogue>
     </div>
-    <!-- 推荐内容 -->
-    <catalogue :isshow=CONFIG.showCatalogue :showlist='8' ></catalogue>
+  </cube-scroll>
 </div>
 <!--基础信息-->
 <template class="hide" id="emp_user_info">

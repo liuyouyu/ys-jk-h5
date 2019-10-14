@@ -686,11 +686,13 @@ var templateView = {
     mounted() {
       this.imgDetails = this.dataInfo;
     },
-    dataInfo: function (newVal, oldVal) {
-      if (newVal) {
-        this.imgDetails = newVal
+    watch: {
+      dataInfo: function (newVal, oldVal) {
+        if (newVal) {
+          this.imgDetails = newVal
+        }
       }
-    }
+    },
   }
 }
 var INDEXAPP = new Vue({
@@ -715,7 +717,13 @@ var INDEXAPP = new Vue({
     picData: [],//图片
     PicImgsData : [],//图集
     videoData : [],//视频
-    isDisable: true//判断是否提交
+    isDisable: true,//判断是否提交
+    scrollOptions:{
+      scrollY:true,
+      // bounce:false
+      bounceTime:500,
+      click: true
+    }
   },
   methods: {
     queryActivityById: function () {
