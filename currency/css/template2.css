@@ -1,12 +1,22 @@
-*{
-    -webkit-overflow-scrolling: touch;
-    overflow-scrolling: touch;
+/* *{
+
+} */
+html{
+    height: 100%;
 }
 body {
-    overflow-x: hidden;
+    /* overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    overflow-scrolling: touch; */
+    height: 100%;
+    overflow: hidden;
+}
+.cube-scroll-wrapper{
+    height: 100%;
 }
 #app {
     background-color: #ffffff;
+    height: 100%;
 }
 
 .content-wrap {
@@ -250,7 +260,6 @@ body {
 }
 .emp_imgs {
     width: 100%;
-    max-height: 222px;
     vertical-align: middle;
 }
 .emp_required{
@@ -350,11 +359,12 @@ body {
     color: #CCCCCC;
 }
 .emp_form_wrap .get_code_wrap .emp_tempInput input{
-    padding: 11px 9px;
+    padding: 7px 9px;
 
 }
 .get_code {
-    line-height: 42px;
+    height: 34px;
+    line-height: 34px;
     border: none;
     border-radius: 0px;
     box-shadow: 0px 0px 10px 1px #F9BAFF inset;

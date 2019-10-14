@@ -28,7 +28,7 @@ var datePick = {
     showDatePicker() {
       if (!this.datePicker) {
         this.datePicker = this.$createDatePicker({
-          title: '日期选择',
+          title: '请选择出生年月',
           min: new Date(1900, 1, 1),
           max: new Date(2100, 12, 31),
           value: new Date(),
@@ -642,9 +642,11 @@ var templateView = {
         playsinline:true,
       })
     },
-    dataInfo: function (newVal, oldVal) {
-      if (newVal) {
-        this.videoDetails = newVal
+    watch: {
+      dataInfo: function (newVal, oldVal) {
+        if (newVal) {
+          this.videoDetails = newVal
+        }
       }
     }
   },
@@ -664,9 +666,11 @@ var templateView = {
     mounted() {
       this.picDetail = this.dataInfo;
     },
-    dataInfo: function (newVal, oldVal) {
-      if (newVal) {
-        this.picDetail = newVal
+    watch: {
+      dataInfo: function (newVal, oldVal) {
+        if (newVal) {
+          this.picDetail = newVal
+        }
       }
     }
   },
@@ -686,9 +690,11 @@ var templateView = {
     mounted() {
       this.imgDetails = this.dataInfo;
     },
-    dataInfo: function (newVal, oldVal) {
-      if (newVal) {
-        this.imgDetails = newVal
+    watch: {
+      dataInfo: function (newVal, oldVal) {
+        if (newVal) {
+          this.imgDetails = newVal
+        }
       }
     }
   }
@@ -716,7 +722,12 @@ var INDEXAPP = new Vue({
     PicImgsData : [],//图集
     videoData : [],//视频
     isDisable: true,//判断是否提交
-    srcUrl:'./common/img/interval.png'
+    scrollOptions:{
+      scrollY:true,
+      // bounce:false
+      bounceTime:500,
+      click: true
+    }
   },
   methods: {
     queryActivityById: function () {
@@ -849,6 +860,8 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
-
+    window.onload = () => {
+      this.$refs.scroll.refresh()
+    }
   }
 })
