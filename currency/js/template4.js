@@ -628,6 +628,10 @@ var templateView = {
       dataInfo: {
         type: Object,
         default: {}
+      },
+      videoindex: {
+        type: Number,
+        default: 0
       }
     },
     data: function () {
@@ -637,7 +641,7 @@ var templateView = {
     },
     mounted() {
       this.videoDetails = this.dataInfo;
-      var player = larkplayer('my-video', {
+      var player = larkplayer('my-video'+this.videoindex, {
         controls:false,
         playsinline:true,
       })
