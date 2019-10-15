@@ -350,3 +350,7 @@ body {
 .cube-dialog-btn_highlight {
     color: #409eff;
 }
+.cube-dialog-icon i {
+    border-radius: 0;
+    background: #fff;
+}

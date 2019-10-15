@@ -754,7 +754,7 @@ var INDEXAPP = new Vue({
                 if(data.data.activityStatus == 2){
                   self.$createDialog({
                     type: 'alert',
-                    icon: 'cubeic-important',
+                    icon: 'cubeic-alert',
                     showClose: false,
                     title: '活动已结束',
                     onClose: () => {
