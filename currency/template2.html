@@ -22,7 +22,7 @@
     <div class="content">
         <!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
         <div v-if="activityData.length">
-            <div v-for="items in activityData" :key="items.index">
+            <div v-for="(items,index) in activityData" :key="index">
                 <div v-if="items.templateType == 1">
                     <emp-form :data-info="items" :isdisable="isDisable"></emp-form>
                 </div>
@@ -46,7 +46,7 @@
                 </div>
                 <div v-else-if="items.templateType == 6">
                     <!--视频-->
-                    <emp-video :data-info="items"></emp-video>
+                    <emp-video :data-info="items" :videoindex ="index" ></emp-video>
                 </div>
             </div>
             <!-- 推荐内容 -->
@@ -80,7 +80,7 @@
 <!--视频-->
 <template class="hide" id="emp_video">
     <div class="emp_myVideo" >
-        <video id="my-video" :poster="videoDetails.posterUrl" :src="videoDetails.picture" webkit-playsinline playsinline x-webkit-airplay x5-playsinline="true"  duration="{$videoList['time_length']}" width="100%" height="280px">
+        <video :id="'my-video'+ videoindex" :poster="videoDetails.posterUrl" :src="videoDetails.picture" webkit-playsinline playsinline x-webkit-airplay x5-playsinline="true"  duration="{$videoList['time_length']}" width="100%" height="280px">
         </video>
     </div>
 </template>
