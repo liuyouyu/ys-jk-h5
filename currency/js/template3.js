@@ -744,7 +744,7 @@ var INDEXAPP = new Vue({
             activityId: mcMethod.info.activityId
           },
           callback: function (data) {
-            if (data.code === 0 && data.data) {
+            if (data.code === 0 && data.data != null) {
               self.activityData = data.data.modelExt
               document.title = data.data.activityInfo.title
               CONTENTVAR.ispvSum = data.data.activityStatus
@@ -776,6 +776,18 @@ var INDEXAPP = new Vue({
                 CONTENTVAR.title = data.data.activityInfo.title
                 self.queryAuthorizeTenantInfo()
               }
+            }else if(data.code === 0 && data.data == null ){
+              self.$createDialog({
+                type: 'alert',
+                icon: 'cubeic-alert',
+                showClose: false,
+                title: '活动已下架',
+                onConfirm: () => {
+                  WeixinJSBridge.call('closeWindow');//IOS
+                  document.addEventListener('WeixinJSBridgeReady', function(){ WeixinJSBridge.call('closeWindow'); }, false) //安卓
+                }
+              }).show()
+            }else {
             }
           }
         })
