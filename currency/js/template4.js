@@ -144,6 +144,7 @@ var templateView = {
         this.picker.show()
       },
       selectHandler(selectedVal, selectedIndex, selectedTxt) {
+        console.log(selectedVal,'selectedVal>>>>');
         this.selected = selectedTxt
         this.$emit('input', selectedVal)
       },
@@ -269,7 +270,6 @@ var templateView = {
         // console.log('submit')
       },
       validateHandler(result) {
-        // console.log(result.validity,"result??????????")
         this.validity = result.validity
         this.valid = result.valid
         // console.log('validity', result.validity, result.valid, result.dirty, result.firstInvalidFieldIndex)
@@ -562,6 +562,13 @@ var templateView = {
       this.formList = this.dataInfo
       this.init()
       console.log(this.fields,'this.fields');
+      $(document).on("blur", "input", function(event){
+        let u = navigator.userAgent;
+        let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isiOS) {
+          window.scrollTo(0, 0);
+        }
+      })
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
@@ -868,7 +875,7 @@ var INDEXAPP = new Vue({
         }
       }
       return false;
-    },
+    }
   },
   created: function () {
     if (mcMethod.info.activityTemplateId != '' && mcMethod.info.activityId == ''){//活动模板
@@ -882,9 +889,10 @@ var INDEXAPP = new Vue({
   mounted: function () {
     //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法 
     window.addEventListener("resize", function () {
+      console.log("窗口变化")
       if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
-          window.setTimeout(function () {
-              document.activeElement.scrollIntoViewIfNeeded();
+        window.setTimeout(function () {
+            document.activeElement.scrollIntoViewIfNeeded();
           }, 0);
       }
     })

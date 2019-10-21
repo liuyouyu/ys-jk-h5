@@ -562,6 +562,13 @@ var templateView = {
       this.formList = this.dataInfo
       this.init()
       console.log(this.fields,'this.fields');
+      $(document).on("blur", "input", function(event){
+        let u = navigator.userAgent;
+        let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isiOS) {
+          window.scrollTo(0, 0);
+        }
+      })
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
@@ -753,6 +760,7 @@ var INDEXAPP = new Vue({
               document.title = data.data.activityInfo.title
               CONTENTVAR.ispvSum = data.data.activityStatus
               if(CONTENTVAR.ispvSum == 1) {
+                console.log("访问有没有")
                 self.pvSum()
               }
               if(data.data.activityStatus == "0" || data.data.activityStatus == "2" ) {
@@ -800,6 +808,7 @@ var INDEXAPP = new Vue({
       }
     },
     pvSum: function () {
+      console.log("访问请求");
       mcMethod.query.request({
         url: mcMethod.url.pvSum,
         queryType: 'GET',
@@ -807,6 +816,7 @@ var INDEXAPP = new Vue({
           activityId: mcMethod.info.activityId
         },
         callback: function (data) {
+          console.log("没有浏览",data);
         }
       })
     },
