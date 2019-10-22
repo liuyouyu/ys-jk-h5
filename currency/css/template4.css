@@ -270,9 +270,10 @@ body {
     width: 100%;
 }
 .cube-slide-dots>span {
-    width: 8px;
-    height: 8px;
+    width: 5px;
+    height: 5px;
     border-radius: 50%;
+    background: rgba(255,255,255,0.5);
 }
 .cube-btn {
   padding: 9px 16px 9px 9px;
@@ -353,4 +354,7 @@ body {
 .cube-dialog-icon i {
     border-radius: 0;
     background: #fff;
+}
+.cube-slide-dots>span.active {
+    background: rgba(255,255,255,1);
 }
