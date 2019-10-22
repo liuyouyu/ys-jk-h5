@@ -1,7 +1,8 @@
 // 直播发布页面 添加下列代码，监听message，接收用户信息
 window.addEventListener('message', function (params) {
 	try{
-		var obj = params.data;
+    var obj = params.data;
+    console.log(obj,'监听到的message');
 		if (obj.src === 'jh') {
 			var auth = obj.auth;
 			var userId = obj.userId;
@@ -36,7 +37,8 @@ if(!xyAuth) {
 			xyAuth.componentAppId = param.componentAppId || "";
 			xyAuth.domain = param.domain || "";
 			xyAuth.setShareInfo(param);
-			xyAuth.clearAuthUserInfo();
+      xyAuth.clearAuthUserInfo();
+      console.log('是否在微信打开',xyAuth.isWechatApp());
 			if(xyAuth.isWechatApp() && xyAuth.appId) {
 				xyAuth.toWechatAuth();
 				xyAuth.initWxShare();
@@ -206,7 +208,8 @@ if(!xyAuth) {
 						var data = data.data;
 						var nowHref = this.clearUrlParam();
 						history.replaceState({}, document.title, nowHref);
-						this.setUserInfo(data);
+            this.setUserInfo(data);
+            console.log('用户登录授权信息',data);
 //						xyAuth.loginFansByWechat();
 					} else {
 						console.info("获取微信授权用户信息错误!");

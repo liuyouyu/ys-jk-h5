@@ -321,7 +321,7 @@ var dazzleUtil = {
     // ua = '#ys_app#{"userinfo":{"auth":"no","headimgUrl":"http://p.yntv.cdvcloud.com/CDVCLOUD/QMTNRK_YUNSHI/35DEF1C48760472297B3EC271E1DE6CE/5bd1685cc4d3e18ff01fdedfd0df36c3.png","nickname":"游客","userid":"1565166281292", "appcode":"JRMAS"},"version":"1.0.0"}#ys_app#';
     var arr = ua.split('#ys_app#');
     if (arr[1]) {
-      console.log(arr[1])
+      console.log(arr[1],'arr[1]')
       return JSON.parse(arr[1]);
     }
     return {};

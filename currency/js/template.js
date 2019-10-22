@@ -776,6 +776,7 @@ var INDEXAPP = new Vue({
               }
               //基础信息
               if (data.data.activityInfo) {
+                console.log(data.data.activityInfo,'data.data.activityInfo');
                 self.activityInfo = data.data.activityInfo
                 console.log(data.data.activityInfo);
                 CONTENTVAR.title = data.data.activityInfo.title
@@ -836,6 +837,10 @@ var INDEXAPP = new Vue({
 
       }
     },
+    // 获取用户登录授权后的信息
+    getAuthUserInfo(){
+      xyAuth.getAuthUserInfo()
+    },
    // 微信分享
     queryAuthorizeTenantInfo: function () {
       var that = this;
@@ -843,6 +848,7 @@ var INDEXAPP = new Vue({
       url = dazzleUtil.replaceUrlCommonParam(url);
       axios.get(url).then(function(res) {
         var data = that.checkReturn(res);
+        console.log('微信分享请求的data',data);
         if(data !== false && data.data && data.code == 0) {
           var _desc = that.activityInfo.synopsis
           var _posterUrl = that.activityInfo.eventPoster + '?x-oss-process=style/320w_100q.src'
