@@ -2,7 +2,7 @@
 window.addEventListener('message', function (params) {
 	try{
     var obj = params.data;
-    console.log(obj,'监听到的message');
+    // console.log(obj,'监听到的message');
 		if (obj.src === 'jh') {
 			var auth = obj.auth;
 			var userId = obj.userId;

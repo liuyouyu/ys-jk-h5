@@ -66,6 +66,7 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  overflow: hidden;
 }
 .c-box .c-info .c-author{
   text-align: right;

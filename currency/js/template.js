@@ -442,7 +442,7 @@ var templateView = {
         //   title: CONTENTVAR.title,
         //   value: ''
         // }
-        console.log(self.fields,"这是表单信息");
+        // console.log(self.fields,"这是表单信息");
         for (var i = 0; i < self.fields.length; i++) {
           if (self.fields[i].category === '') {
             //自定义信息项
@@ -511,6 +511,22 @@ var templateView = {
         jsonObj['activityId'] = mcMethod.info.activityId;
         //手机号重新赋值
         jsonObj['phone'] = self.model.phone;
+        
+        // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
+        var wxInfo = xyAuth.getCacheUserInfo()
+        
+        jsonObj['wxOpenId'] = wxInfo.wxOpenId || ''
+        jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
+        jsonObj['wxName'] = wxInfo.nickname || ''
+        // jsonObj['wxExt'] = {}
+        jsonObj['channelList'] = {
+          'channelName':xyAuth.getRequestValue('channelName') || '',
+          'channelId':xyAuth.getRequestValue('channelId') || '',
+          'authorizeId':xyAuth.getRequestValue('authorizeId') || '',
+          'authorizeName':xyAuth.getRequestValue('authorizeName') || '',
+        }
+        
+        console.log('发送的表单数据',jsonObj);
 
         mcMethod.query.request({
           data: jsonObj,
@@ -530,7 +546,7 @@ var templateView = {
                       self.islinkUrl = {}
                       window.location.href = url
                     }else {
-                      console.log("3333333333333")
+                      console.log("3333333----------------------333333")
                       location.reload();
                     }
                   }
@@ -542,6 +558,7 @@ var templateView = {
             }
           }
         })
+
       },
       handlePhoneChange(val){
         if (CONTENTVAR.rexPhone.test(val)){
