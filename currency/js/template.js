@@ -819,11 +819,23 @@ var INDEXAPP = new Vue({
       }
     },
     pvSum: function () {
+      let channelInfo = {
+        channelName:xyAuth.getRequestValue('channelName') || '',
+        channelId:xyAuth.getRequestValue('channelId') || '',
+        authorizeId:xyAuth.getRequestValue('authorizeId') || '',
+        authorizeName:xyAuth.getRequestValue('authorizeName') || '',
+      }
+      for (const key in channelInfo) {              // 去除对象内多余的空值key
+        if (channelInfo[key] === '') {
+          delete channelInfo[key]
+        }
+      }
       mcMethod.query.request({
         url: mcMethod.url.pvSum,
         queryType: 'GET',
         address: {
-          activityId: mcMethod.info.activityId
+          activityId: mcMethod.info.activityId,
+          ...channelInfo
         },
         callback: function (data) {
         }
