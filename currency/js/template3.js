@@ -247,7 +247,7 @@ var templateView = {
               if(self.model.userCode != ''){
                 const toast = self.$createToast({
                   txt: '验证码错误!',
-                  type: 'txt',
+                  type: 'txt'
                 })
                 toast.show()
               }
@@ -539,23 +539,23 @@ var templateView = {
                 txt: '参与成功!',
                 type: 'txt',
                 time: '2000',
-                $events: {
-                  timeout: () => {
-                    console.log(self.islinkUrl,self.islinkUrl.typetitle != undefined,self.islinkUrl.typetitle != '',"111111111")
-                    if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] != ''){
-                      console.log("2222222")
-                      var url = self.islinkUrl.typetitle
-                      self.islinkUrl = {}
-                      window.location.href = url
-                    }else {
-                      console.log("3333333----------------------333333")
-                      // location.reload();
-                      self.alreadySubmit = false;
-                    }
-                  }
-                }
+                // $events: {
+                //   timeout: () => {
+                //     console.log(self.islinkUrl,self.islinkUrl.typetitle != undefined,self.islinkUrl.typetitle != '',"111111111")
+                //   }
+                // }
               })
               toast.show();
+              if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] != ''){
+                console.log("2222222")
+                var url = self.islinkUrl.typetitle
+                self.islinkUrl = {}
+                window.location.href = url
+              }else {
+                console.log("3333333----------------------333333")
+                // location.reload();
+                self.alreadySubmit = false;
+              }
             }else {
               const toast = self.$createToast({
                 txt: '参与失败!',

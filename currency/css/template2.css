@@ -377,3 +377,15 @@ body {
 .cube-slide-dots>span.active {
     background: rgba(255,255,255,1);
 }
+
+/*更改提示框样式*/
+.cube-toast .cube-popup-content {
+    color: #626262;
+    background: #F3F3F3;
+    padding: 40px 42px;
+    box-shadow: 0px 0px 20px 0px rgba(219,219,219,1);
+    border-radius: 4px;
+}
+.cube-popup-center .cube-popup-content, .cube-popup-left .cube-popup-content, .cube-popup-right .cube-popup-content {
+    top: -66%;
+}
