@@ -159,13 +159,18 @@
         </cube-form-group>
         <cube-form-group>
           <div class="tc submit-button">
-            <cube-button type="button"
-                         v-if="isSubmit && isdisable"
-                         :inline="true"
-                         @click="submitHandler">确认提交
-            </cube-button>
+            <div v-if="isSubmit && isdisable">
+                <cube-button type="button"
+                             :inline="true"
+                             v-if="alreadySubmit"
+                             @click="submitHandler">立即参与
+                </cube-button>
+                <cube-button type="button" :disabled="true" :inline="true" v-else style="background: #ccc">
+                    已参与
+                </cube-button>
+            </div>
             <cube-button type="button" :disabled="true" :inline="true" v-else style="background: #ccc">
-              确认提交
+                立即参与
             </cube-button>
           </div>
         </cube-form-group>

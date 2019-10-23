@@ -133,10 +133,11 @@ var templateView = {
         islinkUrl: {},
         birData:'',
         isSubmit: true , // 控制提交
-        
+
         iswaring:false,
         phoneWaring:false , // 手机号不正确警告
         emailWaring:false , // 邮箱不正确警告
+        alreadySubmit: true,// 表单是否提交
       }
     },
     methods: {
@@ -144,7 +145,6 @@ var templateView = {
         this.picker.show()
       },
       selectHandler(selectedVal, selectedIndex, selectedTxt) {
-        console.log(selectedVal,'selectedVal>>>>');
         this.selected = selectedTxt
         this.$emit('input', selectedVal)
       },
@@ -186,7 +186,7 @@ var templateView = {
                   toast.show()
                   return
                 }
-                
+
               }
               // console.log(this.$refs[this.fields[i]['modelKey']]);
             }else {
@@ -270,14 +270,15 @@ var templateView = {
         // console.log('submit')
       },
       validateHandler(result) {
+        // console.log(result.validity,"result??????????")
         this.validity = result.validity
         this.valid = result.valid
         // console.log('validity', result.validity, result.valid, result.dirty, result.firstInvalidFieldIndex)
       },
       init() {
         if (this.formList
-          && this.formList.items
-          && this.formList.items.length > 0) {
+            && this.formList.items
+            && this.formList.items.length > 0) {
           var fromData = this.formList.items
           for (var i = 0; i < fromData.length ; i ++){
             if(fromData[i].category == "link"){
@@ -357,7 +358,7 @@ var templateView = {
                 }
                 break;
               default:
-              // obj['type'] = 'input';
+                // obj['type'] = 'input';
             }
             this.fields.push(obj)
             if(obj.category == 'phone'){
@@ -442,7 +443,7 @@ var templateView = {
         //   title: CONTENTVAR.title,
         //   value: ''
         // }
-        console.log(self.fields,"这是表单信息");
+        // console.log(self.fields,"这是表单信息");
         for (var i = 0; i < self.fields.length; i++) {
           if (self.fields[i].category === '') {
             //自定义信息项
@@ -512,13 +513,30 @@ var templateView = {
         //手机号重新赋值
         jsonObj['phone'] = self.model.phone;
 
+        // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
+        var wxInfo = xyAuth.getCacheUserInfo()
+
+        jsonObj['wxOpenId'] = wxInfo.wxOpenId || ''
+        jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
+        jsonObj['wxName'] = wxInfo.nickname || ''
+        // jsonObj['wxExt'] = {}
+        jsonObj['channelList'] = {
+          'channelName':xyAuth.getRequestValue('channelName') || '',
+          'channelId':xyAuth.getRequestValue('channelId') || '',
+          'authorizeId':xyAuth.getRequestValue('authorizeId') || '',
+          'authorizeName':xyAuth.getRequestValue('authorizeName') || '',
+        }
+
+        console.log('发送的表单数据',jsonObj);
+
         mcMethod.query.request({
           data: jsonObj,
           url: mcMethod.url.savePortraitInfo,
           callback: function (data) {
+            console.log(data,"提交之后返回数据");
             if (data.code == 0) {
               const toast = self.$createToast({
-                txt: '提交成功!',
+                txt: '领取成功!',
                 type: 'txt',
                 time: '2000',
                 $events: {
@@ -530,8 +548,9 @@ var templateView = {
                       self.islinkUrl = {}
                       window.location.href = url
                     }else {
-                      console.log("3333333333333")
-                      location.reload();
+                      console.log("3333333----------------------333333")
+                      // location.reload();
+                      self.alreadySubmit = false;
                     }
                   }
                 }
@@ -542,6 +561,7 @@ var templateView = {
             }
           }
         })
+
       },
       handlePhoneChange(val){
         if (CONTENTVAR.rexPhone.test(val)){
@@ -554,6 +574,7 @@ var templateView = {
       }
     },
     mounted: function () {
+      this.alreadySubmit = true;
       if (CONTENTVAR.isActivityTemplateId === 1){
         this.isSubmit = false
       }else {
@@ -703,6 +724,7 @@ var templateView = {
     },
     mounted() {
       this.imgDetails = this.dataInfo;
+      // Vue.use(VueLazyload)
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
@@ -736,13 +758,6 @@ var INDEXAPP = new Vue({
     PicImgsData : [],//图集
     videoData : [],//视频
     isDisable: true,//判断是否提交
-    scrollOptions:{
-      scrollY:true,
-      // bounce:false
-      bounceTime:500,
-      click: true,
-      mouseWheel:true
-    }
   },
   methods: {
     queryActivityById: function () {
@@ -782,6 +797,7 @@ var INDEXAPP = new Vue({
               }
               //基础信息
               if (data.data.activityInfo) {
+                console.log(data.data.activityInfo,'data.data.activityInfo');
                 self.activityInfo = data.data.activityInfo
                 console.log(data.data.activityInfo);
                 CONTENTVAR.title = data.data.activityInfo.title
@@ -854,13 +870,18 @@ var INDEXAPP = new Vue({
 
       }
     },
-   // 微信分享
+    // 获取用户登录授权后的信息
+    getAuthUserInfo(){
+      xyAuth.getAuthUserInfo()
+    },
+    // 微信分享
     queryAuthorizeTenantInfo: function () {
       var that = this;
       var url = CONFIG.apiHost + mcMethod.url.queryAuthorizeTenantInfo + "?companyId="+mcMethod.info.companyId+"&appCode="+mcMethod.info.appCode+"&userId="+mcMethod.info.userId+"&serviceCode="+mcMethod.info.serviceCode;
       url = dazzleUtil.replaceUrlCommonParam(url);
       axios.get(url).then(function(res) {
         var data = that.checkReturn(res);
+        console.log('微信分享请求的data',data);
         if(data !== false && data.data && data.code == 0) {
           var _desc = that.activityInfo.synopsis
           var _posterUrl = that.activityInfo.eventPoster + '?x-oss-process=style/320w_100q.src'
@@ -874,7 +895,7 @@ var INDEXAPP = new Vue({
             desc: _desc,
             imgUrl: _posterUrl
           });
-          
+
         }
       }).catch(function(e) {
       });
@@ -887,7 +908,7 @@ var INDEXAPP = new Vue({
         }
       }
       return false;
-    }
+    },
   },
   created: function () {
     if (mcMethod.info.activityTemplateId != '' && mcMethod.info.activityId == ''){//活动模板
@@ -899,13 +920,12 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
-    //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法 
+    //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
     window.addEventListener("resize", function () {
-      console.log("窗口变化")
       if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
         window.setTimeout(function () {
-            document.activeElement.scrollIntoViewIfNeeded();
-          }, 0);
+          document.activeElement.scrollIntoViewIfNeeded();
+        }, 0);
       }
     })
   }

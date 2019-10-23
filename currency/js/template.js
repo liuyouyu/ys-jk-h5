@@ -137,6 +137,7 @@ var templateView = {
         iswaring:false,
         phoneWaring:false , // 手机号不正确警告
         emailWaring:false , // 邮箱不正确警告
+        alreadySubmit: true,// 表单是否提交
       }
     },
     methods: {
@@ -534,7 +535,7 @@ var templateView = {
           callback: function (data) {
             if (data.code == 0) {
               const toast = self.$createToast({
-                txt: '提交成功!',
+                txt: '参与成功!',
                 type: 'txt',
                 time: '2000',
                 $events: {
@@ -547,7 +548,8 @@ var templateView = {
                       window.location.href = url
                     }else {
                       console.log("3333333----------------------333333")
-                      location.reload();
+                      // location.reload();
+                      self.alreadySubmit = false;
                     }
                   }
                 }
@@ -571,6 +573,7 @@ var templateView = {
       }
     },
     mounted: function () {
+      this.alreadySubmit = true;
       if (CONTENTVAR.isActivityTemplateId === 1){
         this.isSubmit = false
       }else {
