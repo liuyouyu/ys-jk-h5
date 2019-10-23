@@ -556,7 +556,12 @@ var templateView = {
                             })
                             toast.show();
                         }else {
-
+                            const toast = self.$createToast({
+                                txt: '领取失败!',
+                                time: '2000',
+                                type: 'txt',
+                            })
+                            toast.show()
                         }
                     }
                 })
