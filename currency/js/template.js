@@ -587,7 +587,21 @@ var templateView = {
       this.formList = this.dataInfo
       this.init()
       console.log(this.fields,'this.fields');
-      $(document).on("blur", "input", function(event){
+      // $(document).on( "input", function(event){
+      //   let u = navigator.userAgent;
+      //   let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+      //   if (isiOS) {
+      //     window.scrollTo(0, 0);
+      //   }
+      // })
+      document.body.addEventListener('focusin', () => {  
+        let u = navigator.userAgent;
+        let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isiOS) {
+          window.scrollTo(0, 0);
+        } 
+      })
+      document.body.addEventListener('focusout', () => { 
         let u = navigator.userAgent;
         let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
         if (isiOS) {
