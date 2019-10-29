@@ -104,10 +104,28 @@ body {
     height: 40px;
     text-align: center;
     box-sizing: border-box;
-    border: 1px solid #f2f2f2;
+    /*border: 1px solid #f2f2f2;*/
     border-radius: 4px;
+    position: relative;
 }
-
+.get_code::after {
+    width: 200%;
+    height: 200%;
+    border-radius: 4px;
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+    content: "";
+    pointer-events: none;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    border: 1px solid #f2f2f2;
+    box-sizing: border-box;
+    border-left: 0;
+}
 .get_code_input {
     width: calc(100% - 7em);
     float: left;
