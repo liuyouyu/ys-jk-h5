@@ -61,7 +61,26 @@ var datePick = {
     }
   }
 }
-
+var templateQuestion = {
+  'empRadio': {
+    template: '#emp_radio',
+    props: ['optionlist'],
+    data() {
+      return {
+        selected: ''
+      }
+    }
+  },
+  'empCheckbox': {
+    template: '#emp_checkbox',
+    props: ['optionlist'],
+    data(){
+      return {
+        checkBoxList:[]
+      }
+    }
+  }
+}
 var templateView = {
   'userInfo': {
     props: {
@@ -133,7 +152,7 @@ var templateView = {
         islinkUrl: {},
         birData:'',
         isSubmit: true , // 控制提交
-
+        
         iswaring:false,
         phoneWaring:false , // 手机号不正确警告
         emailWaring:false , // 邮箱不正确警告
@@ -186,7 +205,7 @@ var templateView = {
                   toast.show()
                   return
                 }
-
+                
               }
               // console.log(this.$refs[this.fields[i]['modelKey']]);
             }else {
@@ -277,8 +296,8 @@ var templateView = {
       },
       init() {
         if (this.formList
-            && this.formList.items
-            && this.formList.items.length > 0) {
+          && this.formList.items
+          && this.formList.items.length > 0) {
           var fromData = this.formList.items
           for (var i = 0; i < fromData.length ; i ++){
             if(fromData[i].category == "link"){
@@ -358,7 +377,7 @@ var templateView = {
                 }
                 break;
               default:
-                // obj['type'] = 'input';
+              // obj['type'] = 'input';
             }
             this.fields.push(obj)
             if(obj.category == 'phone'){
@@ -512,10 +531,10 @@ var templateView = {
         jsonObj['activityId'] = mcMethod.info.activityId;
         //手机号重新赋值
         jsonObj['phone'] = self.model.phone;
-
+        
         // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
         var wxInfo = xyAuth.getCacheUserInfo()
-
+        
         jsonObj['wxOpenId'] = wxInfo.wxOpenId || ''
         jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
         jsonObj['wxName'] = wxInfo.nickname || ''
@@ -526,17 +545,14 @@ var templateView = {
           'authorizeId':xyAuth.getRequestValue('authorizeId') || '',
           'authorizeName':xyAuth.getRequestValue('authorizeName') || '',
         }
-
         console.log('发送的表单数据',jsonObj);
-
         mcMethod.query.request({
           data: jsonObj,
           url: mcMethod.url.savePortraitInfo,
           callback: function (data) {
-            console.log(data,"提交之后返回数据");
             if (data.code == 0) {
               const toast = self.$createToast({
-                txt: '领取成功!',
+                txt: '参与成功!',
                 type: 'txt',
                 time: '2000',
                 // $events: {
@@ -546,23 +562,23 @@ var templateView = {
                 // }
               })
               toast.show();
-              if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] != ''){
-                console.log("2222222")
-                var url = self.islinkUrl.typetitle
-                self.islinkUrl = {}
-                window.location.href = url
-              }else {
-                console.log("3333333----------------------333333")
-                // location.reload();
-                self.alreadySubmit = false;
-              }
+                if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] != ''){
+                    console.log("2222222")
+                    var url = self.islinkUrl.typetitle
+                    self.islinkUrl = {}
+                    window.location.href = url
+                }else {
+                    console.log("3333333----------------------333333")
+                    // location.reload();
+                    self.alreadySubmit = false;
+                }
             }else {
-              const toast = self.$createToast({
-                txt: '领取失败!',
-                time: '2000',
-                type: 'txt',
-              })
-              toast.show()
+                const toast = self.$createToast({
+                    txt: '参与失败!',
+                    time: '2000',
+                    type: 'txt',
+                })
+                toast.show()
             }
           }
         })
@@ -738,6 +754,248 @@ var templateView = {
         }
       }
     }
+  },
+  'empQuestion': {
+    template: '#emp_question',
+    components: {
+      empRadio: templateQuestion.empRadio,
+      empCheckbox: templateQuestion.empCheckbox
+    },
+    props: {
+      dataInfo: {
+        type: Object,
+        default: {}
+      }
+    },
+    data: function () {
+      return {
+        questionData: '',//问卷数据
+        questionTitle: '',// 问卷标题
+        questionDesc: '',//问卷简介
+        questionnaireInfo: [],//问卷基础信息
+        questionOptionList: [], //选项数据
+        isSubmit: true , // 控制提交
+        redioListData: [],
+        checkBoxListData: [],
+        isPhone: false,
+        submitName: '',
+        model: {
+          userPhone: '',
+          userCode: ''
+        },
+        phoneWaring:false , // 手机号不正确警告
+        sendAuthCode: true,/*布尔值，通过v-show控制显示‘获取按钮’还是‘倒计时’ */
+        phoneCodeKey: '',
+        auth_time: 0, /*倒计时 计数器*/
+        valueCode: '',
+        alreadySubmit: true
+      }
+    },
+    methods: {
+      questionInit() {
+        this.questionnaireInfo = this.questionData.questionnaireInfo
+        for (var i = 0; i < this.questionnaireInfo.length; i++) {
+          if(this.questionnaireInfo[i].title == '调查名称') {
+            this.questionTitle = this.questionnaireInfo[i].value
+          } else if(this.questionnaireInfo[i].title == '调查简介') {
+            this.questionDesc = this.questionnaireInfo[i].value
+          }
+        }
+        this.questionOptionList = this.questionData.questionnaireItembank
+        for (var k = 0; k < this.questionOptionList.length; k++) {
+            var optionlist = []
+            var answerList = this.questionOptionList[k].answerList
+            for( var j = 0; j < answerList.length; j++ ) {
+              optionlist.push({label:answerList[j].option,value:answerList[j].answerId})
+            }
+          this.questionOptionList[k]['optionlist'] = optionlist
+        }
+      },
+      handlePhoneChange(val){
+        if (CONTENTVAR.rexPhone.test(val)){
+          this.isPhone = true
+          // this.iswaring = false
+          this.phoneWaring = false
+        }else{
+          this.phoneWaring = true
+        }
+      },
+      getCode() {
+        var phone = this.model.userPhone;
+        if (!(CONTENTVAR.rexPhone.test(phone))) {
+          const toast = this.$createToast({
+            txt: '手机号码有误，请重填写',
+            type: 'txt',
+          })
+          toast.show()
+          return false;
+        }
+        var self = this;
+        mcMethod.query.request({
+          url: mcMethod.url.sendVerificationCode,
+          queryType: 'GET',
+          address: {
+            phone: phone,
+            vCode: ''
+          },
+          callback: function (data) {
+            if (data.code == 0) {
+              self.phoneCodeKey = data.data.codeKey
+              self.sendAuthCode = false;
+              self.auth_time = 60;
+              var auth_timetimer = setInterval(() => {
+                self.auth_time--;
+                if (self.auth_time <= 0) {
+                  self.sendAuthCode = true;
+                  clearInterval(auth_timetimer);
+                }
+              }, 1000);
+            }
+          },
+          errorCallback: function (err) {
+            console.log(err);
+          }
+        })
+
+      },
+      getQuestionData() {
+        var self = this
+        var jsonObj = {}
+        jsonObj['activityId'] = mcMethod.info.activityId
+        jsonObj['phone'] = self.model.userPhone
+        jsonObj['name'] = self.submitName
+        // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
+        var wxInfo = xyAuth.getCacheUserInfo()
+        jsonObj['wxOpenId'] = wxInfo.wxOpenId || ''
+        jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
+        jsonObj['wxName'] = wxInfo.nickname || ''
+        jsonObj['channelList'] = {
+          'channelName':xyAuth.getRequestValue('channelName') || '',
+          'channelId':xyAuth.getRequestValue('channelId') || '',
+          'authorizeId':xyAuth.getRequestValue('authorizeId') || '',
+          'authorizeName':xyAuth.getRequestValue('authorizeName') || '',
+        }
+        jsonObj['questionnaireInfo'] = self.questionnaireInfo
+        var redioData = this.$refs.redio
+        for( var i = 0; i < redioData.length; i++) {
+          this.redioListData.push(redioData[i].selected)
+        }
+        var checkboxData = this.$refs.checkbox
+        for (var g = 0; g < checkboxData.length; g ++){
+          for( var s = 0 ; s < checkboxData[g].checkBoxList.length; s++){
+            this.checkBoxListData.push(checkboxData[g].checkBoxList[s])
+          }
+        }
+        console.log(this.checkBoxListData, '整理过后的复选框数据');
+        for(var k = 0; k < this.questionOptionList.length; k++){
+          for(var j = 0; j < this.questionOptionList[k].answerList.length; j++) {
+            if(this.questionOptionList[k].optionType == '0'){
+              for(var z = 0; z < this.redioListData.length; z++) {
+                if(this.redioListData[z] == this.questionOptionList[k].answerList[j].answerId) {
+                  this.questionOptionList[k].answerList[j].checked = true
+                }
+              }
+            } else {
+              for(var n = 0; n <this.checkBoxListData.length; n ++){
+                if(this.checkBoxListData[n] == this.questionOptionList[k].answerList[j].answerId) {
+                  this.questionOptionList[k].answerList[j].checked = true
+                }
+              }
+            }
+          }
+        }
+        jsonObj['questionnaireItembank'] = self.questionOptionList
+        console.log(jsonObj,"整理传递给后台的数据");
+        mcMethod.query.request({
+          data: jsonObj,
+          url: mcMethod.url.savePortraitInfo,
+          callback: function (data) {
+            if (data.code == 0) {
+              const toast = self.$createToast({
+                txt: '提交成功!',
+                type: 'txt',
+                time: '2000'
+              })
+              toast.show();
+              self.alreadySubmit = false
+            }else {
+              const toast = self.$createToast({
+                txt: '提交失败!',
+                time: '2000',
+                type: 'txt',
+              })
+              toast.show()
+            }
+          }
+        })
+      },
+      handleQuestionSubmint() {
+        var self = this;
+        if (!CONTENTVAR.rexPhone.test(this.model.userPhone)){
+          const toast = self.$createToast({
+            txt: '请输入有效手机号!',
+            type: 'txt',
+          })
+          toast.show()
+          // this.phoneWaring = true
+        }
+        if(this.model.userCode == ''){
+          const toast = self.$createToast({
+            txt: '请输入验证码!',
+            type: 'txt',
+          })
+          toast.show()
+          // this.phoneWaring = false
+        }
+        if(this.model.userPhone == '') {
+          const toast = self.$createToast({
+            txt: '请输入手机号!',
+            type: 'txt',
+          })
+          toast.show()
+        }
+        if(this.submitName == '') {
+          const toast = self.$createToast({
+            txt: '请输入姓名!',
+            type: 'txt',
+          })
+          toast.show()
+        }
+        mcMethod.query.request({
+          url: mcMethod.url.validateCode2,
+          queryType: 'GET',
+          address: {
+            validateCode: self.model.userCode,
+            phone: self.model.userPhone,
+            codeKey: self.phoneCodeKey
+          },
+          callback: function (data) {
+            if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
+              self.getQuestionData()
+            } else {
+              if(self.model.userCode != ''){
+                const toast = self.$createToast({
+                  txt: '验证码错误!',
+                  type: 'txt',
+                })
+                toast.show()
+              }
+            }
+          },
+          errorCallback: function (err) {
+            const toast = self.$createToast({
+              txt: '验证失败，请稍后再试!',
+              type: 'txt',
+            })
+          }
+        })
+      }
+    },
+    mounted() {
+      console.log(this.dataInfo, '问卷模板数据')
+      this.questionData = this.dataInfo
+      this.questionInit()
+    }
   }
 }
 var INDEXAPP = new Vue({
@@ -749,7 +1007,8 @@ var INDEXAPP = new Vue({
     empGuest: templateView.emp_guest,
     empVideo: templateView.empVideo,
     empImg: templateView.empImg,
-    empCarouselImg: templateView.empCarouselImg
+    empCarouselImg: templateView.empCarouselImg,
+    empQuestion: templateView.empQuestion
   },
   data: {
     activityData:[],
@@ -777,7 +1036,7 @@ var INDEXAPP = new Vue({
           callback: function (data) {
             if (data.code === 0 && data.data != null) {
               self.activityData = data.data.modelExt
-              console.log(self.activityData, 'h5模块数据');
+              console.log(self.activityData,'活动模板数据');
               document.title = data.data.activityInfo.title
               CONTENTVAR.ispvSum = data.data.activityStatus
               if(CONTENTVAR.ispvSum == 1) {
@@ -880,7 +1139,7 @@ var INDEXAPP = new Vue({
     getAuthUserInfo(){
       xyAuth.getAuthUserInfo()
     },
-    // 微信分享
+   // 微信分享
     queryAuthorizeTenantInfo: function () {
       var that = this;
       var url = CONFIG.apiHost + mcMethod.url.queryAuthorizeTenantInfo + "?companyId="+mcMethod.info.companyId+"&appCode="+mcMethod.info.appCode+"&userId="+mcMethod.info.userId+"&serviceCode="+mcMethod.info.serviceCode;
@@ -901,7 +1160,7 @@ var INDEXAPP = new Vue({
             desc: _desc,
             imgUrl: _posterUrl
           });
-
+          
         }
       }).catch(function(e) {
       });
@@ -926,12 +1185,12 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
-    //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
+    //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法 
     window.addEventListener("resize", function () {
       if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
-        window.setTimeout(function () {
-          document.activeElement.scrollIntoViewIfNeeded();
-        }, 0);
+          window.setTimeout(function () {
+              document.activeElement.scrollIntoViewIfNeeded();
+          }, 0);
       }
     })
   }
