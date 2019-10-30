@@ -539,11 +539,19 @@ var templateView = {
         jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
         jsonObj['wxName'] = wxInfo.nickname || ''
         // jsonObj['wxExt'] = {}
-        jsonObj['channelList'] = {
+        let channelInfo = {
           'channelName':xyAuth.getRequestValue('channelName') || '',
           'channelId':xyAuth.getRequestValue('channelId') || '',
           'authorizeId':xyAuth.getRequestValue('authorizeId') || '',
           'authorizeName':xyAuth.getRequestValue('authorizeName') || '',
+        }
+        for (let k in channelInfo) {              // 去除对象内多余的空值key
+          if (channelInfo[k] === '') {
+            delete channelInfo[k]
+          }
+        }
+        jsonObj['channelList'] = {
+          ...channelInfo
         }
         console.log('发送的表单数据',jsonObj);
         mcMethod.query.request({
@@ -604,7 +612,14 @@ var templateView = {
       this.formList = this.dataInfo
       this.init()
       console.log(this.fields,'this.fields');
-      $(document).on("blur", "input", function(event){
+      document.body.addEventListener('focusin', () => {  
+        let u = navigator.userAgent;
+        let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isiOS) {
+          window.scrollTo(0, 0);
+        } 
+      })
+      document.body.addEventListener('focusout', () => { 
         let u = navigator.userAgent;
         let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
         if (isiOS) {

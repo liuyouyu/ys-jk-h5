@@ -520,11 +520,19 @@ var templateView = {
         jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
         jsonObj['wxName'] = wxInfo.nickname || ''
         // jsonObj['wxExt'] = {}
-        jsonObj['channelList'] = {
+        let channelInfo = {
           'channelName':xyAuth.getRequestValue('channelName') || '',
           'channelId':xyAuth.getRequestValue('channelId') || '',
           'authorizeId':xyAuth.getRequestValue('authorizeId') || '',
           'authorizeName':xyAuth.getRequestValue('authorizeName') || '',
+        }
+        for (let k in channelInfo) {              // 去除对象内多余的空值key
+          if (channelInfo[k] === '') {
+            delete channelInfo[k]
+          }
+        }
+        jsonObj['channelList'] = {
+          ...channelInfo
         }
         
         console.log('发送的表单数据',jsonObj);
