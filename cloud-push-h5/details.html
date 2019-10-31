@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--七彩号详情页面-->
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="stylesheet" type="text/css" href="common/css/base.css?$$tempflag$$">
+    <link rel="stylesheet" type="text/css" href="common/css/common.css?$$tempflag$$">
+    <link rel="stylesheet" type="text/css" href="common/css/style.css?$$tempflag$$">
+    <link rel="stylesheet" type="text/css" href="common/css/mescroll.min.css?$$tempflag$$">
+    <link rel="stylesheet" type="text/css" href="common/css/swiper.min.css?$$tempflag$$">
+    <link rel="stylesheet" type="text/css" href="css/details.css?$$tempflag$$">
+    <link rel="stylesheet" type="text/css" href="common/css/iconfont.css?$$tempflag$$">
+    <script src="common/js/rem.js?$$tempflag$$" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="details" v-cloak>
+        <div class="invalidWeb" v-if="showNodataType">
+            <div class="invalidCon">
+                <img src="./img/timg.jpg" class="invalidImg" alt="notice_img">
+                <p>对不起，此内容已失效</p>
+            </div>
+        </div>
+        <!-- <div class="guanzhu" v-if="gzState">
+            <img src="../../index/img/dis.png" class="logo" alt="logon">
+            <i class="icon-more" @click="clearGz()"></i>
+            <a href="javascript:;" class="gz_btn">立即关注</a>
+		</div> -->
+        <div v-else>
+<!--            <div class="detailsLogo" :style="{backgroundColor:sysColor}" v-if="!comentList">-->
+<!--                <img v-if="logoData.show == 1 && logoData.imgUrl" :src="logoData.imgUrl" alt="logo">-->
+<!--            </div>-->
+<!--            <div class="topMain"></div>-->
+            <div class="detailsCon" v-show="!comentList" v-cloak ref="detail_content">
+                <h2 class="detailsTit">{{cTit}}</h2>
+                <div class="article_attribute">
+                    <span class="time">{{articleTime}}</span>
+                    <span class="pvNum">1536阅读</span><!-- 目前阅读量是写死的 -->
+                </div>
+                <div class="mediaAttention" v-if="colorfulInfo && colorfulInfo._id">
+                   	<div class="mediaHead fl" @click="toOfficialProfile(colorfulInfo._id)">
+                   		<img :src="colorfulInfo.thumbnail">
+                   	</div>
+                   	<div class="mediaInfo fl" @click="toOfficialProfile(colorfulInfo._id)">
+                   		<div class="mediaName">{{colorfulInfo.colorfulCloudName}}</div>
+                   		<div class="mediaTime">{{cDate | timeFmt}}<span v-if="pvShow">&nbsp;&nbsp;<i style="height: 0.18rem;border-left: 1px solid #ccc;"></i>&nbsp;&nbsp;{{cSee | adjustShowPv}}阅读</span></div>
+                   	</div>
+                   	<span class="mediaBtn fr" :style="{backgroundColor:sysColor}" v-if="fansAttentionStatus == 'no'" @click="attention">关注</span>
+                   	<span class="mediaBtn fr follow" v-else @click="unsubscribe">已关注</span>
+                </div>
+                <div class="videoDiv" v-if="videoData.show && videoData.data.length" v-for="(item, index) in videoData.data">
+                    <video webkit-playsinline="" playsinline="" x5-playsinline x5nativepanel="freewififorvideo_fromvideoelment" :src="item.src" :poster="item.poster" controlslist="nodownload" controls>
+
+                    </video>
+                </div>
+                <div class="articleCon rich_media_content" v-html="cText"></div>
+                <div class="seeInfo">
+                </div>
+            </div>
+<!--            <div class="footerMain"></div>-->
+           
+            <!-- 返回顶部 -->
+            <div class="returnTop" :style="{backgroundColor:sysColor}" v-if="scrollTop > 200" @click="returnTop()">
+                <i class="iconfont icon-goTop"></i>
+            </div>
+            <!-- 提示弹窗 -->
+            <div class="infoAlt" v-if="infoAlt">
+                <p>{{altText}}</p>
+            </div>
+
+ 
+
+            <div class="splash" id="splash" v-if="isShowLoadImg">
+                <div class="inner">
+                    <img :src="loadingGifUrl">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- 图片放大的功能 -->
+    <!-- 预览图片 -->
+    <div class="img_preview_cont hide"></div>
+</body>
+<script src="//cdn.yunshicloud.com/jquery/3.2.1/jquery.min.js?$$tempflag$$"></script>
+<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?$$tempflag$$"></script>
+<script src="//cdn.yunshicloud.com/layer/3.0.1/layer.js?$$tempflag$$"></script>
+<script src="//cdn.yunshicloud.com/vue/2.5.16/vue.min.js?$$tempflag$$"></script>
+<script src="//cdn.yunshicloud.com/lazyload/1.2.3/vue-lazyload.js?$$tempflag$$"></script>
+<script src="//cdn.yunshicloud.com/axios/0.18.0/axios.min.js?$$tempflag$$"></script>
+<script src="//cdn.yunshicloud.com/mescroll/1.3.2/mescroll.min.js?$$tempflag$$"></script>
+<script src="//cdn.yunshicloud.com/fingerprint/2.0.0/fingerprint2.js?$$tempflag$$"></script>
+<script src="common/js/polyfill.min.js?$$tempflag$$"></script>
+<script src="common/js/const.js?$$tempflag$$"></script>
+<script src="common/js/common.js?$$tempflag$$"></script>
+<script src="config/config.js?$$tempflag$$"></script>
+<script src="common/js/xyAuth.js?$$tempflag$$"></script>
+<script src="common/js/vuePrototype.js?$$tempflag$$"></script>
+<script src="common/js/vueCommonApi.js?$$tempflag$$"></script>
+<script src="common/js/swiper.min.js?$$tempflag$$"></script>
+<!-- <script src="./js/mo.min.js"></script> -->
+<!-- <script src="./js/demo.js"></script> -->
+<script src="js/details.js?$$tempflag$$"></script>
+<script src="common/js/filter.js?$$tempflag$$"></script>
+<script src="index/js/public.js?$$tempflag$$"></script>
+
+</html>

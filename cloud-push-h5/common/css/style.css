@@ -1,0 +1,75 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?l6gqha');
+  src:  url('fonts/icomoon.eot?l6gqha#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?l6gqha') format('truetype'),
+    url('fonts/icomoon.woff?l6gqha') format('woff'),
+    url('fonts/icomoon.svg?l6gqha#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-alarm_clock:before {
+  content: "\e900";
+}
+.icon-Announcement:before {
+  content: "\e901";
+}
+.icon-Broke-the-news:before {
+  content: "\e902";
+}
+.icon-comments:before {
+  content: "\e903";
+}
+.icon-left:before {
+  content: "\e904";
+}
+.icon-live:before {
+  content: "\e905";
+}
+.icon-more:before {
+  content: "\e906";
+}
+.icon-peacock:before {
+  content: "\e907";
+}
+.icon-photo:before {
+  content: "\e908";
+}
+.icon-play .path1:before {
+  content: "\e909";
+  color: rgb(0, 0, 0);
+  opacity: 0.5;
+}
+.icon-play .path2:before {
+  content: "\e90a";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.icon-play2:before {
+  content: "\e90b";
+}
+.icon-Shut_down:before {
+  content: "\e90c";
+}
+.icon-suona:before {
+  content: "\e90d";
+}
+.icon-thumb_up:before {
+  content: "\e90e";
+}

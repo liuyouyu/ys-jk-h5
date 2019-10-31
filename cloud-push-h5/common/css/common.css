@@ -1,0 +1,210 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: PingFang SC, Helvetica Neue, Helvetica, STHeitiSC-Light, WOL_SB, Segoe UI Semibold, Segoe UI, Tahoma, sans-serif;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    outline: none;
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+div,
+ul,
+ol,
+li,
+dl,
+dt,
+dd,
+iframe,
+textarea,
+input,
+button,
+p,
+strong,
+b,
+a,
+span,
+del,
+pre,
+table,
+tr,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+del,
+b {
+    font-style: normal;
+    font-weight: normal;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    outline: none;
+}
+
+img {
+    display: block;
+    border: none;
+}
+
+i {
+    display: inline-block;
+}
+
+input {
+    outline: none;
+}
+
+.hide {
+    display: none;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}
+
+.clearfloat:after {
+    content: "\200B";
+    display: block;
+    height: 0;
+    clear: both;
+}
+
+.clearfloat {
+    *zoom: 1;
+}
+
+
+/*IE/7/6*/
+
+
+/*横屏*/
+
+.load1,
+.load2,
+.load3 {
+    position: fixed;
+    background: rgba(0, 0, 0, .8);
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    display: -webkit-box;
+    -webkit-box-pack: center;
+    -webkit-box-align: center;
+}
+
+.load3 {
+    background: #000;
+}
+
+.rotate {
+    position: relative;
+}
+
+.rotate i {
+    background: url(../img/phone2.png) no-repeat 0 0;
+    width: 150px;
+    height: 125px;
+    display: block;
+}
+
+.iphone {
+    -webkit-animation-name: xz;
+    -webkit-animation-duration: 2s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-direction: alternate;
+    -webkit-animation-delay: 1s;
+}
+
+@-webkit-keyframes xz {
+    0% {
+        -webkit-transform-origin: right bottom;
+        -webkit-transform: rotate(0deg);
+        opacity: 0;
+    }
+    100% {
+        -webkit-transform-origin: right bottom;
+        -webkit-transform: rotate(90deg);
+        opacity: 1;
+    }
+}
+
+.phone_p {
+    color: #fff;
+}
+
+.phone_div {
+    position: absolute;
+    top: 60px;
+    left: 31px;
+}
+
+
+/* loading gif */
+
+.splash {
+    position: fixed;
+    /* top: 86px;
+     */
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    z-index: 8000;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.splash .inner {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.splash .inner img {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    display: block;
+    width: 65px;
+    height: 65px;
+    margin-top: -32px;
+    margin-left: -32px;
+}
+
+.verticalcenter {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
