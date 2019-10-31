@@ -1001,7 +1001,7 @@ var templateView = {
         for (var i = 0; i < redioRules.length; i ++) {
           if(redioRules[i].selected === undefined) {
             const toast = self.$createToast({
-              txt: '问卷还未填完整，咱不能提交!',
+              txt: '问卷还未填完整，不能提交哦!',
               type: 'txt',
             })
             toast.show()
@@ -1051,6 +1051,20 @@ var templateView = {
       console.log(this.dataInfo, '问卷模板数据')
       this.questionData = this.dataInfo
       this.questionInit()
+      document.body.addEventListener('focusin', () => {
+        let u = navigator.userAgent;
+        let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isiOS) {
+          window.scrollTo(0, 0);
+        }
+      })
+      document.body.addEventListener('focusout', () => {
+        let u = navigator.userAgent;
+        let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isiOS) {
+          window.scrollTo(0, 0);
+        }
+      })
     }
   }
 }
