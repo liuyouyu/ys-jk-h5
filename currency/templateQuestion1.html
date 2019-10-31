@@ -49,7 +49,7 @@
                 <emp-video :data-info="items" :videoindex ="index" ></emp-video>
             </div>
             <div v-else-if="items.templateType == 7" >
-              <emp-question :data-info="items"></emp-question>
+              <emp-question :data-info="items" :isdisable="isDisable"></emp-question>
             </div>
         </div>
         <!-- 推荐内容 -->
@@ -221,11 +221,16 @@
         </div>
     </div>
     <div class="tc submit-button">
-      <cube-button type="button" :inline="true" @click="handleQuestionSubmint" v-if="alreadySubmit">
-        提交
-      </cube-button>
+      <div v-if="isdisable">
+        <cube-button type="button" :inline="true" @click="handleQuestionSubmint" v-if="alreadySubmit">
+          提交
+        </cube-button>
+        <cube-button type="button" :disabled="true" :inline="true" v-else style="background: #ccc">
+          已提交
+        </cube-button>
+      </div>
       <cube-button type="button" :disabled="true" :inline="true" v-else style="background: #ccc">
-        已提交
+        提交
       </cube-button>
     </div>
   </div>

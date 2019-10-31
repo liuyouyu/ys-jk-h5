@@ -782,6 +782,10 @@ var templateView = {
       dataInfo: {
         type: Object,
         default: {}
+      },
+      isdisable: {
+        type: Boolean,
+        default: true
       }
     },
     data: function () {
