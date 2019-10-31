@@ -876,6 +876,7 @@ var templateView = {
       getQuestionData() {
         var self = this
         var jsonObj = {}
+        var questionnaire = {}
         jsonObj['activityId'] = mcMethod.info.activityId
         jsonObj['phone'] = self.model.userPhone
         jsonObj['name'] = self.submitName
@@ -884,13 +885,26 @@ var templateView = {
         jsonObj['wxOpenId'] = wxInfo.wxOpenId || ''
         jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
         jsonObj['wxName'] = wxInfo.nickname || ''
-        jsonObj['channelList'] = {
+        let channelInfo = {
           'channelName':xyAuth.getRequestValue('channelName') || '',
           'channelId':xyAuth.getRequestValue('channelId') || '',
           'authorizeId':xyAuth.getRequestValue('authorizeId') || '',
           'authorizeName':xyAuth.getRequestValue('authorizeName') || '',
         }
-        jsonObj['questionnaireInfo'] = self.questionnaireInfo
+        for (let k in channelInfo) {              // 去除对象内多余的空值key
+          if (channelInfo[k] === '') {
+            delete channelInfo[k]
+          }
+        }
+        console.log(channelInfo, 'channelInfo');
+        console.log(JSON.stringify(channelInfo) != '{}', '判断对象为空值真假');
+        if(JSON.stringify(channelInfo) != '{}'){
+          jsonObj['channelList'] = {
+            ...channelInfo
+          }
+        }
+
+        questionnaire['questionnaireInfo'] = self.questionnaireInfo
         var redioData = this.$refs.redio
         for( var i = 0; i < redioData.length; i++) {
           this.redioListData.push(redioData[i].selected)
@@ -919,7 +933,8 @@ var templateView = {
             }
           }
         }
-        jsonObj['questionnaireItembank'] = self.questionOptionList
+        questionnaire['questionnaireItembank'] = self.questionOptionList
+        jsonObj['questionnaire'] = questionnaire
         console.log(jsonObj,"整理传递给后台的数据");
         mcMethod.query.request({
           data: jsonObj,

@@ -531,9 +531,12 @@ var templateView = {
             delete channelInfo[k]
           }
         }
-        jsonObj['channelList'] = {
-          ...channelInfo
+        if(JSON.stringify(channelInfo) != '{}') {
+          jsonObj['channelList'] = {
+            ...channelInfo
+          }
         }
+
 
         console.log('发送的表单数据',jsonObj);
 

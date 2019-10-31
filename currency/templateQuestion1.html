@@ -191,6 +191,14 @@
     <div class="emp_questionList">
      <ul>
        <li v-for="(item, index) in questionOptionList" :key="index">
+<!--         <cube-validator-->
+<!--             v-model="valid"-->
+<!--             :model="captcha"-->
+<!--             :rules="rules"-->
+<!--             :messages="messages"-->
+<!--             :immediate="immediate"-->
+<!--             @validating="validatingHandler"-->
+<!--             @validated="validatedHandler">-->
          <ul class="emp_option_list">
            <li v-if="item.optionType == 0">
              <p>{{(index+1) + '、'+ item.title}}</p>
@@ -201,6 +209,7 @@
              <emp-checkbox :optionlist="item.optionlist" ref="checkbox"></emp-checkbox>
            </li>
          </ul>
+<!--         </cube-validator>-->
        </li>
      </ul>
     </div>

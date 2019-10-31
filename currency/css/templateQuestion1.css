@@ -406,9 +406,17 @@ body {
     margin-bottom: 20px;
 }
 .emp_option_list li p {
-    padding: 0 16px;
-    margin: 14px 0;
+    padding: 0 12px;
+    margin: 46px 0 14px;
 }
 .cube-input:after {
-    border:1px solid #f2f2f2!important;
+    border:1px solid #D4D4D4!important;
+}
+.border-top-1px:before,.border-bottom-1px:after {
+    border: 0;
+}
+.cube-checkbox,.cube-radio {
+    border: 1px solid #D4D4D4;
+    margin: 10px;
+    border-radius: 4px;
 }
