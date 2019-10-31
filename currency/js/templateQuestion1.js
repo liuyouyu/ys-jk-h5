@@ -1001,7 +1001,7 @@ var templateView = {
         for (var i = 0; i < redioRules.length; i ++) {
           if(redioRules[i].selected === undefined) {
             const toast = self.$createToast({
-              txt: '选项不能为空!',
+              txt: '问卷还未填完整，咱不能提交!',
               type: 'txt',
             })
             toast.show()
@@ -1011,7 +1011,7 @@ var templateView = {
         for (var i = 0; i < checkboxRules.length; i++) {
           if(checkboxRules[i].checkBoxList.length == 0) {
             const toast = self.$createToast({
-              txt: '选项不能为空!',
+              txt: '问卷还未填完整，咱不能提交!',
               type: 'txt',
             })
             toast.show()
