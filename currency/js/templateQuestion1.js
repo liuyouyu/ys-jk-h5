@@ -69,6 +69,8 @@ var templateQuestion = {
       return {
         selected: ''
       }
+    },
+    methods: {
     }
   },
   'empCheckbox': {
@@ -990,6 +992,26 @@ var templateView = {
             type: 'txt',
           })
           toast.show()
+        }
+        var redioRules = this.$refs.redio
+        for (var i = 0; i < redioRules.length; i ++) {
+          if(redioRules[i].selected === undefined) {
+            const toast = self.$createToast({
+              txt: '选项不能为空!',
+              type: 'txt',
+            })
+            toast.show()
+          }
+        }
+        var checkboxRules = this.$refs.checkbox
+        for (var i = 0; i < checkboxRules.length; i++) {
+          if(checkboxRules[i].checkBoxList.length == 0) {
+            const toast = self.$createToast({
+              txt: '选项不能为空!',
+              type: 'txt',
+            })
+            toast.show()
+          }
         }
         mcMethod.query.request({
           url: mcMethod.url.validateCode2,

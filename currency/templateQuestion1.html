@@ -191,14 +191,6 @@
     <div class="emp_questionList">
      <ul>
        <li v-for="(item, index) in questionOptionList" :key="index">
-<!--         <cube-validator-->
-<!--             v-model="valid"-->
-<!--             :model="captcha"-->
-<!--             :rules="rules"-->
-<!--             :messages="messages"-->
-<!--             :immediate="immediate"-->
-<!--             @validating="validatingHandler"-->
-<!--             @validated="validatedHandler">-->
          <ul class="emp_option_list">
            <li v-if="item.optionType == 0">
              <p>{{(index+1) + '、'+ item.title}}</p>
@@ -209,7 +201,6 @@
              <emp-checkbox :optionlist="item.optionlist" ref="checkbox"></emp-checkbox>
            </li>
          </ul>
-<!--         </cube-validator>-->
        </li>
      </ul>
     </div>
@@ -242,16 +233,16 @@
 <!--单选组件-->
 <template class="hide" id="emp_radio">
   <div>
-    <cube-radio-group class="emp_radio">
-      <cube-radio
-          v-for="(item,index) in optionlist"
-          :key="index"
-          :option="item"
-          v-model="selected"
-          :hollow-style="true">
-<!--        <p>{{optionData}}</p>-->
-      </cube-radio>
-    </cube-radio-group>
+      <cube-radio-group class="emp_radio">
+        <cube-radio
+            v-for="(item,index) in optionlist"
+            :key="index"
+            :option="item"
+            v-model="selected"
+            :hollow-style="true">
+<!--          <p>{{optionData}}</p>-->
+        </cube-radio>
+      </cube-radio-group>
   </div>
 </template>
 <!--多选组件-->
