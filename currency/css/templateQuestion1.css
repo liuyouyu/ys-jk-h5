@@ -107,11 +107,11 @@ body {
     /*border: 1px solid #f2f2f2;*/
     border-radius: 4px;
     position: relative;
+    color: #c6c6c6;
 }
 .get_code::after {
     width: 200%;
     height: 200%;
-    border-radius: 4px;
     -webkit-transform: scale(.5);
     transform: scale(.5);
     content: "";
@@ -125,6 +125,9 @@ body {
     border: 1px solid #f2f2f2;
     box-sizing: border-box;
     border-left: 0;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 .get_code_input {
     width: calc(100% - 7em);
@@ -424,4 +427,8 @@ body {
 }
 .topicType {
     margin-left: 10px;
+}
+.get_code_input:after {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
