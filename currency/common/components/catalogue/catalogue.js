@@ -13,7 +13,8 @@ Vue.component('catalogue', {
           </div>
           <div class='c-info' :style="item.thumbnail?'':'width:100%'" >
             <div class='c-title'>{{item.title}}</div>
-            <div class='c-author'>{{item.utime}}</div>
+            <div class='c-author'>{{item.ffPushTime?item.ffPushTime.substr(0,10):''}}</div>
+            <div class='c-pvCount'>访问量:{{item.pvCount}}</div>
           </div>
         </div>
       </div>
@@ -62,6 +63,7 @@ Vue.component('catalogue', {
           console.log('文稿信息',data.data.length);
           if(data.data.length!=0){
             _this.catalogueData = data.data
+            console.log('推荐内容的数据',data.data);
           }else{
             _this.isShow = false
           }

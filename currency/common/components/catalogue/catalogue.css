@@ -77,3 +77,14 @@
   bottom: -5px;
   right: 5px;
 }
+
+/* 访问量 */
+.c-pvCount{
+  position: absolute;
+  bottom: -5px;
+  right: 95px;
+  text-align: right;
+  height: 20%;
+  font-size: 15px;
+  color: #CACFD8;
+}
