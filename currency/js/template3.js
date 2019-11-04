@@ -793,7 +793,7 @@ var INDEXAPP = new Vue({
     PicImgsData : [],//图集
     videoData : [],//视频
     isDisable: true,//判断是否提交
-    userInfoCacheKey: '',用户信息
+    userInfoCacheKey: '',//用户信息
   },
   methods: {
     queryActivityById: function () {
