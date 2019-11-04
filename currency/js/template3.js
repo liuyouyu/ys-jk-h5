@@ -959,7 +959,7 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
-    this.userInfoCacheKey = sessionStorage.getItem('_user')
+    this.userInfoCacheKey = localStorage.getItem('_user')
     console.log(this.userInfoCacheKey, '获取全局用户信息数据')
     //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
     window.addEventListener("resize", function () {
