@@ -928,12 +928,14 @@ var templateView = {
               for(var z = 0; z < this.redioListData.length; z++) {
                 if(this.redioListData[z] == this.questionOptionList[k].answerList[j].answerId) {
                   this.questionOptionList[k].answerList[j].checked = true
+                  this.questionOptionList[k].answerList[j].count = 1
                 }
               }
             } else {
               for(var n = 0; n <this.checkBoxListData.length; n ++){
                 if(this.checkBoxListData[n] == this.questionOptionList[k].answerList[j].answerId) {
                   this.questionOptionList[k].answerList[j].checked = true
+                  this.questionOptionList[k].answerList[j].count = 1
                 }
               }
             }
