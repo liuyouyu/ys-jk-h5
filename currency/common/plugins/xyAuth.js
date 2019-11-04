@@ -204,6 +204,7 @@ if(!xyAuth) {
 				cache: false,
 				context: this,
 				success: function(data) {
+					console.log(data,'获取微信授权用户信息')
 					if(data.code === 0) {
 						var data = data.data;
 						var nowHref = this.clearUrlParam();

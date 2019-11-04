@@ -1232,7 +1232,8 @@ var INDEXAPP = new Vue({
             desc: _desc,
             imgUrl: _posterUrl
           });
-          
+          var code = xyAuth.getRequestValue("code");
+          this.getAuthUserInfo(code);
         }
       }).catch(function(e) {
       });
