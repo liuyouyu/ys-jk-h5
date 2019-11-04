@@ -102,6 +102,10 @@ var templateView = {
             isdisable: {
                 type: Boolean,
                 default: true
+            },
+            userinfocachekey: {
+                type: Object,
+                default: {}
             }
         },
         components: {
@@ -438,6 +442,13 @@ var templateView = {
             getFromData() {
                 var self = this;
                 var jsonObj = {};
+                var openid = '';
+                var unionid = '';
+                openid = this.userinfocachekey.openid
+                unionid = this.userinfocachekey.unionid
+                console.log(openid,unionid, '提交时获取openid，unionid');
+                jsonObj['wxOpenId'] = openid
+                jsonObj['unionId'] = unionid
                 jsonObj['PortraitInfoCustomize'] = []
                 // {
                 //   title: CONTENTVAR.title,
@@ -779,6 +790,7 @@ var INDEXAPP = new Vue({
         PicImgsData : [],//图集
         videoData : [],//视频
         isDisable: true,//判断是否提交
+        userInfoCacheKey: '',//用户信息
     },
     methods: {
         queryActivityById: function () {
@@ -941,6 +953,7 @@ var INDEXAPP = new Vue({
         }
     },
     mounted: function () {
+        this.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
         //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
         window.addEventListener("resize", function () {
             if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {

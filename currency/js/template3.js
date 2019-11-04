@@ -153,11 +153,6 @@ var templateView = {
         this.$emit('input', selectedVal)
       },
       submitHandler(e) {
-        var openid = '';
-        var unionid = '';
-        openid = this.userinfocachekey.openid
-        unionid = this.userinfocachekey.unionid
-        console.log(openid,unionid, '提交时获取openid，unionid');
         console.log(this.fields,'this.fields');
         for (var i = 0; i < this.fields.length; i++) {
           if (this.fields[i]['type']) {
