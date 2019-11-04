@@ -444,9 +444,13 @@ var templateView = {
         var jsonObj = {};
         var openid = '';
         var unionid = '';
+
         if(this.userinfocachekey.code == 0) {
           openid = this.userinfocachekey.data.openid
           unionid = this.userinfocachekey.data.unionid
+          console.log(openid,unionid, '提交时获取openid，unionid');
+        }else {
+          console.log(this.userinfocachekey, '返回数据data不是0');
         }
         jsonObj['wxOpenId'] = openid
         jsonObj['unionId'] = unionid
@@ -956,6 +960,7 @@ var INDEXAPP = new Vue({
   },
   mounted: function () {
     this.userInfoCacheKey = sessionStorage.getItem('USER_INFO_CACHE_KEY')
+    console.log(this.userInfoCacheKey, '获取全局用户信息数据')
     //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
     window.addEventListener("resize", function () {
       if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
