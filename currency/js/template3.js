@@ -153,6 +153,11 @@ var templateView = {
         this.$emit('input', selectedVal)
       },
       submitHandler(e) {
+        var openid = '';
+        var unionid = '';
+        openid = this.userinfocachekey.openid
+        unionid = this.userinfocachekey.unionid
+        console.log(openid,unionid, '提交时获取openid，unionid');
         console.log(this.fields,'this.fields');
         for (var i = 0; i < this.fields.length; i++) {
           if (this.fields[i]['type']) {
@@ -444,14 +449,9 @@ var templateView = {
         var jsonObj = {};
         var openid = '';
         var unionid = '';
-
-        if(this.userinfocachekey.code == 0) {
-          openid = this.userinfocachekey.data.openid
-          unionid = this.userinfocachekey.data.unionid
-          console.log(openid,unionid, '提交时获取openid，unionid');
-        }else {
-          console.log(this.userinfocachekey, '返回数据data不是0');
-        }
+        openid = this.userinfocachekey.openid
+        unionid = this.userinfocachekey.unionid
+        console.log(openid,unionid, '提交时获取openid，unionid');
         jsonObj['wxOpenId'] = openid
         jsonObj['unionId'] = unionid
         jsonObj['PortraitInfoCustomize'] = []
@@ -959,7 +959,7 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
-    this.userInfoCacheKey = localStorage.getItem('_user')
+    this.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
     console.log(this.userInfoCacheKey, '获取全局用户信息数据')
     //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
     window.addEventListener("resize", function () {
