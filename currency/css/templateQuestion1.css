@@ -1,9 +1,9 @@
 html{
-    height: 100%;
+  height: 100%;
 }
 body {
-    height: 100%;
-    overflow: hidden;
+  height: 100%;
+  overflow: hidden;
 }
 #app {
     background-color: #ffffff;
@@ -94,17 +94,43 @@ body {
 /*文案信息结束*/
 .get_code_wrap {
     font-size: 14px;
+    overflow: hidden;
 }
 
 .get_code {
-    width: 7em;
+    width: 7.5em;
     float: left;
-    line-height: 2.9em;
-    height: 2.9em;
+    /*line-height: 2.9em;*/
+    /*height: 2.9em;*/
+    padding: 10px;
     text-align: center;
     box-sizing: border-box;
-    border: 1px solid #dbdbdb;
+    /*border: 1px solid #f2f2f2;*/
     border-radius: 4px;
+    position: relative;
+    color: #c6c6c6;
+}
+.get_code .c-right {
+    height: 20px;
+    line-height: 20px;
+    display: inline-block;
+}
+.get_code::after {
+    width: 200%;
+    height: 200%;
+    -webkit-transform: scale(.5);
+    transform: scale(.5);
+    content: "";
+    pointer-events: none;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+    border: 1px solid #f2f2f2;
+    box-sizing: border-box;
+    border-radius: 10px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
@@ -200,7 +226,7 @@ body {
 }
 
 .submit-button button {
-    padding: 9px 61px;
+    padding: 14px 146px;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -246,15 +272,15 @@ body {
     padding: 14px 24px;
 }
 .emp_imgs {
-    width: 100%;
-    vertical-align: middle;
+  width: 100%;
+  vertical-align: middle;
 }
 .emp_required{
-    position: absolute;
-    left: -49px;
-    top: 10px;
-    z-index: 9;
-    color: #e64340;
+  position: absolute;
+  left: -49px;
+  top: 10px;
+  z-index: 9;
+  color: #e64340;
 }
 .emp_interval {
     margin-top: 30px;
@@ -270,7 +296,7 @@ body {
     margin-right: 6px;
 }
 .cube-btn {
-    padding: 9px 16px 9px 9px;
+  padding: 9px 16px 9px 9px;
 }
 .submit-button .cube-btn {
     background: #0E357A;
@@ -306,18 +332,18 @@ body {
 }
 /* 样式修改 */
 .cube-input{
-    border-radius: 4px;
+  border-radius: 4px;
 }
 .cube-btn-inline{
-    border-radius: 4px;
-    /* position: relative; */
-    /* left: 7px; */
+  border-radius: 4px;
+  /* position: relative; */
+  /* left: 7px; */
 }
 .cube-form-item{
-    padding: 0px 70px;
+  padding: 0px 70px;
 }
 .dateShowStyle{
-    color: inherit;
+  color: inherit;
 }
 .cube-dialog-btn_highlight {
     color: #409eff;
@@ -341,7 +367,6 @@ body {
 .cube-popup-center .cube-popup-content, .cube-popup-left .cube-popup-content, .cube-popup-right .cube-popup-content {
     top: -66%;
 }
-
 
 /*问卷样式 2019年10月29日14:39:36*/
 .emp_questionTemplate {
@@ -373,14 +398,6 @@ body {
     color: #fff;
     padding: 7px 0;
 }
-.cube-checkbox,.cube-radio {
-    border: 1px solid #D4D4D4;
-    margin: 10px 30px 15px;
-    border-radius: 4px;
-}
-.border-top-1px:before,.border-bottom-1px:after {
-    border: 0;
-}
 .emp_questionFrom {
     margin-top: 20px;
 }
@@ -389,6 +406,10 @@ body {
     width: 84%;
     margin-left: 8%;
     margin-bottom: 10px;
+}
+.emp_questionFrom  .get_code_wrap .get_code_input {
+    width: calc(100% - 11.8em);
+    float: left;
 }
 .submit-button button {
     margin-bottom: 20px;
@@ -401,22 +422,19 @@ body {
     border:1px solid #D4D4D4!important;
     border-radius: 8px;
 }
+.border-top-1px:before,.border-bottom-1px:after {
+    border: 0;
+}
+.cube-checkbox,.cube-radio {
+    border: 1px solid #D4D4D4;
+    margin: 10px 30px 15px;
+    border-radius: 4px;
+}
 .topicType {
     margin-left: 10px;
 }
-.getCode_wrapper.cube-form-item {
-    padding: 0 29px 0 1px;
-    justify-content: space-around;
-}
-.getCode_wrapper .cube-form-field {
-    width: 100%;
-}
-.get_code_wrap {
-    display: flex;
-    justify-content: space-around;
-}
 .get_code_input:after {
+    border-right: none!important;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    border-right: 0;
 }
