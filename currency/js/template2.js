@@ -408,6 +408,15 @@ var templateView = {
                     return false;
                 }
                 var self = this;
+                self.sendAuthCode = false;
+                self.auth_time = 60;
+                var auth_timetimer = setInterval(() => {
+                    self.auth_time--;
+                    if (self.auth_time <= 0) {
+                        self.sendAuthCode = true;
+                        clearInterval(auth_timetimer);
+                    }
+                }, 1000);
                 mcMethod.query.request({
                     url: mcMethod.url.sendVerificationCode,
                     queryType: 'GET',
@@ -418,15 +427,6 @@ var templateView = {
                     callback: function (data) {
                         if (data.code == 0) {
                             self.phoneCodeKey = data.data.codeKey
-                            self.sendAuthCode = false;
-                            self.auth_time = 60;
-                            var auth_timetimer = setInterval(() => {
-                                self.auth_time--;
-                                if (self.auth_time <= 0) {
-                                    self.sendAuthCode = true;
-                                    clearInterval(auth_timetimer);
-                                }
-                            }, 1000);
                         }
                     },
                     errorCallback: function (err) {

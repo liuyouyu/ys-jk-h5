@@ -963,13 +963,13 @@ var templateView = {
               toast.show();
               self.alreadySubmit = false
             }else if(data.code == 10099 ){
-
               var toast = self.$createToast({
                 txt: data.message,
                 time: '2000',
                 type: 'txt',
               })
               toast.show()
+              self.alreadySubmit = false
             } else {
               var toast = self.$createToast({
                 txt: '提交失败!',
