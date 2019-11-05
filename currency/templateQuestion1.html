@@ -207,7 +207,8 @@
     <div class="emp_questionFrom">
         <cube-input v-model="submitName" @input="handlePhoneChange" placeholder='姓名'></cube-input>
         <cube-input v-model="model.userPhone" @input="handlePhoneChange" placeholder='手机号'></cube-input>
-        <span class="emp_waring" v-if="phoneWaring"></span>
+<!--        <span class="emp_waring" v-if="phoneWaring"></span>-->
+        <cube-form-item class="getCode_wrapper">
         <div class="get_code_wrap clearfloat" >
           <cube-input class="get_code_input fl emp_tempInput" maxlength="4" v-model="model.userCode" placeholder='验证码'></cube-input>
           <span class="get_code fr">
@@ -219,6 +220,7 @@
              <span class="auth_text_blue">重新获取{{auth_time}}</span>秒</span>
           </span>
         </div>
+        </cube-form-item>
     </div>
     <div class="tc submit-button">
       <div v-if="isdisable">
