@@ -170,7 +170,7 @@ var templateView = {
                                     console.log(val,'数据不为空',this.model,this.fields[i]);
                                     if(this.fields[i].category == "email"){
                                         if (!CONTENTVAR.regEmail.test(val)||val==''){
-                                            const toast = this.$createToast({
+                                            var toast = this.$createToast({
                                                 txt: '请输入有效邮箱!',
                                                 type: 'txt',
                                             })
@@ -183,7 +183,7 @@ var templateView = {
                                     }
                                 }else{
                                     console.log(val,'数据空',this.model,this.fields[i]);
-                                    const toast = this.$createToast({
+                                    var toast = this.$createToast({
                                         txt: '请输入'+this.fields[i].props.placeholder + '!',
                                         type: 'txt',
                                     })
@@ -221,7 +221,7 @@ var templateView = {
                 }
                 var self = this;
                 if (!CONTENTVAR.rexPhone.test(this.model.phone)){
-                    const toast = self.$createToast({
+                    var toast = self.$createToast({
                         txt: '请输入有效手机号!',
                         type: 'txt',
                     })
@@ -229,7 +229,7 @@ var templateView = {
                     this.phoneWaring = true
                 }
                 if(this.model.userCode == '' && this.isPhone == true){
-                    const toast = self.$createToast({
+                    var toast = self.$createToast({
                         txt: '请输入验证码!',
                         type: 'txt',
                     })
@@ -249,7 +249,7 @@ var templateView = {
                             self.getFromData()
                         } else {
                             if(self.model.userCode != ''){
-                                const toast = self.$createToast({
+                                var toast = self.$createToast({
                                     txt: '验证码错误!',
                                     type: 'txt',
                                 })
@@ -258,7 +258,7 @@ var templateView = {
                         }
                     },
                     errorCallback: function (err) {
-                        const toast = self.$createToast({
+                        var toast = self.$createToast({
                             txt: '验证失败，请稍后再试!',
                             type: 'txt',
                         })
@@ -400,7 +400,7 @@ var templateView = {
             getCode() {
                 var phone = this.model.phone;
                 if (!(CONTENTVAR.rexPhone.test(phone))) {
-                    const toast = this.$createToast({
+                    var toast = this.$createToast({
                         txt: '手机号码有误，请重填写',
                         type: 'txt',
                     })
@@ -531,21 +531,19 @@ var templateView = {
                 jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
                 jsonObj['wxName'] = wxInfo.nickname || ''
                 // jsonObj['wxExt'] = {}
-                let channelInfo = {
+                var channelInfo = {
                   'channelName':xyAuth.getRequestValue('channelName') || '',
                   'channelId':xyAuth.getRequestValue('channelId') || '',
                   'authorizeId':xyAuth.getRequestValue('authorizeId') || '',
                   'authorizeName':xyAuth.getRequestValue('authorizeName') || '',
                 }
-                for (let k in channelInfo) {              // 去除对象内多余的空值key
+                for (var k in channelInfo) {              // 去除对象内多余的空值key
                   if (channelInfo[k] === '') {
                     delete channelInfo[k]
                   }
                 }
                 if(JSON.stringify(channelInfo) != '{}') {
-                    jsonObj['channelList'] = {
-                        ...channelInfo
-                    }
+                    jsonObj['channelList'] = channelInfo
                 }
 
                 console.log('发送的表单数据',jsonObj);
@@ -555,7 +553,7 @@ var templateView = {
                     url: mcMethod.url.savePortraitInfo,
                     callback: function (data) {
                         if (data.code == 0) {
-                            const toast = self.$createToast({
+                            var toast = self.$createToast({
                                 txt: '领取成功!',
                                 type: 'txt',
                                 time: '2000',
@@ -577,7 +575,7 @@ var templateView = {
                                 self.alreadySubmit = false;
                             }
                         }else {
-                            const toast = self.$createToast({
+                            var toast = self.$createToast({
                                 txt: '领取失败!',
                                 time: '2000',
                                 type: 'txt',
@@ -609,15 +607,15 @@ var templateView = {
             this.init()
             console.log(this.fields,'this.fields');
             document.body.addEventListener('focusin', () => {  
-              let u = navigator.userAgent;
-              let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+              var u = navigator.userAgent;
+              var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
               if (isiOS) {
                 window.scrollTo(0, 0);
               } 
             })
             document.body.addEventListener('focusout', () => { 
-              let u = navigator.userAgent;
-              let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+              var u = navigator.userAgent;
+              var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
               if (isiOS) {
                 window.scrollTo(0, 0);
               }
@@ -856,24 +854,25 @@ var INDEXAPP = new Vue({
             }
         },
         pvSum: function () {
-            let channelInfo = {
+            var channelInfo = {
                 channelName:xyAuth.getRequestValue('channelName') || '',
                 channelId:xyAuth.getRequestValue('channelId') || '',
                 authorizeId:xyAuth.getRequestValue('authorizeId') || '',
                 authorizeName:xyAuth.getRequestValue('authorizeName') || '',
             }
-            for (const key in channelInfo) {              // 去除对象内多余的空值key
+            for (var key in channelInfo) {              // 去除对象内多余的空值key
                 if (channelInfo[key] === '') {
                     delete channelInfo[key]
                 }
             }
+            var queryMap = {
+                activityId: mcMethod.info.activityId,
+            }
+            Object.assign(queryMap,channelInfo)
             mcMethod.query.request({
                 url: mcMethod.url.pvSum,
                 queryType: 'GET',
-                address: {
-                    activityId: mcMethod.info.activityId,
-                    ...channelInfo
-                },
+                address: queryMap,
                 callback: function (data) {
                 }
             })
