@@ -408,7 +408,7 @@ body {
     margin-bottom: 10px;
 }
 .emp_questionFrom  .get_code_wrap .get_code_input {
-    width: calc(100% - 12.9em);
+    width: calc(84% - 8em);
     float: left;
 }
 .submit-button button {

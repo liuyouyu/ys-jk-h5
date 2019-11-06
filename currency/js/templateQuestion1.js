@@ -915,16 +915,21 @@ var templateView = {
         if(JSON.stringify(channelInfo) != '{}'){
           jsonObj['channelList'] = channelInfo
         }
-
         questionnaire['questionnaireInfo'] = self.questionnaireInfo
         var redioData = this.$refs.redio
-        for( var i = 0; i < redioData.length; i++) {
-          this.redioListData.push(redioData[i].selected)
+        console.log(redioData,'单选题>>>>>>>???????')
+        if(redioData != undefined) {
+          for( var i = 0; i < redioData.length; i++) {
+            this.redioListData.push(redioData[i].selected)
+          }
         }
         var checkboxData = this.$refs.checkbox
-        for (var g = 0; g < checkboxData.length; g ++){
-          for( var s = 0 ; s < checkboxData[g].checkBoxList.length; s++){
-            this.checkBoxListData.push(checkboxData[g].checkBoxList[s])
+        console.log(checkboxData,'多选题>???????????')
+        if( checkboxData != undefined) {
+          for (var g = 0; g < checkboxData.length; g ++){
+            for( var s = 0 ; s < checkboxData[g].checkBoxList.length; s++){
+              this.checkBoxListData.push(checkboxData[g].checkBoxList[s])
+            }
           }
         }
         console.log(this.checkBoxListData, '整理过后的复选框数据');
@@ -1014,23 +1019,28 @@ var templateView = {
           toast.show()
         }
         var redioRules = this.$refs.redio
-        for (var i = 0; i < redioRules.length; i ++) {
-          if(redioRules[i].selected === undefined) {
-            var toast = self.$createToast({
-              txt: '问卷还未填完整，不能提交哦!',
-              type: 'txt',
-            })
-            toast.show()
+        console.log(redioRules, '单选》？？');
+        if(redioRules != undefined){
+          for (var i = 0; i < redioRules.length; i ++) {
+            if(redioRules[i].selected === undefined) {
+              var toast = self.$createToast({
+                txt: '问卷还未填完整，不能提交哦!',
+                type: 'txt',
+              })
+              toast.show()
+            }
           }
         }
         var checkboxRules = this.$refs.checkbox
-        for (var i = 0; i < checkboxRules.length; i++) {
-          if(checkboxRules[i].checkBoxList.length == 0) {
-            var toast = self.$createToast({
-              txt: '问卷还未填完整，不能提交哦!',
-              type: 'txt',
-            })
-            toast.show()
+        if(checkboxRules != undefined){
+          for (var i = 0; i < checkboxRules.length; i++) {
+            if(checkboxRules[i].checkBoxList.length == 0) {
+              var toast = self.$createToast({
+                txt: '问卷还未填完整，不能提交哦!',
+                type: 'txt',
+              })
+              toast.show()
+            }
           }
         }
         mcMethod.query.request({
