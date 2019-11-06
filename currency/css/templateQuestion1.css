@@ -98,7 +98,7 @@ body {
 }
 
 .get_code {
-    width: 7.5em;
+    width: 8em;
     float: left;
     /*line-height: 2.9em;*/
     /*height: 2.9em;*/
@@ -408,7 +408,7 @@ body {
     margin-bottom: 10px;
 }
 .emp_questionFrom  .get_code_wrap .get_code_input {
-    width: calc(100% - 11.8em);
+    width: calc(100% - 12.9em);
     float: left;
 }
 .submit-button button {
