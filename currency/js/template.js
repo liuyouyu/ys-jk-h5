@@ -444,11 +444,13 @@ var templateView = {
         var jsonObj = {};
         var openid = '';
         var unionid = '';
-        openid = this.userinfocachekey.openid
-        unionid = this.userinfocachekey.unionid
-        console.log(openid,unionid, '提交时获取openid，unionid');
-        jsonObj['wxOpenId'] = openid
-        jsonObj['unionId'] = unionid
+        if(this.userinfocachekey != null){
+          openid = self.userinfocachekey.openid
+          unionid = self.userinfocachekey.unionid
+          console.log(openid,unionid, '提交时获取openid，unionid');
+          jsonObj['wxOpenId'] = openid
+          jsonObj['unionId'] = unionid
+        }
         jsonObj['PortraitInfoCustomize'] = []
         // {
         //   title: CONTENTVAR.title,
