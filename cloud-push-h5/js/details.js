@@ -70,7 +70,8 @@ $(function() {
 			beCommenteItem: '', // 被评论的数组
 			docItem: '', // 文章详情内容
 			pvShow: 'yes', // 是否展示阅读量
-      articleTime: ''//文章发布时间
+      articleTime: '',//文章发布时间
+			pvNumArticle: ''
 		},
 		methods: {
 			//显示loadImg
@@ -520,7 +521,8 @@ $(function() {
 
 						that.cText = data.data.srcontent; //内容
 						if (articleType == 3) { // 视频文稿
-							var videos = data.data.videos || [];
+							console.log('有没有视频？？？')
+							var videos = data.data.extend.videos || [];
 							if(videos.length != 0) {
 								that.videoData.show = true;
 								var obj = {};
@@ -537,7 +539,7 @@ $(function() {
 						} else {
 							//没有正文显示视频
 							if(!that.cText) {
-								var videos = data.data.videos || [];
+								var videos = data.data.extend.videos || [];
 								if(videos.length != 0) {
 									that.videoData.show = true;
 									var obj = {};
@@ -594,7 +596,7 @@ $(function() {
 							$('.articleCon').find('video').attr('webkit-playsinline', '');
 							$('p > img').css('width', '100%');
 							if(!dazzleUtil.getRequestValue('ifram')) {
-								that.addActionLogByPv(data.data, that.SRC[1], that.PAGE_ID.articleDetails); //添加阅读数量
+								// that.addActionLogByPv(data.data, that.SRC[1], that.PAGE_ID.articleDetails); //添加阅读数量
 							}
                             // initImgPreview(); //初始化预览图
                             initImgPreview(docDetailPage); // 初始化预览图
@@ -860,37 +862,31 @@ $(function() {
 					authorizeId:'',
 					authorizeName:''
 				};
-				// axios.get(url, {
-				// 	params: paramJson
-				// }).then(function(res) {
-				// 	var data = that.checkReturn(res);
-				// 	if(data) {
-				// 		if(data.data.num < 0) {
-				// 			that.cZan = 0;
-				// 		} else {
-				// 			that.cZan = data.data.num;
-				// 		}
-				// 	}
-				// }).catch(function(e) {
-				// 	console.log(e);
-				// });
+				axios.get(url, {
+					params: paramJson
+				}).then(function(res) {
+					var data = self.checkReturn(res);
+					console.log(data,'addPageView??')
+					if(data.code == 0) {
+						self.handleGetPvNum()
+					}
+				}).catch(function(e) {
+					console.log(e);
+				});
 			},
 			handleGetPvNum: function () {
 				var self = this;
 				var id = this.getUrlParam('id');
 				var url = config.apiHost + "/api/ff/h5/getPageView?id=" + id;
-				// axios.get(url).then(function(res) {
-				// 	var data = that.checkReturn(res);
-				// 	if(data) {
-				// 		if(data.data.num < 0) {
-				// 			that.cZan = 0;
-				// 		} else {
-				// 			that.cZan = data.data.num;
-				// 		}
-				// 	}
-				// }).catch(function(e) {
-				// 	console.log(e);
-				// });
+				axios.get(url).then(function(res) {
+					var data = self.checkReturn(res);
+					console.log(data,'访问量')
+					if(data.code == 0 ) {
+						self.pvNumArticle = data.data
+					}
+				}).catch(function(e) {
+					console.log(e);
+				});
 			}
 		},
 		mounted: function() {

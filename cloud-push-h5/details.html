@@ -40,7 +40,7 @@
                 <h2 class="detailsTit">{{cTit}}</h2>
                 <div class="article_attribute">
                     <span class="time">{{articleTime}}</span>
-                    <span class="pvNum">1536阅读</span><!-- 目前阅读量是写死的 -->
+                    <span class="pvNum">{{pvNumArticle}}阅读</span><!-- 目前阅读量是写死的 -->
                 </div>
                 <div class="mediaAttention" v-if="colorfulInfo && colorfulInfo._id">
                    	<div class="mediaHead fl" @click="toOfficialProfile(colorfulInfo._id)">
