@@ -537,7 +537,7 @@ var templateView = {
         // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
         var wxInfo = xyAuth.getCacheUserInfo()
         
-        jsonObj['wxOpenId'] = wxInfo.wxOpenId || ''
+        // jsonObj['wxOpenId'] = wxInfo.wxOpenId || ''
         jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
         jsonObj['wxName'] = wxInfo.nickname || ''
         // jsonObj['wxExt'] = {}
@@ -1286,6 +1286,7 @@ var INDEXAPP = new Vue({
   },
   mounted: function () {
     this.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+    console.log(this.userInfoCacheKey, '全局获取用户信息包括openid, unioid');
     //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法 
     window.addEventListener("resize", function () {
       if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
