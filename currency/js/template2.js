@@ -534,10 +534,10 @@ var templateView = {
                 jsonObj['wxName'] = wxInfo.nickname || ''
                 // jsonObj['wxExt'] = {}
                 var channelInfo = {
-                  'channelName':xyAuth.getRequestValue('channelName') || '',
-                  'channelId':xyAuth.getRequestValue('channelId') || '',
-                  'authorizeId':xyAuth.getRequestValue('authorizeId') || '',
-                  'authorizeName':xyAuth.getRequestValue('authorizeName') || '',
+                    'channelName':xyAuth.getRequestValue('ffChannelCall') || '',
+                    'channelId':xyAuth.getRequestValue('ffChannelId') || '',
+                    'authorizeId':xyAuth.getRequestValue('authorizeId') || '',
+                    'authorizeName':xyAuth.getRequestValue('authorizeCall') || '',
                 }
                 for (var k in channelInfo) {              // 去除对象内多余的空值key
                   if (channelInfo[k] === '') {
@@ -857,10 +857,10 @@ var INDEXAPP = new Vue({
         },
         pvSum: function () {
             var channelInfo = {
-                channelName:xyAuth.getRequestValue('channelName') || '',
-                channelId:xyAuth.getRequestValue('channelId') || '',
+                channelName:xyAuth.getRequestValue('ffChannelCall') || '',
+                channelId:xyAuth.getRequestValue('ffChannelId') || '',
                 authorizeId:xyAuth.getRequestValue('authorizeId') || '',
-                authorizeName:xyAuth.getRequestValue('authorizeName') || '',
+                authorizeName:xyAuth.getRequestValue('authorizeCall') || '',
             }
             for (var key in channelInfo) {              // 去除对象内多余的空值key
                 if (channelInfo[key] === '') {

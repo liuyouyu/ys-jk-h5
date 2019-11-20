@@ -534,16 +534,17 @@ var templateView = {
         jsonObj['wxName'] = wxInfo.nickname || ''
         // jsonObj['wxExt'] = {}
         var channelInfo = {
-          'channelName':xyAuth.getRequestValue('channelName') || '',
-          'channelId':xyAuth.getRequestValue('channelId') || '',
+          'channelName':xyAuth.getRequestValue('ffChannelCall') || '',
+          'channelId':xyAuth.getRequestValue('ffChannelId') || '',
           'authorizeId':xyAuth.getRequestValue('authorizeId') || '',
-          'authorizeName':xyAuth.getRequestValue('authorizeName') || '',
+          'authorizeName':xyAuth.getRequestValue('authorizeCall') || '',
         }
         for (var k in channelInfo) {              // 去除对象内多余的空值key
           if (channelInfo[k] === '') {
             delete channelInfo[k]
           }
         }
+        console.log(JSON.stringify(channelInfo) != '{}','判断真假');
         if(JSON.stringify(channelInfo) != '{}') {
           jsonObj['channelList'] = channelInfo
         }
@@ -608,13 +609,6 @@ var templateView = {
       this.formList = this.dataInfo
       this.init()
       console.log(this.fields,'this.fields');
-      // $(document).on( "input", function(event){
-      //   let u = navigator.userAgent;
-      //   let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-      //   if (isiOS) {
-      //     window.scrollTo(0, 0);
-      //   }
-      // })
       document.body.addEventListener('focusin', () => {  
         var u = navigator.userAgent;
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
@@ -864,10 +858,10 @@ var INDEXAPP = new Vue({
     },
     pvSum: function () {
       var channelInfo = {
-        channelName:xyAuth.getRequestValue('channelName') || '',
-        channelId:xyAuth.getRequestValue('channelId') || '',
+        channelName:xyAuth.getRequestValue('ffChannelCall') || '',
+        channelId:xyAuth.getRequestValue('ffChannelId') || '',
         authorizeId:xyAuth.getRequestValue('authorizeId') || '',
-        authorizeName:xyAuth.getRequestValue('authorizeName') || '',
+        authorizeName:xyAuth.getRequestValue('authorizeCall') || '',
       }
       for (var key in channelInfo) {              // 去除对象内多余的空值key
         if (channelInfo[key] === '') {
