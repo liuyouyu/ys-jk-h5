@@ -533,6 +533,9 @@ var templateView = {
         jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
         jsonObj['wxName'] = wxInfo.nickname || ''
         // jsonObj['wxExt'] = {}
+        console.log(xyAuth.getRequestValue('ffChannelCall'), '获取的ffChannelCall');
+        console.log(xyAuth.getRequestValue('ffChannelId'), '获取的ffChannelId');
+        console.log(xyAuth.getRequestValue('authorizeCall'), '获取的authorizeCall');
         var channelInfo = {
           'channelName':xyAuth.getRequestValue('ffChannelCall') || '',
           'channelId':xyAuth.getRequestValue('ffChannelId') || '',
