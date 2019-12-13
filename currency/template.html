@@ -18,13 +18,14 @@
   <title></title>
 </head>
 <body>
+<!--报名招募浅色系-->
 <div id="app" class="wrapper">
   <div class="content">
     <!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
     <div v-if="activityData.length">
         <div v-for="(items,index) in activityData" :key="index">
             <div v-if="items.templateType == 1">
-                <emp-form :data-info="items" :isdisable="isDisable" :userinfocachekey="userInfoCacheKey"></emp-form>
+                <emp-form :data-info="items" :isdisable="isDisable" :userinfocachekey="userInfoCacheKey" :templatetype="templateType"></emp-form>
             </div>
             <div v-else-if="items.templateType == 2">
                 <emp-writing :data-info="items"></emp-writing>

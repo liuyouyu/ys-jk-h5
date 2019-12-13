@@ -106,6 +106,10 @@ var templateView = {
       userinfocachekey: {
         type: Object,
         default: {}
+      },
+      templatetype: {
+        type:String,
+        default: ""
       }
     },
     components: {
@@ -559,16 +563,25 @@ var templateView = {
           url: mcMethod.url.savePortraitInfo,
           callback: function (data) {
             if (data.code == 0) {
-              var toast = self.$createToast({
-                txt: '参与成功!',
-                type: 'txt',
-                time: '2000',
-                // $events: {
-                //   timeout: () => {
-                //     console.log(self.islinkUrl,self.islinkUrl.typetitle != undefined,self.islinkUrl.typetitle != '',"111111111")
-                //   }
-                // }
-              })
+              if(self.templatetype == "template.html" || self.templatetype == "template4.html") {
+                var toast = self.$createToast({
+                  txt: '参与成功!',
+                  type: 'txt',
+                  time: '2000',
+                })
+              }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
+                var toast = self.$createToast({
+                  txt: '领取成功!',
+                  type: 'txt',
+                  time: '2000',
+                })
+              }else if(self.templatetype == "templateSignIn1.html.html" || self.templatetype == "templateSignIn2.html.html"){
+                var toast = self.$createToast({
+                  txt: '签到成功!',
+                  type: 'txt',
+                  time: '2000',
+                })
+              }
               toast.show();
                 if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] != ''){
                     console.log("2222222")
@@ -577,16 +590,29 @@ var templateView = {
                     window.location.href = url
                 }else {
                     console.log("3333333----------------------333333")
-                    // location.reload();
                     self.alreadySubmit = false;
                 }
             }else {
+              if(self.templatetype == "template.html" || self.templatetype == "template4.html") {
                 var toast = self.$createToast({
-                    txt: '参与失败!',
-                    time: '2000',
-                    type: 'txt',
+                  txt: '参与失败!',
+                  type: 'txt',
+                  time: '2000',
                 })
-                toast.show()
+              }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
+                var toast = self.$createToast({
+                  txt: '领取失败!',
+                  type: 'txt',
+                  time: '2000',
+                })
+              }else if(self.templatetype == "templateSignIn1.html.html" || self.templatetype == "templateSignIn2.html.html"){
+                var toast = self.$createToast({
+                  txt: '签到失败!',
+                  type: 'txt',
+                  time: '2000',
+                })
+              }
+              toast.show()
             }
           }
         })
@@ -603,6 +629,7 @@ var templateView = {
       }
     },
     mounted: function () {
+      console.log(this.templatetype,"模板类型");
       this.alreadySubmit = true;
       if (CONTENTVAR.isActivityTemplateId === 1){
         this.isSubmit = false
@@ -794,7 +821,8 @@ var INDEXAPP = new Vue({
     PicImgsData : [],//图集
     videoData : [],//视频
     isDisable: true,//判断是否提交
-    userInfoCacheKey: ''
+    userInfoCacheKey: '',
+    templateType: "",//模板类型
   },
   methods: {
     queryActivityById: function () {
@@ -809,6 +837,7 @@ var INDEXAPP = new Vue({
           callback: function (data) {
             if (data.code === 0 && data.data != null) {
               self.activityData = data.data.modelExt
+              self.templateType = data.data.activityTemplateId
               document.title = data.data.activityInfo.title
               CONTENTVAR.ispvSum = data.data.activityStatus
               if(CONTENTVAR.ispvSum == 1) {
@@ -894,8 +923,10 @@ var INDEXAPP = new Vue({
           },
           callback: function (data) {
             if (data.code === 0 && data.data) {
+              console.log(data.data, "通过模板Id查找数据");
               var data = data.data.templateContent
               self.activityData = data.modelExt
+              self.templateType = data.data.activityTemplateId
               //基础信息
               if (data.activityInfo) {
                 self.activityInfo = data.activityInfo

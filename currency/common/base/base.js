@@ -151,5 +151,3 @@ mcMethod.query.request.prototype.getCommonUrlParam = function (option) {
     address
   
 };
-
-

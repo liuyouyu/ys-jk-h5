@@ -12,12 +12,13 @@
     <script src="common/plugins/cube.min.js?$$tempflag$$"></script>
     <link rel="stylesheet" href="common/font/iconfont.css?$$tempflag$$">
     <link rel="stylesheet" href="common/base/base.css?$$tempflag$$">
-    <link rel="stylesheet" href="css/template2.css?$$tempflag$$">
+    <link rel="stylesheet" href="css/template4.css?$$tempflag$$">
     <!-- 引入文稿组件样式 -->
     <link rel="stylesheet" href="common/components/catalogue/catalogue.css?$$tempflag$$">
     <title></title>
 </head>
 <body>
+<!--签到专用深色模板-->
 <div id="app">
     <div class="content">
         <!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
@@ -86,9 +87,9 @@
 </template>
 <!--图片-->
 <template class="hide" id="emp_img">
-  <div class="emp_picImg">
-      <img v-lazy="picDetail.picture" :key="picDetail.picture" alt="图片">
-  </div>
+    <div class="emp_picImg">
+        <img v-lazy="picDetail.picture" :key="picDetail.picture" alt="图片">
+    </div>
 </template>
 <!--图集轮播-->
 <template class="hide" id="emp_carouselImg">
@@ -137,7 +138,6 @@
                               class="c-right">
                         <span class="auth_text_blue">重新获取{{auth_time}}</span>秒</span>
                   </span>
-                                <!--                  <cube-input v-model="model.userCode" maxlength="4" placeholder="请输入验证码"></cube-input>-->
                             </div>
                         </cube-form-item>
 
@@ -148,7 +148,7 @@
                         </cube-form-item>
                         <cube-form-item v-else :field="item">
                             <date-picks :modelKey="item.modelKey" :tit='item.props.placeholder' :isshowwaring="iswaring"
-                                        @modelkey="handleDatePick">
+                                        @modelkey="handleDatePick" >
                             </date-picks>
                         </cube-form-item>
                         <!--            <cube-form-item v-else :field="item">-->
@@ -163,15 +163,16 @@
                             <cube-button type="button"
                                          v-if="alreadySubmit"
                                          :inline="true"
-                                         @click="submitHandler">即刻领取
+                                         @click="submitHandler">立即签到
                             </cube-button>
                             <cube-button type="button" :disabled="true" :inline="true" v-else style="background: #ccc">
-                                已领取
+                                已签到
                             </cube-button>
                         </div>
                         <cube-button type="button" :disabled="true" :inline="true" v-else style="background: #ccc">
-                            即刻领取
+                            立即签到
                         </cube-button>
+                        <div class='hint-text'>信息提交成功后，我们将在24小时内联系您，请耐心等待</div>
                     </div>
                 </cube-form-group>
             </cube-form>
@@ -216,8 +217,8 @@
 <script src="//cdn.yunshicloud.com/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://unpkg.com/larkplayer@latest/dist/larkplayer.js"></script>
 <script src="https://unpkg.com/larkplayer-ui@latest/dist/larkplayer-ui.js"></script>
-<script src="//cdn.yunshicloud.com/axios/0.18.0/axios.min.js"></script>
-<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="//cdn.yunshicloud.com/axios/0.18.0/axios.min.js?$$tempflag$$"></script>
+<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js?$$tempflag$$"></script>
 <script src="config/config.js?$$tempflag$$"></script>
 <!-- 文稿组件 -->
 <script src="common/components/catalogue/catalogue.js?$$tempflag$$"></script>
