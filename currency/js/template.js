@@ -568,9 +568,11 @@ var templateView = {
                 message = "参与成功"
               }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
                   message = "领取成功!"
-              }else if(self.templatetype == "templateSignIn1.html.html" || self.templatetype == "templateSignIn2.html.html"){
+              }else if(self.templatetype == "templateSignIn1.html" || self.templatetype == "templateSignIn2.html"){
                 message = "签到成功!"
               }
+              console.log(message, "签到信息");
+
               var toast = self.$createToast({
                 txt: message,
                 type: 'txt',
@@ -592,7 +594,7 @@ var templateView = {
                 message = "参与失败"
               }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
                 message = "领取失败"
-              }else if(self.templatetype == "templateSignIn1.html.html" || self.templatetype == "templateSignIn2.html.html"){
+              }else if(self.templatetype == "templateSignIn1.html" || self.templatetype == "templateSignIn2.html"){
                 message = "签到失败"
               }
               var toast = self.$createToast({
@@ -617,7 +619,8 @@ var templateView = {
       }
     },
     mounted: function () {
-      console.log(this.templatetype,"模板类型");
+
+      console.log(this.templatetype == "templateSignIn1.html","模板类型");
       this.alreadySubmit = true;
       if (CONTENTVAR.isActivityTemplateId === 1){
         this.isSubmit = false
