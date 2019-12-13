@@ -569,20 +569,22 @@ var templateView = {
                   type: 'txt',
                   time: '2000',
                 })
+                toast.show();
               }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
                 var toast = self.$createToast({
                   txt: '领取成功!',
                   type: 'txt',
                   time: '2000',
                 })
+                toast.show();
               }else if(self.templatetype == "templateSignIn1.html.html" || self.templatetype == "templateSignIn2.html.html"){
                 var toast = self.$createToast({
                   txt: '签到成功!',
                   type: 'txt',
                   time: '2000',
                 })
+                toast.show();
               }
-              toast.show();
                 if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] != ''){
                     console.log("2222222")
                     var url = self.islinkUrl.typetitle
@@ -599,20 +601,22 @@ var templateView = {
                   type: 'txt',
                   time: '2000',
                 })
+                toast.show()
               }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
                 var toast = self.$createToast({
                   txt: '领取失败!',
                   type: 'txt',
                   time: '2000',
                 })
+                toast.show()
               }else if(self.templatetype == "templateSignIn1.html.html" || self.templatetype == "templateSignIn2.html.html"){
                 var toast = self.$createToast({
                   txt: '签到失败!',
                   type: 'txt',
                   time: '2000',
                 })
+                toast.show()
               }
-              toast.show()
             }
           }
         })
