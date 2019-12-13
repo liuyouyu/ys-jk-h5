@@ -562,29 +562,21 @@ var templateView = {
           data: jsonObj,
           url: mcMethod.url.savePortraitInfo,
           callback: function (data) {
+            var message = ""
             if (data.code == 0) {
               if(self.templatetype == "template.html" || self.templatetype == "template4.html") {
-                var toast = self.$createToast({
-                  txt: '参与成功!',
-                  type: 'txt',
-                  time: '2000',
-                })
-                toast.show();
+                message = "参与成功"
               }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
-                var toast = self.$createToast({
-                  txt: '领取成功!',
-                  type: 'txt',
-                  time: '2000',
-                })
-                toast.show();
+                  message = "领取成功!"
               }else if(self.templatetype == "templateSignIn1.html.html" || self.templatetype == "templateSignIn2.html.html"){
-                var toast = self.$createToast({
-                  txt: '签到成功!',
-                  type: 'txt',
-                  time: '2000',
-                })
-                toast.show();
+                message = "签到成功!"
               }
+              var toast = self.$createToast({
+                txt: message,
+                type: 'txt',
+                time: '2000',
+              })
+              toast.show();
                 if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] != ''){
                     console.log("2222222")
                     var url = self.islinkUrl.typetitle
@@ -595,28 +587,20 @@ var templateView = {
                     self.alreadySubmit = false;
                 }
             }else {
+              var message = ""
               if(self.templatetype == "template.html" || self.templatetype == "template4.html") {
-                var toast = self.$createToast({
-                  txt: '参与失败!',
-                  type: 'txt',
-                  time: '2000',
-                })
-                toast.show()
+                message = "参与失败"
               }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
-                var toast = self.$createToast({
-                  txt: '领取失败!',
-                  type: 'txt',
-                  time: '2000',
-                })
-                toast.show()
+                message = "领取失败"
               }else if(self.templatetype == "templateSignIn1.html.html" || self.templatetype == "templateSignIn2.html.html"){
-                var toast = self.$createToast({
-                  txt: '签到失败!',
-                  type: 'txt',
-                  time: '2000',
-                })
-                toast.show()
+                message = "签到失败"
               }
+              var toast = self.$createToast({
+                txt: message,
+                type: 'txt',
+                time: '2000',
+              })
+              toast.show()
             }
           }
         })
