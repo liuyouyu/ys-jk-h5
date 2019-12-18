@@ -1,9 +1,9 @@
 html{
-  height: 100%;
+    height: 100%;
 }
 body {
-  height: 100%;
-  overflow: hidden;
+    height: 100%;
+    overflow: hidden;
 }
 #app {
     background-color: #ffffff;
@@ -252,16 +252,16 @@ body {
     padding: 11.5px 24px;
 }
 .emp_imgs {
-  width: 100%;
-  max-height: 222px;
-  vertical-align: middle;
+    width: 100%;
+    max-height: 222px;
+    vertical-align: middle;
 }
 .emp_required{
-  position: absolute;
-  left: -49px;
-  top: 10px;
-  z-index: 9;
-  color: #e64340;
+    position: absolute;
+    left: -49px;
+    top: 10px;
+    z-index: 9;
+    color: #e64340;
 }
 .emp_interval {
     margin-top: 30px;
@@ -277,10 +277,10 @@ body {
     margin-right: 6px;
 }
 .cube-btn {
-  padding: 9px 16px 9px 9px;
+    padding: 9px 16px 9px 9px;
 }
 .submit-button .cube-btn {
-    background: #4570A8;
+    background: #F75A47;
 }
 /*.emp_myVideo {*/
 /*    height: 280px;*/
@@ -309,45 +309,45 @@ body {
     color: #e64340;
 }
 .cube-form {
-  background: #202020;
-  padding-top: 20px;
+    background: #000;
+    padding-top: 20px;
 }
 /* 样式修改 */
 .cube-input{
-  border-radius: 15.75px;
-  border-color: #666666;
-  background: #202020;
+    border-radius: 15.75px;
+    border-color: #666666;
+    background: #202020;
 }
 
 .cube-input input::placeholder{
-  color:#666666;
+    color:#666666;
 }
 
 .cube-btn-inline{
-  border-radius: 15.75px;
-  border: 0;
-  /* border-color: #666666; */
+    border-radius: 15.75px;
+    border: 0;
+    /* border-color: #666666; */
 }
 .cube-form-item{
-  padding: 0px 68px;
+    padding: 0px 68px;
 }
 .dateShowStyle{
-  color: inherit;
+    color: inherit;
 }
 .hint-text{
-  text-align: left;
-  color: #ffffff;
-  font-size: 13px;
-  margin-top: 13px;
+    text-align: left;
+    color: #ffffff;
+    font-size: 13px;
+    margin-top: 13px;
 }
 .submit-button .cube-btn-inline {
-  font-size: 13px;
-  /* border-radius: 15.75px; */
+    font-size: 13px;
+    /* border-radius: 15.75px; */
 }
 .submit-button .cube-btn-inline::after{
-  border-radius: 31.5px;
-  border-color: #909090;
-  border: 0;
+    border-radius: 31.5px;
+    border-color: #909090;
+    border: 0;
 }
 .cube-dialog-btn_highlight {
     color: #409eff;

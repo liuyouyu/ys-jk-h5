@@ -565,11 +565,13 @@ var templateView = {
             var message = ""
             if (data.code == 0) {
               if(self.templatetype == "template.html" || self.templatetype == "template4.html") {
-                message = "报名成功"
+                message = "参与成功"
               }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
                   message = "领取成功!"
               }else if(self.templatetype == "templateSignIn1.html" || self.templatetype == "templateSignIn2.html"){
                 message = "签到成功!"
+              }else if(self.templatetype == "template5.html"){
+                message = "报名成功"
               }
               console.log(message, "签到信息");
 
@@ -591,11 +593,13 @@ var templateView = {
             }else {
               var message = ""
               if(self.templatetype == "template.html" || self.templatetype == "template4.html") {
-                message = "报名失败"
+                message = "参与失败"
               }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
                 message = "领取失败"
               }else if(self.templatetype == "templateSignIn1.html" || self.templatetype == "templateSignIn2.html"){
                 message = "签到失败"
+              }else if(self.templatetype == "template5.html") {
+                message = "报名失败"
               }
               var toast = self.$createToast({
                 txt: message,
