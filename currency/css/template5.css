@@ -316,7 +316,7 @@ body {
 .cube-input{
     border-radius: 15.75px;
     border-color: #666666;
-    background: #202020;
+    background: #000;
 }
 
 .cube-input input::placeholder{
