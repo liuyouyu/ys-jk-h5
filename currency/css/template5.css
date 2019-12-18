@@ -179,7 +179,7 @@ body {
 
 .emp_form_wrap .cube-form-item {
     /*border-bottom: 1px solid #ccc;*/
-    margin: auto;
+    margin:12px auto;
 }
 
 .emp_form_wrap .cube-form-field {
@@ -194,7 +194,7 @@ body {
 }
 
 .submit-button {
-    margin-top: 13px;
+    margin-top: 6px;
     margin-bottom: 13px;
     padding: 0 56px;
 }
@@ -310,7 +310,7 @@ body {
 }
 .cube-form {
     background: #000;
-    padding-top: 20px;
+    padding: 55px 0 30px;
 }
 /* 样式修改 */
 .cube-input{
