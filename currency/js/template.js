@@ -565,7 +565,7 @@ var templateView = {
             var message = ""
             if (data.code == 0) {
               if(self.templatetype == "template.html" || self.templatetype == "template4.html") {
-                message = "参与成功"
+                message = "报名成功"
               }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
                   message = "领取成功!"
               }else if(self.templatetype == "templateSignIn1.html" || self.templatetype == "templateSignIn2.html"){
@@ -591,7 +591,7 @@ var templateView = {
             }else {
               var message = ""
               if(self.templatetype == "template.html" || self.templatetype == "template4.html") {
-                message = "参与失败"
+                message = "报名失败"
               }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
                 message = "领取失败"
               }else if(self.templatetype == "templateSignIn1.html" || self.templatetype == "templateSignIn2.html"){
