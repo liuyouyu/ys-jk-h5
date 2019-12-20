@@ -834,6 +834,10 @@ var INDEXAPP = new Vue({
               self.activityData = data.data.modelExt
               self.templateType = data.data.activityTemplateId
               document.title = data.data.activityInfo.title
+              var head = document.getElementsByTagName('head');
+              var meta = document.createElement('meta');
+              meta.content = data.data.activityInfo.synopsis;
+              head[0].appendChild(meta)
               CONTENTVAR.ispvSum = data.data.activityStatus
               if(CONTENTVAR.ispvSum == 1) {
                 self.pvSum()
@@ -919,9 +923,14 @@ var INDEXAPP = new Vue({
           callback: function (data) {
             if (data.code === 0 && data.data) {
               console.log(data.data, "通过模板Id查找数据");
+              document.title = data.data.activityInfo.title
+              var head = document.getElementsByTagName('head');
+              var meta = document.createElement('meta');
+              meta.content = data.data.activityInfo.synopsis;
+              head[0].appendChild(meta)
+              self.templateType = data.data.activityTemplateId
               var data = data.data.templateContent
               self.activityData = data.modelExt
-              self.templateType = data.data.activityTemplateId
               //基础信息
               if (data.activityInfo) {
                 self.activityInfo = data.activityInfo
