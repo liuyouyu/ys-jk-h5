@@ -922,12 +922,12 @@ var INDEXAPP = new Vue({
           },
           callback: function (data) {
             if (data.code === 0 && data.data) {
-              console.log(data.data,data.data.activityInfo, "通过模板Id查找数据");
-              // document.title = data.data.activityInfo.title
-              // var head = document.getElementsByTagName('head');
-              // var meta = document.createElement('meta');
-              // meta.content = data.data.activityInfo.synopsis;
-              // head[0].appendChild(meta)
+              console.log(data.data,data.data.templateContent.activityInfo, "通过模板Id查找数据");
+              document.title = data.data.templateContent.activityInfo.title
+              var head = document.getElementsByTagName('head');
+              var meta = document.createElement('meta');
+              meta.content = data.data.templateContent.activityInfo.synopsis;
+              head[0].appendChild(meta)
               self.templateType = data.data.activityTemplateId
               var data = data.data.templateContent
               self.activityData = data.modelExt
