@@ -833,11 +833,12 @@ var INDEXAPP = new Vue({
             if (data.code === 0 && data.data != null) {
               self.activityData = data.data.modelExt
               self.templateType = data.data.activityTemplateId
-              document.title = data.data.activityInfo.title
-              var head = document.getElementsByTagName('head');
-              var meta = document.createElement('meta');
-              meta.content = data.data.activityInfo.synopsis;
-              head[0].appendChild(meta)
+              // document.title = data.data.activityInfo.title
+              // var head = document.getElementsByTagName('head');
+              // var meta = document.createElement('meta');
+              // meta.content = data.data.activityInfo.synopsis;
+              // head[0].appendChild(meta)
+              $("meta[name='og:description']").attr('content', data.data.activityInfo.synopsis);
               CONTENTVAR.ispvSum = data.data.activityStatus
               if(CONTENTVAR.ispvSum == 1) {
                 self.pvSum()
@@ -924,10 +925,11 @@ var INDEXAPP = new Vue({
             if (data.code === 0 && data.data) {
               console.log(data.data,data.data.templateContent.activityInfo, "通过模板Id查找数据");
               document.title = data.data.templateContent.activityInfo.title
-              var head = document.getElementsByTagName('head');
-              var meta = document.createElement('meta');
-              meta.content = data.data.templateContent.activityInfo.synopsis;
-              head[0].appendChild(meta)
+              // var head = document.getElementsByTagName('head');
+              // var meta = document.createElement('meta');
+              // meta.content = data.data.templateContent.activityInfo.synopsis;
+              // head[0].appendChild(meta)
+              $("meta[name='og:description']").attr('content', data.data.templateContent.activityInfo.synopsis);
               self.templateType = data.data.activityTemplateId
               var data = data.data.templateContent
               self.activityData = data.modelExt
