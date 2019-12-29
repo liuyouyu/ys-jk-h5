@@ -1,0 +1,36 @@
+html{
+  height: 100%;
+}
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+#app{
+    width:100%;
+    height:100%;
+}
+.imgContainer{
+    width:100%;
+    height:100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.imgContainer img{
+    width:100%;
+    height:100%;
+}
+.name{
+  position: absolute;
+  background: #1d3494;
+  color: #fff;
+  font-size: 30px;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0
+}
