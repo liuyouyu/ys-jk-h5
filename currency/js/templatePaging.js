@@ -86,12 +86,77 @@ var CONTENTVAR = {
           bg:'',
           brands:[],
           brand:'',
+          validity: {},
+          valid: undefined,
+          model: {
+            name: '',
+            phone: '',
+            code: ''
+          },
+          fields: [
+            {
+              type: 'input',
+              modelKey: 'name',
+              label: '',
+              props: {
+                placeholder: '请输入姓名'
+              },
+              rules: {
+                required: true
+              }
+            },
+            {
+              type: 'input',
+              modelKey: 'phone',
+              label: '',
+              rules: {
+                required: true
+              },
+              messages: {
+                required: '请输入电话号码'
+              }
+            },
+            {
+              modelKey: 'code',
+              label: '',
+              rules: {
+                required: true
+              },
+              messages: {
+                required: '请输入验证码'
+              }
+            }
+          ]
         }
       },
       mounted(){
         this.bg = this.activityInfo.pagingBg
         this.brands = this.data.brands
         console.log('表单页',this.activityInfo,this.data);
+      },
+      methods:{
+        getCode(){
+          var phone = this.model.phone
+          mcMethod.query.request({
+            queryType: 'GET',
+            url: mcMethod.url.sendVerificationCode,
+            address: {
+              phone: phone,
+              vCode: ''
+            },
+            callback(data){
+              console.log(data);
+            }
+          })
+        },
+        submitHandler(e) {
+          console.log('submit')
+        },
+        validateHandler(result) {
+          this.validity = result.validity
+          this.valid = result.valid
+          console.log('validity', result)
+        },
       }
     }
   }

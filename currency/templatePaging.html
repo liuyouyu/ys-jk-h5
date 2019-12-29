@@ -10,10 +10,10 @@
   <meta name="og:description" content="" />
   <script src="common/plugins/vue.min.js?$$tempflag$$"></script>
   <script src="common/plugins/vue-lazyload.js?$$tempflag$$"></script>
-  <!-- <link rel="stylesheet" href="common/plugins/cube.min.css?$$tempflag$$">
-    <script src="common/plugins/cube.min.js?$$tempflag$$"></script> -->
-  <link rel="stylesheet" href="common/plugins/element-ui/element-2.13.0.css">
-  <script src="common/plugins/element-ui/element-2.13.0.js"></script>
+  <link rel="stylesheet" href="common/plugins/cube.min.css?$$tempflag$$">
+    <script src="common/plugins/cube.min.js?$$tempflag$$"></script>
+  <!-- <link rel="stylesheet" href="common/plugins/element-ui/element-2.13.0.css">
+  <script src="common/plugins/element-ui/element-2.13.0.js"></script> -->
   <link rel="stylesheet" href="common/font/iconfont.css?$$tempflag$$">
   <link rel="stylesheet" href="common/base/base.css?$$tempflag$$">
   <link rel="stylesheet" href="css/templatePaging.css?$$tempflag$$">
@@ -65,17 +65,24 @@
           <transition>
             <div v-if="activeIndex == index" class="transitionBox">
               <div class="inputBox">
-                <el-input class="formItem" placeholder="您的姓名"></el-input>
-                <el-input class="formItem" placeholder="您的电话"></el-input>
-                <el-input class="formItem" placeholder="请输入验证码"></el-input>
+                <cube-form :model="model"  :immediate-validate="false" @validate="validateHandler" @submit="submitHandler">
+                  <cube-form-item class="formItem" :field="fields[0]">
+                    <cube-input  placeholder="您的姓名"></cube-input>
+                  </cube-form-item>
+                  <cube-form-item class="formItem" :field="fields[1]">
+                      <cube-input  placeholder="您的电话"></cube-input>
+                  </cube-form-item>
+                  <cube-form-item class="formItem" :field="fields[2]">
+                    <cube-input  placeholder="请输入验证码"></cube-input><span class="getCode" @click="getCode">获取验证码</span>
+                  </cube-form-item>
+                </cube-form>
               </div>
               <div class="selectBox">
-                <el-select v-model="brand" class="formItem" placeholder="选择关注品牌">
-                  <el-option v-for="item in brands" :label="item" :value="item"></el-option>
-                </el-select>
+                <cube-select v-model="brand" :options="brands" class="formItem" placeholder="选择关注品牌">
+                </cube-select>
               </div>
               <div class="submitBox">
-                <el-button type="primary">提交</el-button>
+                <cube-button type="submit">提交</cube-button>
               </div>
             </div>
           </transition>
