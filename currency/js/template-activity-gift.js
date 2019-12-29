@@ -181,7 +181,7 @@ var INDEXAPP = new Vue({
           console.log("领取礼物失败")
           that.userName = "领取礼物失败"
           that.showPage = 8
-        } else if (messageData.statusCode === "9") {
+        } else if (messageData.statusCode === "0009") {
           console.log("已领取礼物")
           that.userName = "已领取礼物"
           that.showPage = 9
