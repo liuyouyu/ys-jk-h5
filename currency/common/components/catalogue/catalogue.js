@@ -39,7 +39,7 @@ Vue.component('catalogue', {
   },
 
   mounted() {
-    console.log('推荐内容组件',this.isshow);
+    // console.log('推荐内容组件',this.isshow);
     this.getCatalogue()
   },
 
@@ -60,10 +60,10 @@ Vue.component('catalogue', {
         contentType: "application/json ; charset=utf-8",
         dataType: "json",
         success: function (data) {
-          console.log('文稿信息',data.data.length);
+          // console.log('文稿信息',data.data.length);
           if(data.data.length!=0){
             _this.catalogueData = data.data
-            console.log('推荐内容的数据',data.data);
+            // console.log('推荐内容的数据',data.data);
           }else{
             _this.isShow = false
           }
