@@ -10,9 +10,18 @@ var INDEXAPP = new Vue({
   //   empCarouselImg: templateView.empCarouselImg
   // },
   data: {
-    showPage: 1 ,//默认扫码签到
-    returnTimer:null,
-    messageQue:[]
+    showPage: 1, //默认扫码签到
+    returnTimer: null,
+    messageQue: [],
+    userName: 'ssssssss',
+    count: 0
+  },
+  watch: {
+    // messageQue(newVal, oldVal) {
+    //   setTimeout(function () {
+    //     that.showPage = 2
+    //   }, 1000)
+    // }
   },
   methods: {
     geSearchVal: function (searchName) {
@@ -32,6 +41,14 @@ var INDEXAPP = new Vue({
         }
       }
       return searchVal;
+    },
+    sleep: function (sleepTime) {
+      var start = new Date().getTime();
+      while (true) {
+        if (new Date().getTime() - start > sleepTime) {
+          break;
+        }
+      }
     }
   },
   created: function () {
@@ -48,26 +65,68 @@ var INDEXAPP = new Vue({
     //打开事件
     chapterDiscussScoket.onopen = function () {
       console.log("websocket已打开");
-      chapterDiscussScoket.send("发送数据6666")
+      heartbeatIntervalId = setInterval(function () {
+        if (that.count > 10) {
+          clearInterval(heartbeatIntervalId)
+        }
+        // console.log(that.count)
+        var obj = {
+          "c_timestamp": 1577451559954,
+          "msg": that.count,
+          "type": "msg",
+          "uname": "CHO"
+        }
+        obj = JSON.stringify(obj);
+        chapterDiscussScoket.send(obj);
+      },100);
     };
     //获得消息事件
     chapterDiscussScoket.onmessage = function (msg) {
       // console.log('开始处理接收到的消息: ' + msg.data);
       //发现消息进入    开始处理前端触发逻辑
-
       console.log("获取消息")
-      that.showPage = 2
-      var time=new Date();
-      if(that.messageQue.length!==0){
-        that.messageQue.push(time)
-      }
+      var messageData = JSON.parse(msg.data)
+      console.log(messageData.msg, msg.data)
 
-      if(that.returnTimer){
-        clearTimeout(that.returnTimer);
-      }
-      that.returnTimer = setTimeout(function () {
-        that.showPage = 1;
-      }, 5000)
+      that.messageQue.push(msg.data)
+
+      // if (that.count >= 20) {
+      //   that.showPage = 1
+      //   that.count += 1
+
+        if (that.returnTimer) {
+          clearTimeout(that.returnTimer)
+        }
+        that.returnTimer = setTimeout(function () {
+          that.showPage = 1
+        }, 5000)
+
+      // } else {
+        if (that.count % 2 === 1) {
+          that.sleep(1000);
+          that.showPage = 2
+          that.count += 1
+          that.userName = messageData.msg
+        } else {
+          that.sleep(1000);
+          that.showPage = 3
+          that.count += 1
+          that.userName = messageData.msg
+        }
+      // }
+
+      // if(that.messageQue.length!==0){
+      //   that.messageQue.push(time)
+      // }else{
+      //   that.returnTimer = setTimeout(function () {
+      //     that.showPage = 1;
+      //   }, 5000)
+      // }
+
+      // if(that.returnTimer){
+      //   clearTimeout(that.returnTimer);
+      // }
+
       if (msg.data == 1) {
         console.log("无效设备")
         console.log("无效码")
@@ -92,12 +151,7 @@ var INDEXAPP = new Vue({
 
     }
 
-    var heartbeatIntervalId = setInterval(function () {
-      console.log(1111)
 
-      var obj = {"c_timestamp":1577451559954,"msg":"ll","type":"msg","uname":"CHO"}
-      chapterDiscussScoket.send(obj);
-    }, 100000);
 
   },
   mounted: function () {
