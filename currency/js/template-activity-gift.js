@@ -10,11 +10,11 @@ var INDEXAPP = new Vue({
   //   empCarouselImg: templateView.empCarouselImg
   // },
   data: {
-    showPage: 1, //默认扫码签到
+    showPage: 0, //默认扫码签到
     returnTimer: null,
     messageQue: [],
     messageQueIndex: -1,
-    userName: '人名啊啊啊',
+    userName: '待签到',
     count: 0,
   },
   watch: {
@@ -64,7 +64,7 @@ var INDEXAPP = new Vue({
         }
         chapterDiscussSetTimeout = setTimeout(function () {
           that.reconnectionSocket();
-        }, 200);
+        }, 500);
       }
     },
     closeChapterDiscussScoket: function () {
@@ -85,30 +85,30 @@ var INDEXAPP = new Vue({
 
       //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
       //等同于socket = new WebSocket("ws://localhost:8888/api/websocket/25");
-      var socketUrl = "wss://bs.yunshicloud.com/api/websocket/5dea74006282c959b1ddedd1/5dea74006282c959b1ddedd1";
-      // var socketUrl = "wss://alpha-jk.yunshicloud.com/api/websocket/" + deviceNumber;
+      // var socketUrl = "wss://bs.yunshicloud.com/api/websocket/5dea74006282c959b1ddedd1/5dea74006282c959b1ddedd1";
+      var socketUrl = "wss://alpha-jk.yunshicloud.com/api/websocket/" + deviceNumber;
       socketUrl = socketUrl.replace("https", "wss").replace("http", "ws");
       chapterDiscussScoket = new WebSocket(socketUrl);
       //打开事件
 
       chapterDiscussScoket.onopen = function () {
-        console.log("websocket已打开");
-        var count = 0;
-        heartbeatIntervalId = setInterval(function () {
-          count += 1;
-          if (count > 3) {
-            clearInterval(heartbeatIntervalId)
-          }
-          // console.log(that.count)
-          var obj = {
-            "c_timestamp": 1577451559954,
-            "msg": count,
-            "type": "msg",
-            "uname": "CHO"
-          }
-          obj = JSON.stringify(obj);
-          chapterDiscussScoket.send(obj);
-        }, 10);
+        // console.log("websocket已打开");
+        // var count = 0;
+        // heartbeatIntervalId = setInterval(function () {
+        //   count += 1;
+        //   if (count > 3) {
+        //     clearInterval(heartbeatIntervalId)
+        //   }
+        //   // console.log(that.count)
+        //   var obj = {
+        //     "c_timestamp": 1577451559954,
+        //     "msg": count,
+        //     "type": "msg",
+        //     "uname": "CHO"
+        //   }
+        //   obj = JSON.stringify(obj);
+        //   // chapterDiscussScoket.send(obj);
+        // }, 10);
       };
       //获得消息事件
       chapterDiscussScoket.onmessage = function (msg) {
@@ -128,30 +128,61 @@ var INDEXAPP = new Vue({
           clearTimeout(that.returnTimer)
         }
         that.returnTimer = setTimeout(function () {
-          that.showPage = 1
-        }, 10000)
+          that.showPage = 0
+          // 6s回待签到页面
+        }, 6000)
         debugger;
         // } else {
-        if (that.count % 2 === 1) {
-          that.sleep(5000);
-          that.showPage = 2
-          that.userName =  that.messageQue[that.messageQueIndex]
-        } else {
-          that.sleep(5000);
-          that.showPage = 3
-          that.userName = that.messageQue[that.messageQueIndex]
-        }
+        // if (that.count % 2 === 1) {
+        //   that.sleep(5000);
+        //   that.showPage = 2
+        //   console.log(that.messageQue[that.messageQueIndex])
+        //   that.userName =  messageData.msg
+        //   // that.userName =  that.messageQue[that.messageQueIndex]
+        // } else {
+        //   that.sleep(5000);
+        //   that.showPage = 3
+        //   console.log(that.messageQue[that.messageQueIndex])
 
+        //   that.userName = messageData.msg
+        //   // that.userName = that.messageQue[that.messageQueIndex]
+        // }
         if (messageData.statusCode === "0001") {
           console.log("无效码")
+          that.showPage = 1
+          that.userName = "无效码"
         } else if (messageData.statusCode === "0002") {
           console.log("无效设备")
+          that.userName = "无效设备"
+          that.showPage = 2
         } else if (messageData.statusCode === "0003") {
           console.log("签到成功")
+          that.userName = "签到成功"
+          that.showPage = 3
         } else if (messageData.statusCode === "0004") {
           console.log("签到失败")
+          that.userName = "签到失败"
+          that.showPage = 4
         } else if (messageData.statusCode === "0005") {
           console.log("已签到")
+          that.userName = "已签到"
+          that.showPage = 5
+        } else if (messageData.statusCode === "0006") {
+          console.log("活动已失效")
+          that.userName = "活动已失效"
+          that.showPage = 5
+        } else if (messageData.statusCode === "0007") {
+          console.log("领取礼物成功")
+          that.userName = "领取礼物成功"
+          that.showPage = 7
+        } else if (messageData.statusCode === "0008") {
+          console.log("领取礼物失败")
+          that.userName = "领取礼物失败"
+          that.showPage = 8
+        } else if (messageData.statusCode === "9") {
+          console.log("已领取礼物")
+          that.userName = "已领取礼物"
+          that.showPage = 9
         }
       };
       //关闭事件
@@ -160,7 +191,6 @@ var INDEXAPP = new Vue({
       };
       //发生了错误事件
       chapterDiscussScoket.onerror = function () {
-        console.log("websocket发生了错误");
         that.reconnectionSocket()
       }
       window.onbeforeunload = function () {
@@ -170,13 +200,11 @@ var INDEXAPP = new Vue({
         that.closeChapterDiscussScoket()
       }
 
-
     }
   },
   created: function () {
     this.connectSocket()
   },
   mounted: function () {
-
   }
 })
