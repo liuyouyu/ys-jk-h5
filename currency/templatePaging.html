@@ -64,26 +64,25 @@
           <img v-if="bg !== '' " class="bg" :src="bg">
           <transition>
             <div v-if="activeIndex == index" class="transitionBox">
+              <cube-form :model="model"  :immediate-validate="false" @validate="validateHandler" @submit="submitHandler">
               <div class="inputBox">
-                <cube-form :model="model"  :immediate-validate="false" @validate="validateHandler" @submit="submitHandler">
-                  <cube-form-item class="formItem" :field="fields[0]">
-                    <cube-input  placeholder="您的姓名"></cube-input>
-                  </cube-form-item>
-                  <cube-form-item class="formItem" :field="fields[1]">
-                      <cube-input  placeholder="您的电话"></cube-input>
-                  </cube-form-item>
-                  <cube-form-item class="formItem" :field="fields[2]">
-                    <cube-input  placeholder="请输入验证码"></cube-input><span class="getCode" @click="getCode">获取验证码</span>
-                  </cube-form-item>
-                </cube-form>
-              </div>
-              <div class="selectBox">
-                <cube-select v-model="brand" :options="brands" class="formItem" placeholder="选择关注品牌">
-                </cube-select>
-              </div>
-              <div class="submitBox">
-                <cube-button type="submit">提交</cube-button>
-              </div>
+                  <cube-form-group>
+                    <cube-form-item class="formItem" :field="fields[0]"></cube-form-item>
+                    <cube-form-item class="formItem" :field="fields[1]"></cube-form-item>
+                    <cube-form-item class="formItem" :field="fields[2]"></cube-form-item>
+                    <cube-form-item class="formItem" :field="fields[3]"></cube-form-item>
+                  </cube-form-group>
+                </div>
+                <!-- <div class="selectBox">
+                  <cube-select v-model="brand" :options="brands" class="formItem" placeholder="选择关注品牌">
+                  </cube-select>
+                </div> -->
+                <cube-form-group>
+                  <div class="submitBox">
+                    <cube-button type="submit">提交</cube-button>
+                  </div>
+                </cube-form-group>
+              </cube-form>
             </div>
           </transition>
         </div>

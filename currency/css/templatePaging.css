@@ -91,6 +91,33 @@ body {
   height: 100%;
 }
 
+.pagingForm .cube-form {
+  background: transparent;
+}
+
+.pagingForm .cube-form .cube-form-item {
+  padding: 0;
+  position: relative;
+  background: #ffffff;
+  border-radius: .04rem;
+  overflow: hidden;
+}
+
+.pagingForm .cube-form .cube-form-item .cube-input input {
+  text-indent: .2rem;
+}
+
+.pagingForm .cube-form .cube-form-item .cube-select span {
+  text-indent: .2rem;
+}
+
+.pagingForm .cube-form .cube-form-item .getCode {
+  position: absolute;
+  right: .2rem;
+  top: .13rem;
+  color: #bbbbbb;
+}
+
 .pagingForm .inputBox {
   width: 80%;
   margin: 0 auto;
@@ -104,54 +131,11 @@ body {
   margin-bottom: .2rem;
 }
 
-.pagingForm .inputBox .cube-form {
-  background: transparent;
-}
-
-.pagingForm .inputBox .cube-form .cube-form-item {
-  padding: 0;
-  position: relative;
-}
-
-.pagingForm .inputBox .cube-form .cube-form-item .cube-input {
-  border-radius: .04rem;
-}
-
-.pagingForm .inputBox .cube-form .cube-form-item .cube-input input {
-  text-indent: .2rem;
-}
-
-.pagingForm .inputBox .cube-form .cube-form-item .getCode {
-  position: absolute;
-  right: .1rem;
-  top: .13rem;
-}
-
-.pagingForm .selectBox {
-  width: 80%;
-  height: .46rem;
-  margin: 0 auto;
-  position: relative;
-  z-index: 5;
-}
-
-.pagingForm .selectBox .cube-select {
-  border-radius: .04rem;
-  height: 100%;
-  line-height: .46rem;
-  padding: 0 0 0 .2rem;
-}
-
 .pagingForm .submitBox {
   width: 80%;
   margin: 20px auto;
   position: relative;
   z-index: 5;
-}
-
-.pagingForm .submitBox .el-button {
-  width: 100%;
-  height: 40px;
 }
 
 .v-enter-active {
