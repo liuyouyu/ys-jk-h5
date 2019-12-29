@@ -129,6 +129,8 @@ var INDEXAPP = new Vue({
         }
         that.returnTimer = setTimeout(function () {
           that.showPage = 0
+          that.userName='待签到'
+
           // 6s回待签到页面
         }, 6000)
         debugger;
