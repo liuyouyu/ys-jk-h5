@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+  <meta http-equiv="Pragma" content="no-cache"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="og:description" content="" />
+  <script src="common/plugins/vue.min.js?$$tempflag$$"></script>
+  <script src="common/plugins/vue-lazyload.js?$$tempflag$$"></script>
+  <link rel="stylesheet" href="common/plugins/cube.min.css?$$tempflag$$">
+  <script src="common/plugins/cube.min.js?$$tempflag$$"></script>
+  <link rel="stylesheet" href="common/font/iconfont.css?$$tempflag$$">
+  <link rel="stylesheet" href="common/base/base.css?$$tempflag$$">
+  <link rel="stylesheet" href="css/template-activity-gift.css?$$tempflag$$">
+  <!-- 引入文稿组件样式 -->
+  <link rel="stylesheet" href="common/components/catalogue/catalogue.css?$$tempflag$$">
+  <title></title>
+</head>
+<body>
+<!--报名招募浅色系-->
+<div id="app" class="wrapper">
+
+    <div class="imgContainer" v-if='showPage==1'><img src="common/img/activityImg/1.jpg" alt="" srcset=""></div>
+    <div class="imgContainer" v-if='showPage==2'><img src="common/img/activityImg/2.jpg" alt="" srcset=""><div class="name">{{userName}}</div></div>
+    <div class="imgContainer" v-if='showPage==3'><img src="common/img/activityImg/6.jpg" alt="" srcset=""><div class="name">{{userName}}</div></div>
+    <div class="imgContainer" v-if='showPage==4'><img src="common/img/activityImg/4.jpg" alt="" srcset=""><div class="name">{{userName}}</div></div>
+    <!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
+</div>
+
+<script src="common/plugins/moment.js?$$tempflag$$"></script>
+<script src="//cdn.yunshicloud.com/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://unpkg.com/larkplayer@latest/dist/larkplayer.js"></script>
+<script src="https://unpkg.com/larkplayer-ui@latest/dist/larkplayer-ui.js"></script>
+<script src="//cdn.yunshicloud.com/axios/0.18.0/axios.min.js"></script>
+<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="config/config.js?$$tempflag$$"></script>
+<!-- 文稿组件 -->
+<script src="common/components/catalogue/catalogue.js?$$tempflag$$"></script>
+<script src="common/common/common.js?$$tempflag$$"></script>
+<script src="common/plugins/xyAuth.js?$$tempflag$$"></script>
+<script src="common/base/base.js?$$tempflag$$"></script>
+<script src="js/template-activity-gift.js?$$tempflag$$"></script>
+
+<script>
+  Vue.use(VueLazyload,{
+  })
+</script>
+
+</body>
+</html>

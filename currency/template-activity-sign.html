@@ -21,12 +21,54 @@
 <body>
 <!--报名招募浅色系-->
 <div id="app" class="wrapper">
-
-    <div class="imgContainer" v-if='showPage==1'><img src="common/img/activityImg/1.jpg" alt="" srcset=""></div>
+      <!-- if (messageData.statusCode === "0001") {
+        console.log("无效码")
+        that.showPage = 1
+        that.userName = "无效码"
+      } else if (messageData.statusCode === "0002") {
+        console.log("无效设备")
+        that.userName = "无效设备"
+        that.showPage = 2
+      } else if (messageData.statusCode === "0003") {
+        console.log("签到成功")
+        that.userName = "签到成功"
+        that.showPage = 3
+      } else if (messageData.statusCode === "0004") {
+        console.log("签到失败")
+        that.userName = "签到失败"
+        that.showPage = 4
+      } else if (messageData.statusCode === "0005") {
+        console.log("已签到")
+        that.userName = "已签到"
+        that.showPage = 5
+      } else if (messageData.statusCode === "0006") {
+        console.log("活动已失效")
+        that.userName = "活动已失效"
+        that.showPage = 5
+      } else if (messageData.statusCode === "0007") {
+        console.log("领取礼物成功")
+        that.userName = "领取礼物成功"
+        that.showPage = 7
+      } else if (messageData.statusCode === "0008") {
+        console.log("领取礼物失败")
+        that.userName = "领取礼物失败"
+        that.showPage = 8
+      } else if (messageData.statusCode === "9") {
+        console.log("已领取礼物")
+        that.userName = "已领取礼物"
+        that.showPage = 9
+      }
+    }; -->
+    <div class="imgContainer" v-if='showPage==0'><img src="common/img/activityImg/1.jpg" alt="" srcset=""></div>
+    <div class="imgContainer" v-if='showPage==1'>{{userName}}</div>
     <div class="imgContainer" v-if='showPage==2'><img src="common/img/activityImg/2.jpg" alt="" srcset=""><div class="name">{{userName}}</div></div>
-    <div class="imgContainer" v-if='showPage==3'><img src="common/img/activityImg/6.jpg" alt="" srcset=""><div class="name">{{userName}}</div></div>
-    <div class="imgContainer" v-if='showPage==4'><img src="common/img/activityImg/4.jpg" alt="" srcset=""><div class="name">{{userName}}</div></div>
-    <!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
+    <div class="imgContainer" v-if='showPage==3'><div class="name">{{userName}}</div></div>
+    <div class="imgContainer" v-if='showPage==4'><div class="name">{{userName}}</div></div>
+    <div class="imgContainer" v-if='showPage==5'><div class="name">{{userName}}</div></div>
+    <div class="imgContainer" v-if='showPage==6'><div class="name">{{userName}}</div></div>
+    <div class="imgContainer" v-if='showPage==7'><div class="name">{{userName}}</div></div>
+    <div class="imgContainer" v-if='showPage==8'><div class="name">{{userName}}</div></div>
+    <div class="imgContainer" v-if='showPage==9'><div class="name">{{userName}}</div></div>
 </div>
 
 <script src="common/plugins/moment.js?$$tempflag$$"></script>
