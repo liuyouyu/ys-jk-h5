@@ -87,12 +87,19 @@ body {
       background:#ffffff;
       border-radius: .04rem;
       overflow: hidden;
+      height: .46rem;
+      min-height: 0;
+      font-size: .14rem;
       .cube-input{
+        font-size: .14rem;
         input{
+          height: .46rem;
+          min-height: 0;
           text-indent: .2rem;
         }
       }
       .cube-select{
+        font-size: .14rem;
         span{
           text-indent: .2rem;
         }
@@ -105,9 +112,13 @@ body {
     margin-top: 2rem;
     position: relative;
     z-index: 5;
+    font-size: .14rem;
     .formItem{
       width: 100%;
       margin-bottom: .2rem;
+    }
+    .cube-form-group-content{
+      height: 100%;
     }
     .getCode{
       position: absolute;
@@ -122,6 +133,15 @@ body {
     margin: 20px auto;
     position: relative;
     z-index: 5;
+    height: .46rem;
+    line-height: .46rem;
+    min-height: 0;
+    .cube-btn{
+      height: .46rem;
+      min-height: 0;
+      font-size: .16rem;
+      padding: .16rem .17rem;
+    }
   }
 }
 

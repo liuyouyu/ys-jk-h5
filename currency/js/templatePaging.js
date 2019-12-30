@@ -93,8 +93,10 @@ var templateView = {
         countDown: 60,      // 默认60s重新获取
         codeKey:'',         // 验证码校验码
         timer:'',
+        portraitId:'',      // 报名成功后拿到的潜客id
         model: {
           name: '',
+          sex:'',
           phone: '',
           code: ''
         },
@@ -109,6 +111,21 @@ var templateView = {
             rules: {
               required: true,
               max:10,
+            }
+          },
+          {
+            modelKey: 'sex',
+            type: 'select',
+            label: '',
+            props: {
+              options:['男','女'],
+              placeholder: '请选择您的性别'
+            },
+            rules: {
+              required: true
+            },
+            messages: {
+              required: '请选择您的性别！'
             }
           },
           {
@@ -168,6 +185,9 @@ var templateView = {
     },
     methods: {
       getCode() {
+        if(!this.checkStatus()){
+          return
+        }
         var that = this
         var phone = this.model.phone
         if(!(/^1[3456789]\d{9}$/.test(phone))){ 
@@ -248,10 +268,37 @@ var templateView = {
           }
         })
       },
+      checkStatus(){
+        if(CONTENTVAR.ispvSum === '2'){
+          this.$createDialog({
+            type: 'alert',
+            icon: 'cubeic-alert',
+            showClose: false,
+            title: '活动已结束',
+            onClose: () => {
+            }
+          }).show()
+          return false
+        }else if(CONTENTVAR.ispvSum === '0'){
+          this.$createDialog({
+            type: 'alert',
+            icon: 'cubeic-alert',
+            showClose: false,
+            title: '活动未发布',
+            onClose: () => {
+            }
+          }).show()
+          return false
+        }else{
+          return true
+        }
+      },
       submitHandler(e) {
         e.preventDefault()
-        console.log('submit')
-        this.checkCode()
+        console.log('submit',CONTENTVAR.ispvSum)
+        if(this.checkStatus()){
+          this.checkCode()
+        }
       },
       // 收集提交表单使用的参数
       getParamsObj() {
@@ -270,6 +317,8 @@ var templateView = {
         // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
         var wxInfo = xyAuth.getCacheUserInfo()
         console.log('微信信息',wxInfo);
+
+        jsonObj['gender'] = this.model.sex === '男' ? '1' : '2'
         jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
         jsonObj['wxName'] = wxInfo.nickname || ''
         var channelInfo = {
@@ -303,6 +352,7 @@ var templateView = {
           callback: function (res) {
             console.log('活动报名后', res);
             if(res.code === 0){
+              that.portraitId = res.data              // 获取潜客id
               that.$createDialog({
                 type: 'alert',
                 // icon: 'cubeic-alert',
@@ -311,7 +361,7 @@ var templateView = {
                 confirmBtn: {
                   text: that.data.successData.btnName || '确定',
                   active: true,
-                  href:'http://'+ that.data.successData.skipUrl || 'javascript:;'
+                  href: that.clearUrl(that.data.successData.skipUrl) || 'javascript:;'
                 },
                 onClose: () => {
                 }
@@ -319,6 +369,14 @@ var templateView = {
             }
           }
         })
+      },
+      clearUrl(url){
+        var index = url.indexOf('?')
+        if(index === -1){
+          return url
+        }else{
+          return url.substring(0,index)
+        }
       },
       validateHandler(result) {
         this.validity = result.validity
