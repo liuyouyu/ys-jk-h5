@@ -80,7 +80,7 @@ var templateView = {
   // 表单页组件
   empPagingForm: {
     template: '#empPagingForm',
-    props: ['data', 'activityInfo', 'activeIndex', 'index', 'userInfoCacheKey'],
+    props: ['data', 'activityInfo', 'activeIndex', 'index', 'userinfocachekey'],
     data() {
       return {
         bg: '',             // 背景图
@@ -165,6 +165,7 @@ var templateView = {
       this.brands = this.data.brands
       this.faceImg = this.data.faceImg
       console.log('表单页', this.activityInfo, this.data);
+      console.log('this.userinfocachekey',this.userinfocachekey);
     },
     methods: {
       getCode() {
@@ -258,7 +259,6 @@ var templateView = {
         var jsonObj = {}
         var openid = '';
         var unionid = '';
-        console.log('this.userinfocachekey',this.userinfocachekey);
         if(this.userinfocachekey != null){
           openid = self.userinfocachekey.openid
           unionid = self.userinfocachekey.unionid
