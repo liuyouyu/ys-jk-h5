@@ -361,7 +361,7 @@ var templateView = {
                 confirmBtn: {
                   text: that.data.successData.btnName || '确定',
                   active: true,
-                  href: that.clearUrl(that.data.successData.skipUrl) || 'javascript:;'
+                  href: that.clearUrl(that.data.successData.skipUrl,that.portraitId) || 'javascript:;'
                 },
                 onClose: () => {
                 }
@@ -370,13 +370,14 @@ var templateView = {
           }
         })
       },
-      clearUrl(url){
-        var index = url.indexOf('?')
-        if(index === -1){
-          return url
-        }else{
-          return url.substring(0,index)
+      clearUrl(url,portraitId){
+        var urlArr = url.split('&')
+        for(var i = 0; i < urlArr.length; i++){
+          if(urlArr[i].indexOf('userId')!=-1){
+            urlArr[i] = 'userId='+ portraitId
+          }
         }
+        return urlArr.join('&')
       },
       validateHandler(result) {
         this.validity = result.validity
