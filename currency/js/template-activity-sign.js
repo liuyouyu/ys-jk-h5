@@ -14,7 +14,7 @@ var INDEXAPP = new Vue({
     returnTimer: null,
     messageQue: [],
     messageQueIndex: -1,
-    userName: '待签到',
+    userName: '',
     count: 0,
   },
   watch: {
@@ -89,9 +89,13 @@ var INDEXAPP = new Vue({
       // var socketUrl = "wss://alpha-jk.yunshicloud.com/api/websocket/" + deviceNumber;
       var socketUrl = CONFIG.cloudUrl +"websocket/" + deviceNumber;
       socketUrl = socketUrl.replace("https", "wss").replace("http", "ws");
+      
+      if (typeof (WebSocket) == "undefined") {
+        alert("您的浏览器不支持websocket")
+        return 
+      }
       chapterDiscussScoket = new WebSocket(socketUrl);
       //打开事件
-
       chapterDiscussScoket.onopen = function () {
         // console.log("websocket已打开");
         // var count = 0;
@@ -130,11 +134,10 @@ var INDEXAPP = new Vue({
         }
         that.returnTimer = setTimeout(function () {
           that.showPage = 0
-          that.userName= '待签到'
+          that.userName= ''
 
           // 6s回待签到页面
         }, 6000)
-        debugger;
         // } else {
         // if (that.count % 2 === 1) {
         //   that.sleep(5000);
@@ -159,34 +162,31 @@ var INDEXAPP = new Vue({
           that.userName = "无效设备"
           that.showPage = 2
         } else if (messageData.statusCode === "0003") {
-          console.log("签到成功")
-          that.userName = "签到成功"
+          that.userName='尊敬的'+messageData.userName+'先生（女士）'
           that.showPage = 3
         } else if (messageData.statusCode === "0004") {
           console.log("签到失败")
           that.userName = "签到失败"
           that.showPage = 4
         } else if (messageData.statusCode === "0005") {
-          console.log("已签到")
-          that.userName = "已签到"
+          that.userName='尊敬的'+messageData.userName+'先生（女士）'
           that.showPage = 5
         } else if (messageData.statusCode === "0006") {
           console.log("活动已失效")
           that.userName = "活动已失效"
           that.showPage = 5
         } else if (messageData.statusCode === "0007") {
-          console.log("领取礼物成功")
-          that.userName = "领取礼物成功"
+          that.userName='尊敬的'+messageData.userName+'先生（女士）'
           that.showPage = 7
         } else if (messageData.statusCode === "0008") {
           console.log("领取礼物失败")
           that.userName = "领取礼物失败"
           that.showPage = 8
         } else if (messageData.statusCode === "0009") {
-          console.log("已领取礼物")
-          that.userName = "已领取礼物"
+          that.userName='尊敬的'+messageData.userName+'先生（女士）'
           that.showPage = 9
         }
+        
       };
       //关闭事件
       chapterDiscussScoket.onclose = function () {
