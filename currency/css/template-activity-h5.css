@@ -169,8 +169,8 @@ body {
 }
 /*二维码位置*/
 .qrewmCode {
-    width: 132px;
-    height: 132px;
+    width: 131px;
+    height: 119px;
     position: absolute;
     top: 46.8%;
     left: 32.8%;

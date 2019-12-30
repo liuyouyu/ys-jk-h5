@@ -244,7 +244,7 @@ var INDEXAPP = new Vue({
         callback: function (data) {
           if(data.code == 0 && JSON.stringify(data.data) != {}){
               //已有贵宾卡
-              if(data.data.portraitInfoExists == true){
+              if(data.data.guestExists == true){
                 self.vipCardFlag = true
                 self.isApplyFlag = false
                 self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
