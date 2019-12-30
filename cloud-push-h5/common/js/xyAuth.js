@@ -223,6 +223,7 @@ if(!xyAuth) {
 			if(data && data.openid) {
 				data.ctime = new Date().getTime();
 				data.auth = "yes";
+				console.log(data,'用户授权信息');
 				localStorage.setItem(xyAuth.userCacheId(), JSON.stringify(data));
 			} else {
 				localStorage.removeItem(xyAuth.userCacheId());

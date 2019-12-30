@@ -86,7 +86,8 @@ var INDEXAPP = new Vue({
       //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
       //等同于socket = new WebSocket("ws://localhost:8888/api/websocket/25");
       // var socketUrl = "wss://bs.yunshicloud.com/api/websocket/5dea74006282c959b1ddedd1/5dea74006282c959b1ddedd1";
-      var socketUrl = "wss://alpha-jk.yunshicloud.com/api/websocket/" + deviceNumber;
+      // var socketUrl = "wss://alpha-jk.yunshicloud.com/api/websocket/" + deviceNumber;
+      var socketUrl = CONFIG.cloudUrl +"websocket/" + deviceNumber;
       socketUrl = socketUrl.replace("https", "wss").replace("http", "ws");
       chapterDiscussScoket = new WebSocket(socketUrl);
       //打开事件

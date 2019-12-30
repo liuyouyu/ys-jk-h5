@@ -86,7 +86,8 @@ var INDEXAPP = new Vue({
       //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
       //等同于socket = new WebSocket("ws://localhost:8888/api/websocket/25");
       // var socketUrl = "wss://bs.yunshicloud.com/api/websocket/5dea74006282c959b1ddedd1/5dea74006282c959b1ddedd1";
-      var socketUrl = "wss://alpha-jk.yunshicloud.com/api/websocket/" + deviceNumber;
+      // var socketUrl = "wss://alpha-jk.yunshicloud.com/api/websocket/" + deviceNumber;
+      var socketUrl = CONFIG.cloudUrl + "websocket/" + deviceNumber;
       socketUrl = socketUrl.replace("https", "wss").replace("http", "ws");
       chapterDiscussScoket = new WebSocket(socketUrl);
       //打开事件
@@ -117,7 +118,7 @@ var INDEXAPP = new Vue({
         console.log("获取消息")
         var messageData = JSON.parse(msg.data)
         console.log(messageData.msg, msg.data)
-        that.messageQueIndex+=1;
+        that.messageQueIndex += 1;
         that.messageQue.push(messageData.msg)
 
         // if (that.count >= 20) {
@@ -129,11 +130,10 @@ var INDEXAPP = new Vue({
         }
         that.returnTimer = setTimeout(function () {
           that.showPage = 0
-          that.userName='待签到'
+          that.userName = '待签到'
 
           // 6s回待签到页面
         }, 6000)
-        debugger;
         // } else {
         // if (that.count % 2 === 1) {
         //   that.sleep(5000);
@@ -207,6 +207,5 @@ var INDEXAPP = new Vue({
   created: function () {
     this.connectSocket()
   },
-  mounted: function () {
-  }
+  mounted: function () {}
 })
