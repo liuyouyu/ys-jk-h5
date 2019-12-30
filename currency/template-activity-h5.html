@@ -11,6 +11,8 @@
     <script src="common/plugins/vue-lazyload.js?$$tempflag$$"></script>
     <link rel="stylesheet" href="common/plugins/cube.min.css?$$tempflag$$">
     <script src="common/plugins/cube.min.js?$$tempflag$$"></script>
+    <link rel="stylesheet" href="common/plugins/element-ui/element-2.13.0.css">
+    <script src="common/plugins/element-ui/element-2.13.0.js"></script>
     <link rel="stylesheet" href="common/font/iconfont.css?$$tempflag$$">
     <link rel="stylesheet" href="common/base/base.css?$$tempflag$$">
     <link rel="stylesheet" href="css/template-activity-h5.css?$$tempflag$$">
@@ -22,132 +24,65 @@
 <!--签到专用深色模板-->
 <div id="app" class="wrapper">
     <div class="content">
-        <!-- 表单:1 文案:2 嘉宾:3 图片:4 图集:5 视频:6-->
-        <div v-if="activityData.length">
-            <div v-for="(items,index) in activityData" :key="index">
-                <div v-if="items.templateType == 1">
-
-
-                    <emp-form :data-info="items" :isdisable="isDisable" :userinfocachekey="userInfoCacheKey" :templatetype="templateType"></emp-form>
+        <div class="content-wrap">
+            <div class="content-container">
+                <div class="scroll">
+                  <!-- 卡片详情-->
+                  <div class="vipCardWrapper" v-if="vipCardFlag">
+                      <img src="./common/img/cardDetails.png" alt="背景图">
+                  </div>
+                  <!-- 申请卡片 -->
+                  <div class="immediatelyApplyWrapper" v-if="isApplyFlag && !vipCardFlag">
+                      <div class="carDTips">
+                          <!--                <img src="./common/img/activityImg/1.jpg" alt="">-->
+                          卡片领取引导提示语
+                      </div>
+                      <div class="immediatelyApplyBtn">
+                          <cube-button :primary="true" @click="handleApply">立即申请</cube-button>
+                      </div>
+                  </div>
+                  <!-- 资料填写 -->
+                  <div class="writeInfoContainer" v-if="!isApplyFlag">
+                      <emp-write-info :userinfocachekey="userInfoCacheKey"></emp-write-info>
+                  </div>
                 </div>
-              
             </div>
-            <!-- 推荐内容 -->
-            <catalogue :isshow=CONFIG.showCatalogue :showlist='8' ></catalogue>
         </div>
+        <!-- 资料填写 -->
+        <!--<div>资料填写</div>-->
     </div>
 </div>
-
-<!--form-->
-<template class="hide" id="emp_form">
-    <div class="emp_form_wrap">
-        <div v-if="formList&&formList.sortMax">
-            <!--      <h2 v-if="formList.title" class="emp_writing_title" v-text="formList.title"></h2>-->
-            <!--      <h2 class="emp_writing_title">表单的标题</h2>-->
-            <cube-form :model="model"
-                       :options="options"
-                       ref="form"
-                       @validate="validateHandler">
-                <cube-form-group>
-                    <div v-for="item of fields">
-                        <!-- 手机号 -->
-                        <cube-form-item v-if="item.category=='phone'"
-                                        :ref="item.modelKey"
-                                        :field="item">
-                            <!-- <span class="emp_required">*</span> -->
-                            <div>
-                                <cube-input v-model="model.phone" @input="handlePhoneChange" placeholder='手机号'></cube-input>
-                                <span class="emp_waring" v-if="phoneWaring"></span>
-                            </div>
-                        </cube-form-item>
-                        <!-- 短信验证码 -->
-                        <cube-form-item v-else-if="item.category=='verification'"
-                                        :ref="item.modelKey"
-                                        :field="item">
-                            <!-- <span class="emp_required">*</span> -->
-                            <div class="get_code_wrap clearfloat" >
-                                <cube-input class="get_code_input fl emp_tempInput" maxlength="4" v-model="model.userCode" placeholder='验证码' @input="codeChange"></cube-input>
-                                <span class="get_code fr">
-                        <span v-if="sendAuthCode"
-                              class="c-right"
-                              @click="getCode">获取验证码</span>
-                        <span v-if="!sendAuthCode"
-                              class="c-right">
-                        <span class="auth_text_blue">重新获取{{auth_time}}</span>秒</span>
-                  </span>
-                                <!--                  <cube-input v-model="model.userCode" maxlength="4" placeholder="请输入验证码"></cube-input>-->
-                            </div>
-                        </cube-form-item>
-
-                        <cube-form-item v-else-if="item.type"
-                                        :ref="item.modelKey"
-                                        :field="item">
-                            <!-- <span class="emp_waring" v-if="item.category=='email'&&emailWaring"></span> -->
-                        </cube-form-item>
-                        <cube-form-item v-else :field="item">
-                            <date-picks :modelKey="item.modelKey" :tit='item.props.placeholder' :isshowwaring="iswaring"
-                                        @modelkey="handleDatePick">
-                            </date-picks>
-                        </cube-form-item>
-                        <!--            <cube-form-item v-else :field="item">-->
-                        <!--              <cube-button class="button-date" @click="showDatePicker(item.modelKey)">{{model[item.modelKey] || '请选择日期'}}</cube-button>-->
-                        <!--              <date-picker ref="datePicker"></date-picker>-->
-                        <!--            </cube-form-item>-->
-                    </div>
-                </cube-form-group>
-                <cube-form-group>
-                    <div class="tc submit-button">
-                        <div v-if="isSubmit && isdisable">
-                            <cube-button type="button"
-                                         :inline="true"
-                                         v-if="alreadySubmit"
-                                         @click="submitHandler">立即申请
-                            </cube-button>
-                            <cube-button type="button" :disabled="true" :inline="true" v-else style="background: #ccc">
-                                已签到
-                            </cube-button>
-                        </div>
-                        <cube-button type="button" :disabled="true" :inline="true" v-else style="background: #ccc">
-                            立即签到
-                        </cube-button>
-                    </div>
-                </cube-form-group>
-            </cube-form>
+<template class="hide" id="emp_writeInfo">
+    <div class="emp_writeInfoTemplate">
+        <div class="emp_writeInfoIntroduce">
+<!--            <img src="" alt="">-->
+            vip图片
         </div>
-    </div>
-</template>
-<!--嘉宾信息-->
-<template class="hide" id="emp_guest">
-    <div class="emp_guest_wrap">
-        <div class="emp_guest_main">
-            <div class="emp_guest_tx" v-if="guestInfo.headPortrait">
-                <img :src="guestInfo.headPortrait" alt="嘉宾头像">
+        <div class="writeInfo_inputWrapper">
+            <cube-input v-model="submitName" @input="handlePhoneChange" placeholder='姓名'></cube-input>
+            <cube-input v-model="model.userPhone" @input="handlePhoneChange" placeholder='手机号'></cube-input>
+            <div class="get_code_wrap clearfloat" >
+                <cube-input class="get_code_input fl emp_tempInput" maxlength="4" v-model="model.userCode" placeholder='验证码'></cube-input>
+                <span class="get_code fr">
+                    <span v-if="sendAuthCode"
+                          class="c-right"
+                          @click="getCode">获取验证码</span>
+                    <span v-if="!sendAuthCode"
+                          class="c-right">
+                    <span class="auth_text_blue">{{auth_time}}</span>秒后重新获取</span>
+                </span>
             </div>
-            <div class="emp_guest_info emp_guest_name" v-if="guestInfo.guestName">
-                <span v-text="guestInfo.guestName"></span>
-            </div>
-            <!--    <div class="emp_guest_info" v-if="guestInfo.companyName">-->
-            <!--      <span v-text="guestInfo.companyName"></span>-->
-            <!--    </div>-->
-            <!--    <div class="emp_guest_info" v-if="guestInfo.job">-->
-            <!--      <span v-text="guestInfo.job"></span>-->
-            <!--    </div>-->
-            <div class="emp_guest_info" v-if="guestInfo.synopsis">
-                <span v-text="guestInfo.synopsis"></span>
+            <div class="tc submit-button">
+                <div class="submit-cubeBtn">
+                    <cube-button type="button" :inline="true"  v-if="alreadySubmit" @click="handleApplySubmint">
+                        立即领取
+                    </cube-button>
+                    <cube-button type="button" :disabled="true" :inline="true" v-else style="background: #ccc">
+                        已提交
+                    </cube-button>
+                </div>
             </div>
         </div>
-
-    </div>
-</template>
-<template class="hide" id="datePick">
-    <div>
-        {{modelKey.title}}
-        <cube-button :class="dateValue?'dateShowStyle':''" class="button-date"
-                     @click="showDatePicker">
-            {{dateValue || tit}}
-        </cube-button>
-        <span class="emp_waring" v-if="isshowwaring"></span>
-        <date-picker ref="datePicker"></date-picker>
     </div>
 </template>
 <script src="common/plugins/moment.js?$$tempflag$$"></script>
@@ -166,6 +101,38 @@
 
 <script>
   Vue.use(VueLazyload,{
+  })
+  //禁止微信内核上下拉动
+  var overscroll = function(el) {
+    el.addEventListener('touchstart', function() {
+      var top = el.scrollTop
+        , totalScroll = el.scrollHeight
+        , currentScroll = top + el.offsetHeight
+      //If we're at the top or the bottom of the containers
+      //scroll, push up or down one pixel.
+      //
+      //this prevents the scroll from "passing through" to
+      //the body.
+      if(top === 0) {
+        el.scrollTop = 1
+      } else if(currentScroll === totalScroll) {
+        el.scrollTop = top - 1
+      }
+    })
+    el.addEventListener('touchmove', function(evt) {
+      //if the content is actually scrollable, i.e. the content is long enough
+      //that scrolling can occur
+      if(el.offsetHeight < el.scrollHeight)
+        evt._isScroller = true
+    })
+  }
+  overscroll(document.querySelector('.scroll'));
+  document.body.addEventListener('touchmove', function(evt) {
+    //In this case, the default behavior is scrolling the body, which
+    //would result in an overflow.  Since we don't want that, we preventDefault.
+    if(!evt._isScroller) {
+      evt.preventDefault()
+    }
   })
 </script>
 

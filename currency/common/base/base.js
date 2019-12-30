@@ -26,9 +26,13 @@ mcMethod.url = {
   //活动模板-根据模板Id查询模板详情
   findActivityTemplateById: 'api/activityTemplate/v1/findActivityTemplateById',
   //微信分享接口
-  queryAuthorizeTenantInfo: 'api/ffWxCheck/v1/queryAuthorizeTenantInfo'
-
-  // 活动页面大屏websocket deiz
+  queryAuthorizeTenantInfo: 'api/ffWxCheck/v1/queryAuthorizeTenantInfo',
+  //根据潜客id查询潜客信息
+  findPortraitInfiById:'/api/portraitInfo/v1/findPortraitInfiById',
+  //根据openid查询潜客信息
+  findPortraitInfiByOpenid:'/api/portraitInfo/v1/findPortraitInfiByOpenid',
+  //申请VIP卡
+  createPortrait:'/api/portraitInfo/v1/createPortrait'
 };
 
 mcMethod.info = {
@@ -38,7 +42,8 @@ mcMethod.info = {
   serviceCode:mcMethod.getRequestValue('serviceCode') || 'YUNSHI_XSGL',
   versionId: mcMethod.getRequestValue('versionId')  || '1',
   activityId: mcMethod.getRequestValue('activityId') || '',
-  activityTemplateId: mcMethod.getRequestValue('activityTemplateId') || ''
+  activityTemplateId: mcMethod.getRequestValue('activityTemplateId') || '',
+  guestId: mcMethod.getRequestValue('guestId') || ''
 };
 
 mcMethod.query = {};
