@@ -80,11 +80,13 @@ var templateView = {
       getApplyData() {
         var self = this
         var jsonObj = {
-          'gender': '',//性别
           'phone':self.model.userPhone,
           'name': self.submitName,
-          'wxOpenId': '',//微信openId
-          'wxHeadImgUrl': '',//微信头像
+        }
+        if(this.userinfocachekey != null) {
+          jsonObj['gender'] = this.userinfocachekey.sex // 性别
+          jsonObj['wxOpenId'] = this.userinfocachekey.openid // 微信openId
+          jsonObj['wxHeadImgUrl'] = this.userinfocachekey.headimgurl // 微信头像
         }
         mcMethod.query.request({
           data: jsonObj,
@@ -92,36 +94,28 @@ var templateView = {
           callback: function (data) {
             console.log('申请VIP',data)
             if (data.code == 0) {
-              // this.$createDialog({
-              //   type: 'alert',
-              //   content: '恭喜您，领取成功！',
-              //   icon: 'cubeic-ok',
-              //   confirmBtn: {
-              //     text: '确定',
-              //     active: true,
-              //     disabled: false,
-              //     href: 'javascript:;'
-              //   },
-              //   onConfirm: () => {
-              //     console.log('111')
-              //   }
-              // }).show()
+              this.$createDialog({
+                type: 'alert',
+                content: '恭喜您，申请成功！',
+                icon: 'cubeic-ok',
+                confirmBtn: {
+                  text: '确定',
+                  active: true,
+                  disabled: false,
+                  href: 'javascript:;'
+                },
+                onConfirm: () => {
+                  self.$parent.queryPortraitInfoById(data.data);
+                }
+              }).show()
               self.alreadySubmit = false
-            }else if(data.code == 10019 ){
-              // var toast = self.$createToast({
-              //   txt: data.message,
-              //   time: '2000',
-              //   type: 'txt',
-              // })
-              // toast.show()
-              self.alreadySubmit = false
-            } else {
-              // var toast = self.$createToast({
-              //   txt: '提交失败!',
-              //   time: '2000',
-              //   type: 'txt',
-              // })
-              // toast.show()
+            }else {
+              var toast = self.$createToast({
+                txt: '领取失败!',
+                time: '2000',
+                type: 'txt',
+              })
+              toast.show()
             }
           }
         })
@@ -229,6 +223,8 @@ var INDEXAPP = new Vue({
     userInfoCacheKey: '',//用户信息
     isApplyFlag: true,//资料填写flag
     vipCardFlag: false,//贵宾卡展示
+    portraitQRcodeUrl: '',//二维码链接
+    QRCodeMsg: '',
   },
   methods: {
     //立即申请
@@ -236,21 +232,29 @@ var INDEXAPP = new Vue({
       this.isApplyFlag = false
     },
     //根据潜客id查询潜客信息
-    findPortraitInfiById: function(id){
+    queryPortraitInfoById: function(id){
       var self = this
       var jsonObj = {
         'id': id
       }
       mcMethod.query.request({
         data: jsonObj,
-        url: mcMethod.url.findPortraitInfiById,
+        url: mcMethod.url.queryPortraitInfoById,
         callback: function (data) {
           if(data.code == 0 && JSON.stringify(data.data) != {}){
               //已有贵宾卡
               if(data.data.portraitInfoExists == true){
-                this.vipCardFlag = true
+                self.vipCardFlag = true
+                self.isApplyFlag = false
+                self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
+                self.getQRCode(self.portraitQRcodeUrl)
               }else {
-                this.vipCardFlag = false
+                var toast = self.$createToast({
+                  txt: 'VIP卡已失效',
+                  time: '2000',
+                  type: 'txt',
+                })
+                toast.show()
               }
             self.queryAuthorizeTenantInfo()
           }else {
@@ -265,21 +269,26 @@ var INDEXAPP = new Vue({
       })
     },
     //根据openid查询潜客信息
-    findPortraitInfiByOpenid: function(id){
+    queryPortraitInfoByOpenid: function(id){
       var self = this
       var jsonObj = {
         'openid': id
       }
       mcMethod.query.request({
         data: jsonObj,
-        url: mcMethod.url.findPortraitInfiByOpenid,
+        url: mcMethod.url.queryPortraitInfoByOpenid,
         callback: function (data) {
           if(data.code == 0 && JSON.stringify(data.data) != {}){
             //已有贵宾卡
-            if(data.data.portraitInfoExists == true){
-              this.vipCardFlag = true
+            if(data.data.guestExists == true){
+              console.log('申请贵宾卡',data);
+              self.vipCardFlag = true
+              self.isApplyFlag = false
+              self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
+              self.getQRCode(self.portraitQRcodeUrl)
             }else {
-              this.vipCardFlag = false
+              self.vipCardFlag = false
+              self.isApplyFlag = true
             }
             self.queryAuthorizeTenantInfo()
           }else {
@@ -293,122 +302,18 @@ var INDEXAPP = new Vue({
         }
       })
     },
-    queryActivityById: function () {
+    //生成二维码
+    getQRCode: function (ewmUrl){
       var self = this;
-      if (mcMethod.info.activityId) {
-        mcMethod.query.request({
-          queryType: 'GET',
-          url: mcMethod.url.queryActivityById,
-          address: {
-            activityId: mcMethod.info.activityId
-          },
-          callback: function (data) {
-            if (data.code === 0 && data.data != null) {
-              self.activityData = data.data.modelExt
-              console.log(self.activityData,'活动模板数据');
-              document.title = data.data.activityInfo.title
-              $("meta[name='og:description']").attr('content', data.data.activityInfo.synopsis)
-              CONTENTVAR.ispvSum = data.data.activityStatus
-              if(CONTENTVAR.ispvSum == 1) {
-                self.pvSum()
-              }
-              if(data.data.activityStatus == "0" || data.data.activityStatus == "2" ) {
-                self.isDisable = false
-                if(data.data.activityStatus == 2){
-                  self.$createDialog({
-                    type: 'alert',
-                    icon: 'cubeic-alert',
-                    showClose: false,
-                    title: '活动已结束',
-                    onClose: () => {
-                      this.$createToast({
-                        type: 'warn',
-                        time: 1000,
-                        txt: '点击关闭按钮'
-                      }).show()
-                    }
-                  }).show()
-                }
-              }
-              //基础信息
-              if (data.data.activityInfo) {
-                console.log(data.data.activityInfo,'data.data.activityInfo');
-                self.activityInfo = data.data.activityInfo
-                console.log(data.data.activityInfo);
-                CONTENTVAR.title = data.data.activityInfo.title
-                self.queryAuthorizeTenantInfo()
-              }
-            }else if(data.code === 0 && data.data == null ){
-              self.$createDialog({
-                type: 'alert',
-                icon: 'cubeic-alert',
-                showClose: false,
-                title: '活动已下架',
-                onConfirm: () => {
-                  WeixinJSBridge.call('closeWindow');//IOS
-                  document.addEventListener('WeixinJSBridgeReady', function(){ WeixinJSBridge.call('closeWindow'); }, false) //安卓
-                }
-              }).show()
-            }else {
-            }
-          }
-        })
-      } else {
-
-      }
-    },
-    pvSum: function () {
-      var channelInfo = {
-        channelName:xyAuth.getRequestValue('ffChannelCall') || '',
-        channelId:xyAuth.getRequestValue('ffChannelId') || '',
-        authorizeId:xyAuth.getRequestValue('authorizeId') || '',
-        authorizeName:xyAuth.getRequestValue('authorizeCall') || '',
-      }
-      for (var key in channelInfo) {              // 去除对象内多余的空值key
-        if (channelInfo[key] === '') {
-          delete channelInfo[key]
-        }
-      }
-      var queryMap = {
-        activityId: mcMethod.info.activityId,
-      }
-      Object.assign(queryMap,channelInfo)
-      console.log(queryMap, '合并之后的对象');
-      mcMethod.query.request({
-        url: mcMethod.url.pvSum,
-        queryType: 'GET',
-        address: queryMap,
-        callback: function (data) {
-        }
+      console.log('获取生成二维码',self.portraitQRcodeUrl);
+      self.$nextTick(function () {
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+          width : 100,
+          height : 100
+        });
+        qrcode.makeCode(ewmUrl);
       })
-    },
-    findActivityTemplateById: function () {
-      var self = this;
-      if (mcMethod.info.activityTemplateId) {
-        mcMethod.query.request({
-          queryType: 'GET',
-          url: mcMethod.url.findActivityTemplateById,
-          address: {
-            id: mcMethod.info.activityTemplateId
-          },
-          callback: function (data) {
-            if (data.code === 0 && data.data) {
-              console.log(data.data,data.data.templateContent.activityInfo, "通过模板Id查找数据");
-              document.title = data.data.templateContent.activityInfo.title
-              $("meta[name='og:description']").attr('content', data.data.templateContent.activityInfo.synopsis)
-              var data = data.data.templateContent
-              self.activityData = data.modelExt
-              //基础信息
-              if (data.activityInfo) {
-                self.activityInfo = data.activityInfo
-                CONTENTVAR.title = data.activityInfo.title
-              }
-            }
-          }
-        })
-      } else {
 
-      }
     },
     // 获取用户登录授权后的信息
     getAuthUserInfo(){
@@ -453,14 +358,26 @@ var INDEXAPP = new Vue({
   },
   created: function () {
     this.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
-    console.log(this.userInfoCacheKey, '全局获取用户信息包括openid, unioid');
-    console.log('mcMethod.info.guestId',mcMethod.info.guestId);
-    if (mcMethod.info.guestId != '' && mcMethod.info.guestId != undefined && mcMethod.info.guestId != null ){//活动模板
-      this.findPortraitInfiById(mcMethod.info.guestId)
+    console.log('用户授权信息',this.userInfoCacheKey);
+    // this.userInfoCacheKey = {
+    //   auth: "yes",
+    //   city: "海淀",
+    //   country: "中国",
+    //   ctime: 1577683299845,
+    //   headimgurl: "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLT0RMjKNehHtDAyxfSeDTbfVR7YndcydMpJrjQ4mKymDJbgrLu2t3OQWhb3hv8iaKQgp9cAULiaStw/132",
+    //   language: "zh_CN",
+    //   nickname: "💋、 M",
+    //   openid: "o6MrawbFTDdP0ritphk2eMIOdQ5I",
+    //   privilege: Array(0),
+    //   province: "北京",
+    //   sex: 2,
+    //   unionid: "oIMTwwPV1j8ktFlxuPpe7lGkLTYE"
+    // }
+    if (mcMethod.info.userId != '' && mcMethod.info.userId != undefined && mcMethod.info.userId != null ){//活动模板
+      this.queryPortraitInfoById(mcMethod.info.userId)
     }else {
-      console.log('this.userInfoCacheKey',this.userInfoCacheKey);
       var openid = this.userInfoCacheKey.openid
-      this.findPortraitInfiByOpenid(openid)
+      this.queryPortraitInfoByOpenid(openid)
     }
   },
   mounted: function () {
