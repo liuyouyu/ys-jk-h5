@@ -259,7 +259,7 @@ var templateView = {
         jsonObj['activityId'] = mcMethod.info.activityId;
         // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
         var wxInfo = xyAuth.getCacheUserInfo()
-
+        console.log('微信信息',wxInfo);
         jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
         jsonObj['wxName'] = wxInfo.nickname || ''
         var channelInfo = {
