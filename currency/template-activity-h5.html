@@ -27,10 +27,6 @@
         <div class="content-wrap">
             <div class="content-container">
                 <div class="scroll">
-                  <!-- 卡片详情-->
-                  <div class="vipCardWrapper" v-if="vipCardFlag">
-                      <img src="./common/img/cardDetails.png" alt="背景图">
-                  </div>
                   <!-- 申请卡片 -->
                   <div class="immediatelyApplyWrapper" v-if="isApplyFlag && !vipCardFlag">
                       <div class="carDTips">
@@ -42,14 +38,17 @@
                       </div>
                   </div>
                   <!-- 资料填写 -->
-                  <div class="writeInfoContainer" v-if="!isApplyFlag">
+                  <div class="writeInfoContainer" v-if="!isApplyFlag && !vipCardFlag">
                       <emp-write-info :userinfocachekey="userInfoCacheKey"></emp-write-info>
                   </div>
+                    <!-- 卡片详情-->
+                    <div class="vipCardWrapper" v-if="vipCardFlag">
+                        <img src="./common/img/cardDetails.png" alt="背景图">
+                        <div id="qrcode" class="qrewmCode"></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- 资料填写 -->
-        <!--<div>资料填写</div>-->
     </div>
 </div>
 <template class="hide" id="emp_writeInfo">
@@ -96,6 +95,7 @@
 <script src="common/components/catalogue/catalogue.js?$$tempflag$$"></script>
 <script src="common/common/common.js?$$tempflag$$"></script>
 <script src="common/plugins/xyAuth.js?$$tempflag$$"></script>
+<script src="common/plugins/qrcode.min.js?$$tempflag$$"></script>
 <script src="common/base/base.js?$$tempflag$$"></script>
 <script src="js/template-activity-h5.js?$$tempflag$$"></script>
 

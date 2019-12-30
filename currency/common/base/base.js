@@ -28,22 +28,21 @@ mcMethod.url = {
   //微信分享接口
   queryAuthorizeTenantInfo: 'api/ffWxCheck/v1/queryAuthorizeTenantInfo',
   //根据潜客id查询潜客信息
-  findPortraitInfiById:'/api/portraitInfo/v1/findPortraitInfiById',
+  queryPortraitInfoById:'/api/portraitInfo/v1/queryPortraitInfoById',
   //根据openid查询潜客信息
-  findPortraitInfiByOpenid:'/api/portraitInfo/v1/findPortraitInfiByOpenid',
+  queryPortraitInfoByOpenid:'/api/portraitInfo/v1/queryPortraitInfoByOpenid',
   //申请VIP卡
   createPortrait:'/api/portraitInfo/v1/createPortrait'
 };
 
 mcMethod.info = {
-  companyId: mcMethod.getRequestValue('companyId') || 'root',
+  companyId: mcMethod.getRequestValue('companyId') || 'ed466ab9c3024b3587bd117148421600',
   appCode: mcMethod.getRequestValue('appCode') || 'VLOG_YUNSHI',
-  userId: mcMethod.getRequestValue('userId') || '5d8dc8ad05a9b43d88fb3b7f',
+  userId: mcMethod.getRequestValue('userId') || '5da1bee2e297f5000770af9c',
   serviceCode:mcMethod.getRequestValue('serviceCode') || 'YUNSHI_XSGL',
   versionId: mcMethod.getRequestValue('versionId')  || '1',
   activityId: mcMethod.getRequestValue('activityId') || '',
   activityTemplateId: mcMethod.getRequestValue('activityTemplateId') || '',
-  guestId: mcMethod.getRequestValue('guestId') || ''
 };
 
 mcMethod.query = {};
