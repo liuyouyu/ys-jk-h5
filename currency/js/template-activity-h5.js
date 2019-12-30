@@ -225,6 +225,7 @@ var INDEXAPP = new Vue({
     vipCardFlag: false,//贵宾卡展示
     portraitQRcodeUrl: '',//二维码链接
     QRCodeMsg: '',
+    isExpireFlag: true,//VIP申请
   },
   methods: {
     //立即申请
@@ -249,6 +250,7 @@ var INDEXAPP = new Vue({
                 self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
                 self.getQRCode(self.portraitQRcodeUrl)
               }else {
+                self.isExpireFlag = false;
                 var toast = self.$createToast({
                   txt: 'VIP卡已失效',
                   time: '2000',
@@ -373,6 +375,7 @@ var INDEXAPP = new Vue({
     //   sex: 2,
     //   unionid: "oIMTwwPV1j8ktFlxuPpe7lGkLTYE"
     // }
+    console.log('mcMethod.info.userId',mcMethod.info.userId);
     if (mcMethod.info.userId != '' && mcMethod.info.userId != undefined && mcMethod.info.userId != null ){//活动模板
       this.queryPortraitInfoById(mcMethod.info.userId)
     }else {

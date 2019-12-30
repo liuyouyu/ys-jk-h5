@@ -29,20 +29,20 @@
                 <div class="scroll">
                   <!-- 申请卡片 -->
                   <div class="immediatelyApplyWrapper" v-if="isApplyFlag && !vipCardFlag">
-                      <div class="carDTips">
-                          <!--                <img src="./common/img/activityImg/1.jpg" alt="">-->
-                          卡片领取引导提示语
+                      <div class="carDTips" v-cloak>
+<!--                          <img src="./common/img/applyBg.jpg" alt="">-->
                       </div>
-                      <div class="immediatelyApplyBtn">
-                          <cube-button :primary="true" @click="handleApply">立即申请</cube-button>
+                      <div class="immediatelyApplyBtn" v-cloak>
+                          <cube-button :primary="true" @click="handleApply" v-if="isExpireFlag">立即申请</cube-button>
+                          <cube-button :primary="true" :disabled="true" style="background: #ccc" v-else>立即申请</cube-button>
                       </div>
                   </div>
                   <!-- 资料填写 -->
-                  <div class="writeInfoContainer" v-if="!isApplyFlag && !vipCardFlag">
+                  <div class="writeInfoContainer" v-if="!isApplyFlag && !vipCardFlag" v-cloak>
                       <emp-write-info :userinfocachekey="userInfoCacheKey"></emp-write-info>
                   </div>
                     <!-- 卡片详情-->
-                    <div class="vipCardWrapper" v-if="vipCardFlag">
+                    <div class="vipCardWrapper" v-if="vipCardFlag" v-cloak>
                         <img src="./common/img/cardDetails.png" alt="背景图">
                         <div id="qrcode" class="qrewmCode"></div>
                     </div>
@@ -54,8 +54,7 @@
 <template class="hide" id="emp_writeInfo">
     <div class="emp_writeInfoTemplate">
         <div class="emp_writeInfoIntroduce">
-<!--            <img src="" alt="">-->
-            vip图片
+            <img src="./common/img/vipImg.jpg" alt="">
         </div>
         <div class="writeInfo_inputWrapper">
             <cube-input v-model="submitName" @input="handlePhoneChange" placeholder='姓名'></cube-input>

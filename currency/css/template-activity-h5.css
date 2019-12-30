@@ -31,6 +31,11 @@ body {
     bottom:0;
     right:0;
 }
+
+[v-cloak] {
+  display: none;
+}
+
 /*vip卡片详情*/
 .vipCardWrapper {
     width: 100%;
@@ -48,8 +53,15 @@ body {
 }
 .carDTips {
     width: 100%;
+    height: 100%;
     text-align: center;
-    padding-top: 50px;
+    background:url('../common/img/applyBg.jpg') no-repeat;
+    background-size: cover;
+}
+.carDTips img {
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 .immediatelyApplyBtn {
     width: 100%;
@@ -69,6 +81,11 @@ body {
     width: 100%;
     height: 100%;
     position: relative;
+}
+.emp_writeInfoIntroduce {
+    position: absolute;
+    left: 21%;
+    top: 12%;
 }
 .writeInfoWrapper {
     width: 100%;
@@ -157,4 +174,9 @@ body {
     position: absolute;
     top: 46.8%;
     left: 32.8%;
+}
+
+/*禁止按钮样式*/
+.cube-btn_disabled:after {
+    border: 0;
 }

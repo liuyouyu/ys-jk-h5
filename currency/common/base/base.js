@@ -36,9 +36,9 @@ mcMethod.url = {
 };
 
 mcMethod.info = {
-  companyId: mcMethod.getRequestValue('companyId') || 'ed466ab9c3024b3587bd117148421600',
+  companyId: mcMethod.getRequestValue('companyId') || '',
   appCode: mcMethod.getRequestValue('appCode') || 'VLOG_YUNSHI',
-  userId: mcMethod.getRequestValue('userId') || '5da1bee2e297f5000770af9c',
+  userId: mcMethod.getRequestValue('userId') || '',
   serviceCode:mcMethod.getRequestValue('serviceCode') || 'YUNSHI_XSGL',
   versionId: mcMethod.getRequestValue('versionId')  || '1',
   activityId: mcMethod.getRequestValue('activityId') || '',
