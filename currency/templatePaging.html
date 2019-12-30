@@ -34,7 +34,7 @@
             <emp_paging :active-index= "activeIndex" :activity-info="activityInfo" :data="items" :index = "index"></emp_paging>
           </div>
           <div style="width:100%;height: 100%;" v-else-if="items.templateType === 9">
-            <emp-paging-form :active-index= "activeIndex" :activity-info="activityInfo" :data="items" :index = "index"></emp-paging-form>
+            <emp-paging-form :user-info-cache-key="userInfoCacheKey" :active-index= "activeIndex" :activity-info="activityInfo" :data="items" :index = "index"></emp-paging-form>
           </div>
 
         </div>

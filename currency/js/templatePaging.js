@@ -80,7 +80,7 @@ var templateView = {
   // 表单页组件
   empPagingForm: {
     template: '#empPagingForm',
-    props: ['data', 'activityInfo', 'activeIndex', 'index'],
+    props: ['data', 'activityInfo', 'activeIndex', 'index', 'userInfoCacheKey'],
     data() {
       return {
         bg: '',             // 背景图
@@ -256,6 +256,16 @@ var templateView = {
       // 收集提交表单使用的参数
       getParamsObj() {
         var jsonObj = {}
+        var openid = '';
+        var unionid = '';
+        console.log('this.userinfocachekey',this.userinfocachekey);
+        if(this.userinfocachekey != null){
+          openid = self.userinfocachekey.openid
+          unionid = self.userinfocachekey.unionid
+          console.log(openid,unionid, '提交时获取openid，unionid');
+          jsonObj['wxOpenId'] = openid
+          jsonObj['unionId'] = unionid
+        }
         jsonObj['activityId'] = mcMethod.info.activityId;
         // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
         var wxInfo = xyAuth.getCacheUserInfo()
@@ -534,6 +544,5 @@ var INDEXAPP = new Vue({
         }, 0);
       }
     })
-    // this.init()
   }
 })
