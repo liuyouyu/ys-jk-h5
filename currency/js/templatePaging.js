@@ -260,8 +260,8 @@ var templateView = {
         var unionid = '';
         console.log('this.userinfocachekey',this.userinfocachekey);
         if(this.userinfocachekey != null){
-          openid = self.userinfocachekey.openid
-          unionid = self.userinfocachekey.unionid
+          openid = this.userinfocachekey.openid
+          unionid = this.userinfocachekey.unionid
           console.log(openid,unionid, '提交时获取openid，unionid');
           jsonObj['wxOpenId'] = openid
           jsonObj['unionId'] = unionid
