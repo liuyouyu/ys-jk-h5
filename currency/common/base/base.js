@@ -27,6 +27,8 @@ mcMethod.url = {
   findActivityTemplateById: 'api/activityTemplate/v1/findActivityTemplateById',
   //微信分享接口
   queryAuthorizeTenantInfo: 'api/ffWxCheck/v1/queryAuthorizeTenantInfo'
+
+  // 活动页面大屏websocket deiz
 };
 
 mcMethod.info = {
