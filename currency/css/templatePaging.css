@@ -111,13 +111,6 @@ body {
   text-indent: .2rem;
 }
 
-.pagingForm .cube-form .cube-form-item .getCode {
-  position: absolute;
-  right: .2rem;
-  top: .13rem;
-  color: #bbbbbb;
-}
-
 .pagingForm .inputBox {
   width: 80%;
   margin: 0 auto;
@@ -129,6 +122,14 @@ body {
 .pagingForm .inputBox .formItem {
   width: 100%;
   margin-bottom: .2rem;
+}
+
+.pagingForm .inputBox .getCode {
+  position: absolute;
+  right: .2rem;
+  top: 1.46rem;
+  color: #bbbbbb;
+  font-size: .14rem;
 }
 
 .pagingForm .submitBox {

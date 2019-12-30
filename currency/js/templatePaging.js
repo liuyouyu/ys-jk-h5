@@ -83,11 +83,16 @@ var templateView = {
     props: ['data', 'activityInfo', 'activeIndex', 'index'],
     data() {
       return {
-        bg: '',
-        brands: [],
+        bg: '',             // 背景图
+        faceImg:'',         // 表单内容图
+        brands: [],         // 意向品牌数组
         brand: '',
-        validity: {},
+        validity: {},        
         valid: undefined,
+        canGetCode: true,   // 是否可以获取验证码
+        countDown: 60,      // 默认60s重新获取
+        codeKey:'',         // 验证码校验码
+        timer:'',
         model: {
           name: '',
           phone: '',
@@ -102,7 +107,8 @@ var templateView = {
               placeholder: '请输入姓名'
             },
             rules: {
-              required: true
+              required: true,
+              max:10,
             }
           },
           {
@@ -113,10 +119,12 @@ var templateView = {
               placeholder: '请输入电话号码'
             },
             rules: {
-              required: true
+              required: true,
+              type:'tel',
             },
             messages: {
-              required: '请输入电话号码！'
+              required: '请输入电话号码！',
+              type:'请输入正确的电话号码！'
             }
           },
           {
@@ -127,7 +135,8 @@ var templateView = {
               placeholder: '请输入验证码'
             },
             rules: {
-              required: true
+              required: true,
+              type:'number',
             },
             messages: {
               required: '请输入验证码！'
@@ -154,11 +163,20 @@ var templateView = {
     mounted() {
       this.bg = this.activityInfo.pagingBg
       this.brands = this.data.brands
+      this.faceImg = this.data.faceImg
       console.log('表单页', this.activityInfo, this.data);
     },
     methods: {
       getCode() {
+        var that = this
         var phone = this.model.phone
+        if(!(/^1[3456789]\d{9}$/.test(phone))){ 
+          this.$createToast({
+            type:'error',
+            txt:'手机号码格式不正确！'
+          }).show()
+          return
+        }
         mcMethod.query.request({
           queryType: 'GET',
           url: mcMethod.url.sendVerificationCode,
@@ -166,15 +184,103 @@ var templateView = {
             phone: phone,
             vCode: ''
           },
-          callback(data) {
-            console.log(data);
+          callback(res) {
+            // console.log(res);
+            if(res.code === 0){ 
+              that.codeKey = res.data.codeKey     // 存储校验码
+              that.$createToast({
+                type:'correct',
+                txt:'发送成功，请注意接收'
+              }).show()
+              that.canGetCode = false
+              if(that.timer === ''){
+                that.timer = setInterval(() => {
+                  that.countDown --
+                  if(that.countDown <= 0) {
+                    clearInterval(that.timer)
+                    that.countDown = 60
+                    that.canGetCode = true
+                    that.timer = ''
+                  }
+                },1000)
+              }
+            }else{
+              that.$createToast({
+                type:'error',
+                txt:'获取验证码失败'
+              }).show()
+            }
+          }
+        })
+      },
+      // 校验用户输入验证码
+      checkCode(){
+        var that = this
+        if(this.codeKey === ''){
+          this.$createToast({
+            type:'error',
+            txt:'验证码已过期，请重新获取'
+          }).show()
+        }
+        mcMethod.query.request({
+          url: mcMethod.url.validateCode2,
+          queryType: 'GET',
+          address: {
+            validateCode: that.model.code,
+            phone: that.model.phone,
+            codeKey: that.codeKey
+          },
+          callback: function (data) {
+            if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
+              that.savePortraitInfo()
+            }else{
+              that.$createToast({
+                type:'error',
+                txt:'验证码不正确'
+              }).show()
+            }
+          },
+          errorCallback: function (err) {
+            that.$createToast({
+              txt: '验证失败，请稍后再试!',
+              type: 'txt',
+            }).show()
           }
         })
       },
       submitHandler(e) {
         e.preventDefault()
+        console.log('submit')
+        this.checkCode()
+      },
+      // 收集提交表单使用的参数
+      getParamsObj() {
+        var jsonObj = {}
+        jsonObj['activityId'] = mcMethod.info.activityId;
+        // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
+        var wxInfo = xyAuth.getCacheUserInfo()
+
+        jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
+        jsonObj['wxName'] = wxInfo.nickname || ''
+        var channelInfo = {
+          'channelName': xyAuth.getRequestValue('ffChannelCall') || '',
+          'channelId': xyAuth.getRequestValue('ffChannelId') || '',
+          'authorizeId': xyAuth.getRequestValue('authorizeId') || '',
+          'authorizeName': xyAuth.getRequestValue('authorizeCall') || '',
+        }
+        for (var k in channelInfo) {              // 去除对象内多余的空值key
+          if (channelInfo[k] === '') {
+            delete channelInfo[k]
+          }
+        }
+        console.log(JSON.stringify(channelInfo) != '{}', '判断真假');
+        if (JSON.stringify(channelInfo) != '{}') {
+          jsonObj['channelList'] = channelInfo
+        }
+        return jsonObj
+      },
+      savePortraitInfo(){
         var that = this
-        console.log('submit', this)
         var jsonObj = {
           name: this.model.name,
           phone: this.model.phone,
@@ -203,32 +309,6 @@ var templateView = {
             }
           }
         })
-      },
-      // 收集提交表单使用的参数
-      getParamsObj() {
-        var jsonObj = {}
-        jsonObj['activityId'] = mcMethod.info.activityId;
-        // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
-        var wxInfo = xyAuth.getCacheUserInfo()
-
-        jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
-        jsonObj['wxName'] = wxInfo.nickname || ''
-        var channelInfo = {
-          'channelName': xyAuth.getRequestValue('ffChannelCall') || '',
-          'channelId': xyAuth.getRequestValue('ffChannelId') || '',
-          'authorizeId': xyAuth.getRequestValue('authorizeId') || '',
-          'authorizeName': xyAuth.getRequestValue('authorizeCall') || '',
-        }
-        for (var k in channelInfo) {              // 去除对象内多余的空值key
-          if (channelInfo[k] === '') {
-            delete channelInfo[k]
-          }
-        }
-        console.log(JSON.stringify(channelInfo) != '{}', '判断真假');
-        if (JSON.stringify(channelInfo) != '{}') {
-          jsonObj['channelList'] = channelInfo
-        }
-        return jsonObj
       },
       validateHandler(result) {
         this.validity = result.validity
@@ -445,6 +525,7 @@ var INDEXAPP = new Vue({
   },
   mounted: function () {
     this.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+    console.log('获取到用户微信信息？？',this.userInfoCacheKey);
     //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法 
     window.addEventListener("resize", function () {
       if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
