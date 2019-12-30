@@ -158,32 +158,28 @@ var INDEXAPP = new Vue({
           that.userName = "无效设备"
           that.showPage = 2
         } else if (messageData.statusCode === "0003") {
-          console.log("签到成功")
-          that.userName = "签到成功"
+          that.userName='尊敬的'+messageData.userName+'先生（女士）'
           that.showPage = 3
         } else if (messageData.statusCode === "0004") {
           console.log("签到失败")
           that.userName = "签到失败"
           that.showPage = 4
         } else if (messageData.statusCode === "0005") {
-          console.log("已签到")
-          that.userName = "已签到"
+          that.userName='尊敬的'+messageData.userName+'先生（女士）'
           that.showPage = 5
         } else if (messageData.statusCode === "0006") {
           console.log("活动已失效")
           that.userName = "活动已失效"
           that.showPage = 5
         } else if (messageData.statusCode === "0007") {
-          console.log("领取礼物成功")
-          that.userName = "领取礼物成功"
+          that.userName='尊敬的'+messageData.userName+'先生（女士）'
           that.showPage = 7
         } else if (messageData.statusCode === "0008") {
           console.log("领取礼物失败")
           that.userName = "领取礼物失败"
           that.showPage = 8
         } else if (messageData.statusCode === "0009") {
-          console.log("已领取礼物")
-          that.userName = "已领取礼物"
+          that.userName='尊敬的'+messageData.userName+'先生（女士）'
           that.showPage = 9
         }
       };
