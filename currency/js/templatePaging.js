@@ -314,7 +314,7 @@ var templateView = {
           jsonObj['unionId'] = unionid
         }
         console.log('userId',mcMethod.info.userId);
-        if(mcMethod.info.userId != '' && mcMethod.info.userId != undefined && mcMethod.info.userId != null){
+        if(mcMethod.info.employeeId != '' && mcMethod.info.employeeId != undefined && mcMethod.info.employeeId != null){
           jsonObj['employeeId'] = mcMethod.info.userId
         }
         if(mcMethod.info.shareId != '' && mcMethod.info.shareId != undefined && mcMethod.info.shareId != null){

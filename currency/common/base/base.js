@@ -45,7 +45,8 @@ mcMethod.info = {
   versionId: mcMethod.getRequestValue('versionId')  || '1',
   activityId: mcMethod.getRequestValue('activityId') || '',
   activityTemplateId: mcMethod.getRequestValue('activityTemplateId') || '',
-  shareId: mcMethod.getRequestValue('shareId') || ''
+  shareId: mcMethod.getRequestValue('shareId') || '',
+  employeeId: mcMethod.getRequestValue('employeeId') || '',
 };
 
 mcMethod.query = {};
