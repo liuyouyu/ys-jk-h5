@@ -41,11 +41,10 @@
                   <div class="writeInfoContainer" v-if="!isApplyFlag && !vipCardFlag" v-cloak>
                       <emp-write-info :userinfocachekey="userInfoCacheKey"></emp-write-info>
                   </div>
-                    <!-- 卡片详情-->
-                    <div class="vipCardWrapper" v-if="vipCardFlag" v-cloak>
-                        <img src="./common/img/cardDetails.png" alt="背景图">
-                        <div id="qrcode" class="qrewmCode"></div>
-                    </div>
+                  <!-- 卡片详情-->
+                  <div class="vipCardWrapper" v-if="vipCardFlag" v-cloak>
+                      <div id="qrcode" class="qrewmCode"></div>
+                  </div>
                 </div>
             </div>
         </div>
@@ -53,9 +52,9 @@
 </div>
 <template class="hide" id="emp_writeInfo">
     <div class="emp_writeInfoTemplate">
-        <div class="emp_writeInfoIntroduce">
-            <img src="./common/img/vipImg.jpg" alt="">
-        </div>
+<!--        <div class="emp_writeInfoIntroduce">-->
+<!--            <img src="./common/img/vipImg.jpg" alt="">-->
+<!--        </div>-->
         <div class="writeInfo_inputWrapper">
             <cube-input v-model="submitName" @input="handlePhoneChange" placeholder='姓名'></cube-input>
             <cube-input v-model="model.userPhone" @input="handlePhoneChange" placeholder='手机号'></cube-input>

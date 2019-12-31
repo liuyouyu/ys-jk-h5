@@ -258,7 +258,7 @@ var INDEXAPP = new Vue({
                 })
                 toast.show()
               }
-            self.queryAuthorizeTenantInfo()
+            // self.queryAuthorizeTenantInfo()
           }else {
               var toast = self.$createToast({
                 txt: '查询失败!',
@@ -292,7 +292,7 @@ var INDEXAPP = new Vue({
               self.vipCardFlag = false
               self.isApplyFlag = true
             }
-            self.queryAuthorizeTenantInfo()
+            // self.queryAuthorizeTenantInfo()
           }else {
             var toast = self.$createToast({
               txt: '查询失败!',
