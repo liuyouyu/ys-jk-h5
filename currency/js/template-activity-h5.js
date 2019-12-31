@@ -249,6 +249,8 @@ var INDEXAPP = new Vue({
               if(data.data.guestExists == true){
                 self.vipCardFlag = true
                 self.isApplyFlag = false
+                self.vipName = data.data.portraitInfo.uuserName
+                self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
                 self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
                 self.getQRCode(self.portraitQRcodeUrl)
               }else {
