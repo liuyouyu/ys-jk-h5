@@ -324,18 +324,30 @@ if(!xyAuth) {
 					imgUrl: xyAuth.shareInfo.imgUrl,
 					link: xyAuth.shareInfo.link,
 					desc: xyAuth.shareInfo.desc,
-					success: function(res) {}, // 已分享;
-					cancel: function(res) {}, // 已取消
-					fail: function(res) {}, // 失败
+					success: function(res) {
+						console.log('微信分享成功onMenuShareAppMessage')
+					}, // 已分享;
+					cancel: function(res) {
+						console.log('微信分享已取消onMenuShareAppMessage')
+					}, // 已取消
+					fail: function(res) {
+						console.log('微信分享失败onMenuShareAppMessage')
+					}, // 失败
 				});
 				wx.onMenuShareTimeline({
 					title: xyAuth.shareInfo.title,
 					imgUrl: xyAuth.shareInfo.imgUrl,
 					link: xyAuth.shareInfo.link,
 					desc: xyAuth.shareInfo.desc,
-					success: function(res) {}, // 已分享;
-					cancel: function(res) {}, // 已取消'
-					fail: function(res) {}, // 失败
+					success: function(res) {
+						console.log('微信分享成功onMenuShareTimeline')
+					}, // 已分享;
+					cancel: function(res) {
+						console.log('微信分享已取消onMenuShareTimeline')
+					}, // 已取消'
+					fail: function(res) {
+						console.log('微信分享失败onMenuShareTimeline')
+					}, // 失败
 				});
 			} catch (error) {
 				console.log(error, '设置微信分享失败')

@@ -941,14 +941,14 @@ var INDEXAPP = new Vue({
     getAuthUserInfo(){
       xyAuth.getAuthUserInfo()
     },
-   // 微信分享
+   // 微信授权
     queryAuthorizeTenantInfo: function () {
       var that = this;
       var url = CONFIG.apiHost + mcMethod.url.queryAuthorizeTenantInfo + "?companyId="+mcMethod.info.companyId+"&appCode="+mcMethod.info.appCode+"&userId="+mcMethod.info.userId+"&serviceCode="+mcMethod.info.serviceCode;
       url = dazzleUtil.replaceUrlCommonParam(url);
       axios.get(url).then(function(res) {
         var data = that.checkReturn(res);
-        console.log('微信分享请求的data',data);
+        console.log('微信授权请求的data',data);
         if(data !== false && data.data && data.code == 0) {
           var _desc = that.activityInfo.synopsis
           var _posterUrl = that.activityInfo.eventPoster + '?x-oss-process=style/320w_100q.src'
