@@ -537,6 +537,8 @@ var INDEXAPP = new Vue({
                 CONTENTVAR.title = data.activityInfo.title
               }
             }
+                 // 初始化swiper
+                 self.init()
           }
         })
       } else {
