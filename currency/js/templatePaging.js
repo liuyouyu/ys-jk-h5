@@ -115,11 +115,11 @@ var templateView = {
           },
           {
             modelKey: 'sex',
-            type: 'select',
+            type: 'radio-group',
             label: '',
             props: {
               options:['男','女'],
-              placeholder: '请选择您的性别'
+              placeholder: ''
             },
             rules: {
               required: true
@@ -313,6 +313,12 @@ var templateView = {
           jsonObj['wxOpenId'] = openid
           jsonObj['unionId'] = unionid
         }
+        if(mcMethod.info.userId != '' && mcMethod.info.userId != undefined && mcMethod.info.userId != null){
+          jsonObj['employeeId'] = mcMethod.info.userId
+        }
+        if(mcMethod.info.shareId != '' && mcMethod.info.shareId != undefined && mcMethod.info.shareId != null){
+          jsonObj['shareId'] = mcMethod.info.shareId
+        }
         jsonObj['activityId'] = mcMethod.info.activityId;
         // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
         var wxInfo = xyAuth.getCacheUserInfo()
@@ -332,7 +338,6 @@ var templateView = {
             delete channelInfo[k]
           }
         }
-        console.log(JSON.stringify(channelInfo) != '{}', '判断真假');
         if (JSON.stringify(channelInfo) != '{}') {
           jsonObj['channelList'] = channelInfo
         }
@@ -352,7 +357,7 @@ var templateView = {
           callback: function (res) {
             console.log('活动报名后', res);
             if(res.code === 0){
-              that.portraitId = res.data              // 获取潜客id
+              that.portraitId = res.data.id              // 获取潜客id
               that.$createDialog({
                 type: 'alert',
                 // icon: 'cubeic-alert',
@@ -583,6 +588,29 @@ var INDEXAPP = new Vue({
         }
       }
       return false;
+    },
+    //活动-分享关系记录
+    sharePortrait: function(){
+      var self = this;
+      var objQuery = {
+        'activityId': '',
+        'circulateType': 'wechat'
+      }
+      if(mcMethod.info.userId != '' && mcMethod.info.userId != undefined && mcMethod.info.userId != null){
+        objQuery['sId'] = mcMethod.info.userId
+      }
+      if(this.userInfoCacheKey != null){
+        objQuery['cId'] = this.userInfoCacheKey.openid
+        objQuery['cName'] = this.userInfoCacheKey.nickname
+      }
+      mcMethod.query.request({
+        data: objQuery,
+        url: mcMethod.url.sharePortrait,
+        callback: function (res) {
+          if(res.code === 0){
+          }
+        }
+      })
     },
   },
   created: function () {
