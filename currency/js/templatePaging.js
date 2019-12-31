@@ -351,21 +351,75 @@ var templateView = {
           url: mcMethod.url.savePortraitInfo,
           callback: function (res) {
             console.log('活动报名后', res);
+            debugger;
             if(res.code === 0){
-              that.portraitId = res.data              // 获取潜客id
+              that.portraitId = res.data.id              // 获取潜客id
               that.$createDialog({
                 type: 'alert',
                 // icon: 'cubeic-alert',
                 showClose: true,
                 title: '恭喜您已经报名成功！',
                 confirmBtn: {
-                  text: that.data.successData.btnName || '确定',
+                  text: that.data.successData.btnName || '前往查看您的贵宾卡',
                   active: true,
                   href: that.clearUrl(that.data.successData.skipUrl,that.portraitId) || 'javascript:;'
                 },
-                onClose: () => {
-                }
+             }, (createElement) => {
+                return [
+                  createElement('div', {
+                    'class': {
+                      'my-title': true
+                    },
+                    slot: 'title'
+                  }, [
+                    createElement('div', {
+                      'class': {
+                        'my-title-img': true
+                      }
+                    }),
+                    createElement('p', '您的信息已提交成功'),
+                    createElement('p', '编码'+res.data.participateInNumber),
+                    createElement('p', '获得专属电子VIP卡!')
+                  ]),
+                  // createElement('p', {
+                  //   'class': {
+                  //     'my-content': true
+                  //   },
+                  //   slot: 'content'
+                  // }, '价格仍按快车计算')
+                ]
               }).show()
+              // that.$createDialog({
+              //   type: 'alert',
+              //   confirmBtn: {
+              //     text: '前往查看您的贵宾卡',
+              //     active: true,
+              //     href: that.clearUrl(that.data.successData.skipUrl,that.portraitId) || 'javascript:;'
+              //   }
+              // }, (createElement) => {
+              //   return [
+              //     createElement('div', {
+              //       'class': {
+              //         'my-title': true
+              //       },
+              //       slot: 'title'
+              //     }, [
+              //       createElement('div', {
+              //         'class': {
+              //           'my-title-img': true
+              //         }
+              //       }),
+              //       createElement('p', '您的信息已提交成功'),
+              //       createElement('p', '获得专属电子VIP卡!')
+              //     ]),
+              //     // createElement('p', {
+              //     //   'class': {
+              //     //     'my-content': true
+              //     //   },
+              //     //   slot: 'content'
+              //     // }, '价格仍按快车计算')
+              //   ]
+              // }).show()
             }
           }
         })

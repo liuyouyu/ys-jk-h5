@@ -179,3 +179,34 @@ body {
 .v-enter-to {
   opacity: 1;
 }
+/* 弹窗style */
+.cube-dialog-btns{
+}
+.my-title-img{
+  height:0.9rem;
+  margin-top: 0.3rem;
+  background:url(../common/img/activityImg/submit-success.svg) no-repeat center;
+}
+.cube-popup-content{
+  background:transparent;
+}
+.cube-dialog-main{
+  background:transparent;
+  width:80vw;
+}
+.cube-dialog-alert{
+  background:rgba(87, 246, 255, 0.16);
+  padding-bottom:0.3rem;
+}
+.my-title p{
+  color:#fff;
+  font-size:0.2rem;
+  line-height:0.38rem;
+}
+
+.cube-dialog-btn  {
+  color: #fff !important;
+  background: rgb(55,158,220) !important;
+  width: 80% !important;
+  border-radius: 50px !important;
+};
