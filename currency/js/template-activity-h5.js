@@ -226,6 +226,8 @@ var INDEXAPP = new Vue({
     portraitQRcodeUrl: '',//二维码链接
     QRCodeMsg: '',
     isExpireFlag: true,//VIP申请
+    vipName: '',
+    gender: ''
   },
   methods: {
     //立即申请
@@ -286,6 +288,7 @@ var INDEXAPP = new Vue({
               console.log('申请贵宾卡',data);
               self.vipCardFlag = true
               self.isApplyFlag = false
+              self.vipName = data.data.portraitInfo.uuserName
               self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
               self.getQRCode(self.portraitQRcodeUrl)
             }else {

@@ -135,7 +135,7 @@ body {
 
 .pagingForm .inputBox .formItem {
   width: 100%;
-  margin-bottom: .2rem;
+  /*margin-bottom: .2rem;*/
 }
 
 .pagingForm .inputBox .cube-form-group-content {

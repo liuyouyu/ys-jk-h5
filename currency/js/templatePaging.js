@@ -106,7 +106,7 @@ var templateView = {
             modelKey: 'name',
             label: '',
             props: {
-              placeholder: '请输入姓名'
+              placeholder: '您的姓名'
             },
             rules: {
               required: true,
@@ -118,7 +118,7 @@ var templateView = {
             type: 'radio-group',
             label: '',
             props: {
-              options:['男','女'],
+              options:['先生','女士'],
               placeholder: ''
             },
             rules: {
@@ -133,7 +133,7 @@ var templateView = {
             modelKey: 'phone',
             label: '',
             props: {
-              placeholder: '请输入电话号码'
+              placeholder: '您的电话'
             },
             rules: {
               required: true,
@@ -149,7 +149,7 @@ var templateView = {
             type: 'input',
             label: '',
             props: {
-              placeholder: '请输入验证码'
+              placeholder: '验证码'
             },
             rules: {
               required: true,
