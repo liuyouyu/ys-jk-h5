@@ -102,7 +102,7 @@ if(!xyAuth) {
 					link: xyAuth.shareInfo.link,
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
-						// xyAuth.addShareNum();
+						xyAuth.sharePortrait()
 					}, // 已分享;
 					cancel: function(res) {}, // 已取消
 					fail: function(res) {}, // 失败
@@ -114,11 +114,35 @@ if(!xyAuth) {
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
 						// xyAuth.addShareNum();
+						xyAuth.sharePortrait()
 					}, // 已分享;
 					cancel: function(res) {}, // 已取消'
 					fail: function(res) {}, // 失败
 				});
 			});
+		},
+		//活动-分享关系记录
+		sharePortrait: function(){
+			var userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+			var objQuery = {
+				'activityId': mcMethod.info.activityId,
+				'circulateType': 'wechat'
+			}
+			if(mcMethod.info.userId != '' && mcMethod.info.userId != undefined && mcMethod.info.userId != null){
+				objQuery['sId'] = mcMethod.info.userId
+			}
+			if(userInfoCacheKey != null){
+				objQuery['cId'] = userInfoCacheKey.openid
+				objQuery['cName'] = userInfoCacheKey.nickname
+			}
+			mcMethod.query.request({
+				data: objQuery,
+				url: mcMethod.url.sharePortrait,
+				callback: function (res) {
+					if(res.code === 0){
+					}
+				}
+			})
 		},
 		initWxShare: function(shareInfo) {
 			var data = {

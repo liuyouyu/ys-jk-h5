@@ -83,12 +83,13 @@ body {
   left: 0px;
   z-index: -10;
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 
 .pagingForm .transitionBox {
   width: 100%;
   height: 100%;
+  padding-top:2.2rem;
 }
 
 .pagingForm .cube-form {
@@ -98,7 +99,7 @@ body {
 .pagingForm .cube-form .cube-form-item {
   padding: 0;
   position: relative;
-  background: #ffffff;
+  background: transparent;
   border-radius: .04rem;
   overflow: hidden;
   height: .46rem;
@@ -127,7 +128,6 @@ body {
 .pagingForm .inputBox {
   width: 80%;
   margin: 0 auto;
-  margin-top: 2rem;
   position: relative;
   z-index: 5;
   font-size: .14rem;
@@ -135,7 +135,7 @@ body {
 
 .pagingForm .inputBox .formItem {
   width: 100%;
-  margin-bottom: .2rem;
+  /*margin-bottom: .2rem;*/
 }
 
 .pagingForm .inputBox .cube-form-group-content {
@@ -179,6 +179,24 @@ body {
 .v-enter-to {
   opacity: 1;
 }
+
+/*更改表单radio样式*/
+.inputBox .cube-radio {
+  display: inline-block;
+  margin:0 30px 0 21px;
+}
+/*input框背景色更改*/
+.inputBox .cube-input {
+  background: transparent;
+}
+.inputBox .cube-radio-wrap.border-bottom-1px:after {
+  border: 0;
+}
+.cube-radio-label {
+  color: #bbb;
+}
+
+
 /* 弹窗style */
 .cube-dialog-btns{
 }
@@ -210,3 +228,5 @@ body {
   width: 80% !important;
   border-radius: 50px !important;
 };
+
+

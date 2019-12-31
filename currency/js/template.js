@@ -610,7 +610,6 @@ var templateView = {
             }
           }
         })
-
       },
       handlePhoneChange(val){
         if (CONTENTVAR.rexPhone.test(val)){

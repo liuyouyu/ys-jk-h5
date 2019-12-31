@@ -32,7 +32,9 @@ mcMethod.url = {
   //根据openid查询潜客信息
   queryPortraitInfoByOpenid:'/api/portraitInfo/v1/queryPortraitInfoByOpenid',
   //申请VIP卡
-  createPortrait:'/api/portraitInfo/v1/createPortrait'
+  createPortrait:'/api/portraitInfo/v1/createPortrait',
+  //活动分享关系记录
+  sharePortrait:'/api/portraitInfo/v1/sharePortrait'
 };
 
 mcMethod.info = {
@@ -43,6 +45,7 @@ mcMethod.info = {
   versionId: mcMethod.getRequestValue('versionId')  || '1',
   activityId: mcMethod.getRequestValue('activityId') || '',
   activityTemplateId: mcMethod.getRequestValue('activityTemplateId') || '',
+  shareId: mcMethod.getRequestValue('shareId') || ''
 };
 
 mcMethod.query = {};

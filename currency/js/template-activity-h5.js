@@ -226,6 +226,8 @@ var INDEXAPP = new Vue({
     portraitQRcodeUrl: '',//二维码链接
     QRCodeMsg: '',
     isExpireFlag: true,//VIP申请
+    vipName: '',
+    gender: ''
   },
   methods: {
     //立即申请
@@ -247,6 +249,8 @@ var INDEXAPP = new Vue({
               if(data.data.guestExists == true){
                 self.vipCardFlag = true
                 self.isApplyFlag = false
+                self.vipName = data.data.portraitInfo.uuserName
+                self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
                 self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
                 self.getQRCode(self.portraitQRcodeUrl)
               }else {
@@ -258,7 +262,7 @@ var INDEXAPP = new Vue({
                 })
                 toast.show()
               }
-            self.queryAuthorizeTenantInfo()
+            // self.queryAuthorizeTenantInfo()
           }else {
               var toast = self.$createToast({
                 txt: '查询失败!',
@@ -286,13 +290,14 @@ var INDEXAPP = new Vue({
               console.log('申请贵宾卡',data);
               self.vipCardFlag = true
               self.isApplyFlag = false
+              self.vipName = data.data.portraitInfo.uuserName
               self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
               self.getQRCode(self.portraitQRcodeUrl)
             }else {
               self.vipCardFlag = false
               self.isApplyFlag = true
             }
-            self.queryAuthorizeTenantInfo()
+            // self.queryAuthorizeTenantInfo()
           }else {
             var toast = self.$createToast({
               txt: '查询失败!',

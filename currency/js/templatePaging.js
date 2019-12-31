@@ -106,7 +106,7 @@ var templateView = {
             modelKey: 'name',
             label: '',
             props: {
-              placeholder: '请输入姓名'
+              placeholder: '您的姓名'
             },
             rules: {
               required: true,
@@ -115,11 +115,11 @@ var templateView = {
           },
           {
             modelKey: 'sex',
-            type: 'select',
+            type: 'radio-group',
             label: '',
             props: {
-              options:['男','女'],
-              placeholder: '请选择您的性别'
+              options:['先生','女士'],
+              placeholder: ''
             },
             rules: {
               required: true
@@ -133,7 +133,7 @@ var templateView = {
             modelKey: 'phone',
             label: '',
             props: {
-              placeholder: '请输入电话号码'
+              placeholder: '您的电话'
             },
             rules: {
               required: true,
@@ -149,7 +149,7 @@ var templateView = {
             type: 'input',
             label: '',
             props: {
-              placeholder: '请输入验证码'
+              placeholder: '验证码'
             },
             rules: {
               required: true,
@@ -313,6 +313,13 @@ var templateView = {
           jsonObj['wxOpenId'] = openid
           jsonObj['unionId'] = unionid
         }
+        console.log('userId',mcMethod.info.userId);
+        if(mcMethod.info.userId != '' && mcMethod.info.userId != undefined && mcMethod.info.userId != null){
+          jsonObj['employeeId'] = mcMethod.info.userId
+        }
+        if(mcMethod.info.shareId != '' && mcMethod.info.shareId != undefined && mcMethod.info.shareId != null){
+          jsonObj['shareId'] = mcMethod.info.shareId
+        }
         jsonObj['activityId'] = mcMethod.info.activityId;
         // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
         var wxInfo = xyAuth.getCacheUserInfo()
@@ -332,7 +339,6 @@ var templateView = {
             delete channelInfo[k]
           }
         }
-        console.log(JSON.stringify(channelInfo) != '{}', '判断真假');
         if (JSON.stringify(channelInfo) != '{}') {
           jsonObj['channelList'] = channelInfo
         }
@@ -463,6 +469,7 @@ var INDEXAPP = new Vue({
     templateType: "",//模板类型
     mySwiper: {},
     activeIndex: 0,
+    activityId: '',//活动id
   },
   methods: {
     init() {
@@ -489,6 +496,7 @@ var INDEXAPP = new Vue({
           },
           callback: function (data) {
             if (data.code === 0 && data.data != null) {
+              self.activityId = data.data.id
               self.activityData = data.data.modelExt
               self.templateType = data.data.activityTemplateId
               document.title = data.data.activityInfo.title
@@ -585,6 +593,7 @@ var INDEXAPP = new Vue({
               self.templateType = data.data.activityTemplateId
               var data = data.data.templateContent
               self.activityData = data.modelExt
+              self.activityId = data.id
               //基础信息
               if (data.activityInfo) {
                 self.activityInfo = data.activityInfo
