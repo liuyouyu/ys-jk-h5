@@ -315,7 +315,7 @@ var templateView = {
         }
         console.log('userId',mcMethod.info.userId);
         if(mcMethod.info.employeeId != '' && mcMethod.info.employeeId != undefined && mcMethod.info.employeeId != null){
-          jsonObj['employeeId'] = mcMethod.info.userId
+          jsonObj['employeeId'] = mcMethod.info.employeeId
         }
         if(mcMethod.info.shareId != '' && mcMethod.info.shareId != undefined && mcMethod.info.shareId != null){
           jsonObj['shareId'] = mcMethod.info.shareId
