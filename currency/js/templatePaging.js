@@ -313,6 +313,7 @@ var templateView = {
           jsonObj['wxOpenId'] = openid
           jsonObj['unionId'] = unionid
         }
+        console.log('userId',mcMethod.info.userId);
         if(mcMethod.info.userId != '' && mcMethod.info.userId != undefined && mcMethod.info.userId != null){
           jsonObj['employeeId'] = mcMethod.info.userId
         }
