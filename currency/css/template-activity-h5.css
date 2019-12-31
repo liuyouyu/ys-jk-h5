@@ -188,3 +188,13 @@ body {
 .cube-btn_disabled:after {
     border: 0;
 }
+.vipName {
+    position: absolute;
+    top: 38.6%;
+    color: #fff;
+    left: 28%;
+    font-size: 18px;
+}
+.gender {
+    margin-right: 14px;
+}

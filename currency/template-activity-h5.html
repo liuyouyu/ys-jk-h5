@@ -43,9 +43,9 @@
                   </div>
                   <!-- 卡片详情-->
                   <div class="vipCardWrapper" v-if="vipCardFlag" v-cloak>
-                      <p> {{vipName}}
-                          <span v-if="gender == '1'">先生</span>
-                          <span v-if="gender == '2'">女士</span>
+                      <p class="vipName"> {{vipName}}
+                          <span v-if="gender == '1'" class="gender">先生</span>
+                          <span v-if="gender == '2'" class="gender">女士</span>
                           专属贵宾卡
                       </p>
                       <div id="qrcode" class="qrewmCode"></div>
