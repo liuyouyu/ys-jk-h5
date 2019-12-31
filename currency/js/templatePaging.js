@@ -414,6 +414,7 @@ var INDEXAPP = new Vue({
     templateType: "",//模板类型
     mySwiper: {},
     activeIndex: 0,
+    activityId: '',//活动id
   },
   methods: {
     init() {
@@ -440,6 +441,7 @@ var INDEXAPP = new Vue({
           },
           callback: function (data) {
             if (data.code === 0 && data.data != null) {
+              self.activityId = data.data.id
               self.activityData = data.data.modelExt
               self.templateType = data.data.activityTemplateId
               document.title = data.data.activityInfo.title
@@ -536,6 +538,7 @@ var INDEXAPP = new Vue({
               self.templateType = data.data.activityTemplateId
               var data = data.data.templateContent
               self.activityData = data.modelExt
+              self.activityId = data.id
               //基础信息
               if (data.activityInfo) {
                 self.activityInfo = data.activityInfo
@@ -588,29 +591,6 @@ var INDEXAPP = new Vue({
         }
       }
       return false;
-    },
-    //活动-分享关系记录
-    sharePortrait: function(){
-      var self = this;
-      var objQuery = {
-        'activityId': '',
-        'circulateType': 'wechat'
-      }
-      if(mcMethod.info.userId != '' && mcMethod.info.userId != undefined && mcMethod.info.userId != null){
-        objQuery['sId'] = mcMethod.info.userId
-      }
-      if(this.userInfoCacheKey != null){
-        objQuery['cId'] = this.userInfoCacheKey.openid
-        objQuery['cName'] = this.userInfoCacheKey.nickname
-      }
-      mcMethod.query.request({
-        data: objQuery,
-        url: mcMethod.url.sharePortrait,
-        callback: function (res) {
-          if(res.code === 0){
-          }
-        }
-      })
     },
   },
   created: function () {
