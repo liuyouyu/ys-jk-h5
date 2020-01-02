@@ -184,6 +184,13 @@ var templateView = {
       this.brands = this.data.brands
       this.faceImg = this.data.faceImg
       console.log('表单页', this.activityInfo, this.data);
+      document.body.addEventListener('focusin', () => {
+        var u = navigator.userAgent;
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isiOS) {
+          window.scrollTo(0, 0);
+        }
+      })
       document.body.addEventListener('focusout', () => {
         var u = navigator.userAgent;
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端

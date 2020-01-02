@@ -637,13 +637,13 @@ var templateView = {
           window.scrollTo(0, 0);
         } 
       })
-      // document.body.addEventListener('focusout', () => {
-      //   var u = navigator.userAgent;
-      //   var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
-      //   if (isiOS) {
-      //     window.scrollTo(0, 0);
-      //   }
-      // })
+      document.body.addEventListener('focusout', () => {
+        var u = navigator.userAgent;
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isiOS) {
+          window.scrollTo(0, 0);
+        }
+      })
     },
     watch: {
       dataInfo: function (newVal, oldVal) {
