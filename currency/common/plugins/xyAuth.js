@@ -99,7 +99,7 @@ if(!xyAuth) {
 				wx.onMenuShareAppMessage({
 					title: xyAuth.shareInfo.title,
 					imgUrl: xyAuth.shareInfo.imgUrl,
-					link: xyAuth.shareInfo.link,
+					link: xyAuth.shareInfo.link + "&shareId="+ mcMethod.info.shareId,
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
 						xyAuth.sharePortrait()
@@ -110,7 +110,7 @@ if(!xyAuth) {
 				wx.onMenuShareTimeline({
 					title: xyAuth.shareInfo.title,
 					imgUrl: xyAuth.shareInfo.imgUrl,
-					link: xyAuth.shareInfo.link,
+					link: xyAuth.shareInfo.link + "&shareId="+ mcMethod.info.shareId,
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
 						// xyAuth.addShareNum();
@@ -336,11 +336,12 @@ if(!xyAuth) {
 		 * 设置分享信息
 		 */
 		setShareInfo: function(info) {
+			console.log(info.link, '分享链接');
 			try {
 				info = info || {};
 				info.title = info.title || $("title").text();
 				info.imgUrl = info.imgUrl || "";
-				info.link = info.link+"&shareId="+ mcMethod.info.shareId || window.location.href;
+				info.link = info.link || window.location.href;
 				info.desc = info.desc || $("title").text();
 				xyAuth.shareInfo = info;
 				wx.onMenuShareAppMessage({
