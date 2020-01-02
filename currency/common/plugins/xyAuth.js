@@ -130,16 +130,16 @@ if(!xyAuth) {
 				'circulateType': 'wechat'
 			}
 			if(mcMethod.info.employeeId != '' && mcMethod.info.employeeId != undefined && mcMethod.info.employeeId != null){
-				objQuery['sId'] = mcMethod.info.employeeId
+				objQuery['sid'] = mcMethod.info.employeeId
 			}
 			if(userInfoCacheKey != null){
-				objQuery['cId'] = userInfoCacheKey.openid
-				objQuery['cName'] = userInfoCacheKey.nickname
+				objQuery['cid'] = userInfoCacheKey.openid
+				objQuery['cname'] = userInfoCacheKey.nickname
 			}
 			if(mcMethod.info.shareId != '' && mcMethod.info.shareId != undefined && mcMethod.info.shareId != null){
 				objQuery['pid'] = userInfoCacheKey.shareId
 			}else {
-				objQuery['pid'] = userInfoCacheKey.openid
+				objQuery['pid'] = mcMethod.info.employeeId
 			}
 			mcMethod.query.request({
 				data: objQuery,
