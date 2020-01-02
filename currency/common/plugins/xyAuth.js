@@ -14,7 +14,8 @@ window.addEventListener('message', function (params) {
 		console.log(e)
 	}
 }, false);
-
+//微信授权信息
+var userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
 if(!xyAuth) {
 	var xyAuth = {
 		//公众号appid
@@ -99,7 +100,7 @@ if(!xyAuth) {
 				wx.onMenuShareAppMessage({
 					title: xyAuth.shareInfo.title,
 					imgUrl: xyAuth.shareInfo.imgUrl,
-					link: xyAuth.shareInfo.link+"&shareId="+xyAuth.getRequestValue('shareId'),
+					link: xyAuth.shareInfo.link+"&shareId="+userInfoCacheKey.openid,
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
 						xyAuth.sharePortrait()
@@ -110,7 +111,7 @@ if(!xyAuth) {
 				wx.onMenuShareTimeline({
 					title: xyAuth.shareInfo.title,
 					imgUrl: xyAuth.shareInfo.imgUrl,
-					link: xyAuth.shareInfo.link+"&shareId="+xyAuth.getRequestValue('shareId'),
+					link: xyAuth.shareInfo.link+"&shareId="+userInfoCacheKey.openid,
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
 						// xyAuth.addShareNum();
@@ -123,7 +124,7 @@ if(!xyAuth) {
 		},
 		//活动-分享关系记录
 		sharePortrait: function(){
-			var userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+			console.log(userInfoCacheKey, '授权信息');
 			var objQuery = {
 				'activityId': mcMethod.info.activityId,
 				'circulateType': 'wechat'
@@ -134,6 +135,11 @@ if(!xyAuth) {
 			if(userInfoCacheKey != null){
 				objQuery['cId'] = userInfoCacheKey.openid
 				objQuery['cName'] = userInfoCacheKey.nickname
+			}
+			if(mcMethod.info.userId ){
+				objQuery['pid'] = userInfoCacheKey.openid
+			}else {
+				objQuery['pid'] = userInfoCacheKey.openid
 			}
 			mcMethod.query.request({
 				data: objQuery,
@@ -636,7 +642,6 @@ if(!xyAuth) {
 			}
 		}
 	};
-
 	var appUa = dazzleUtil.getAppUa();
 	window.USER_INFO_CACHE_KEY = 'userAgent'; // 设置全局使用的用户信息可以 这个数据来自app
 	if (appUa.userinfo) {
