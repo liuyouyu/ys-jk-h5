@@ -74,7 +74,7 @@
                     <cube-form-item class="formItem" :field="fields[3]"></cube-form-item>
 <!--                    <cube-form-item class="formItem" :field="fields[4]"></cube-form-item>--><!--意向品牌-->
                     <span class="getCode" v-if="canGetCode" @click="getCode">获取验证码</span>
-                    <span class="getCode" v-else >重新获取{{countDown}}s</span>
+                    <span class="getCode" v-else >{{countDown}}s</span>
                   </cube-form-group>
                 </div>
                 <cube-form-group>
