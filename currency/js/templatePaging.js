@@ -357,7 +357,6 @@ var templateView = {
           url: mcMethod.url.savePortraitInfo,
           callback: function (res) {
             console.log('活动报名后', res);
-            debugger;
             if(res.code === 0){
               that.portraitId = res.data.id              // 获取潜客id
               that.$createDialog({

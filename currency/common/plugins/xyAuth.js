@@ -340,7 +340,7 @@ if(!xyAuth) {
 				info = info || {};
 				info.title = info.title || $("title").text();
 				info.imgUrl = info.imgUrl || "";
-				info.link = info.link+"&shareId="+ mcMethod.info.shareId || window.location.href+"&shareId="+ mcMethod.info.shareId;
+				info.link = info.link || window.location.href;
 				info.desc = info.desc || $("title").text();
 				xyAuth.shareInfo = info;
 				wx.onMenuShareAppMessage({
