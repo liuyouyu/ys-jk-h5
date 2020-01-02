@@ -148,13 +148,13 @@ var templateView = {
             modelKey: 'code',
             type: 'input',
             label: '',
-            maxlength: 4,
             props: {
               placeholder: '验证码'
             },
             rules: {
               required: true,
               type:'number',
+              max:4,
             },
             messages: {
               required: '请输入验证码！'
