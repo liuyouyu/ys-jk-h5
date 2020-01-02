@@ -15,7 +15,7 @@ window.addEventListener('message', function (params) {
 	}
 }, false);
 //微信授权信息
-var userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+var userInfoCacheKey = ''
 if(!xyAuth) {
 	var xyAuth = {
 		//公众号appid
@@ -53,7 +53,7 @@ if(!xyAuth) {
 		 */
 		setShareConfig: function(data) {
 			wx.config({
-				debug: true,
+				debug: false,
 				appId: xyAuth.appId,
 				timestamp: data.timestamp,
 				nonceStr: data.nonceStr,
@@ -129,15 +129,15 @@ if(!xyAuth) {
 				'activityId': mcMethod.info.activityId,
 				'circulateType': 'wechat'
 			}
-			if(mcMethod.info.userId != '' && mcMethod.info.userId != undefined && mcMethod.info.userId != null){
-				objQuery['sId'] = mcMethod.info.userId
+			if(mcMethod.info.employeeId != '' && mcMethod.info.employeeId != undefined && mcMethod.info.employeeId != null){
+				objQuery['sId'] = mcMethod.info.employeeId
 			}
 			if(userInfoCacheKey != null){
 				objQuery['cId'] = userInfoCacheKey.openid
 				objQuery['cName'] = userInfoCacheKey.nickname
 			}
-			if(mcMethod.info.userId ){
-				objQuery['pid'] = userInfoCacheKey.openid
+			if(mcMethod.info.shareId != '' && mcMethod.info.shareId != undefined && mcMethod.info.shareId != null){
+				objQuery['pid'] = userInfoCacheKey.shareId
 			}else {
 				objQuery['pid'] = userInfoCacheKey.openid
 			}
@@ -241,6 +241,7 @@ if(!xyAuth) {
 						var nowHref = this.clearUrlParam();
 						history.replaceState({}, document.title, nowHref);
             this.setUserInfo(data);
+						userInfoCacheKey = data
             console.log('用户登录授权信息',data);
 //						xyAuth.loginFansByWechat();
 					} else {
