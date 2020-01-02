@@ -103,10 +103,6 @@ var templateView = {
         type: Boolean,
         default: true
       },
-      userinfocachekey: {
-        type: Object,
-        default: {}
-      },
       templatetype: {
         type:String,
         default: ""
@@ -146,6 +142,7 @@ var templateView = {
         phoneWaring:false , // 手机号不正确警告
         emailWaring:false , // 邮箱不正确警告
         alreadySubmit: true,// 表单是否提交
+        userInfoCacheKey: '',//存储微信授权信息
       }
     },
     methods: {
@@ -448,9 +445,10 @@ var templateView = {
         var jsonObj = {};
         var openid = '';
         var unionid = '';
-        if(this.userinfocachekey != null){
-          openid = self.userinfocachekey.openid
-          unionid = self.userinfocachekey.unionid
+        self.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+        if(self.userInfoCacheKey != null){
+          openid = self.userInfoCacheKey.openid
+          unionid = self.userInfoCacheKey.unionid
           console.log(openid,unionid, '提交时获取openid，unionid');
           jsonObj['wxOpenId'] = openid
           jsonObj['unionId'] = unionid

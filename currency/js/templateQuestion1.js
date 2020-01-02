@@ -784,10 +784,6 @@ var templateView = {
       isdisable: {
         type: Boolean,
         default: true
-      },
-      userinfocachekey: {
-        type: Object,
-        default: {}
       }
     },
     data: function () {
@@ -811,7 +807,8 @@ var templateView = {
         phoneCodeKey: '',
         auth_time: 0, /*倒计时 计数器*/
         valueCode: '',
-        alreadySubmit: true
+        alreadySubmit: true,
+        userInfoCacheKey: '',//存储微信授权信息
       }
     },
     methods: {
@@ -885,9 +882,10 @@ var templateView = {
         var jsonObj = {}
         var openid = '';
         var unionid = '';
-        if(self.userinfocachekey != null){
-          openid = self.userinfocachekey.openid
-          unionid = self.userinfocachekey.unionid
+        self.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+        if(self.userInfoCacheKey != null){
+          openid = self.userInfoCacheKey.openid
+          unionid = self.userInfoCacheKey.unionid
           console.log(openid,unionid, '提交时获取openid，unionid');
           jsonObj['wxOpenId'] = openid
           jsonObj['unionId'] = unionid

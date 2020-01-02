@@ -367,21 +367,6 @@ var INDEXAPP = new Vue({
   created: function () {
     this.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
     console.log('用户授权信息',this.userInfoCacheKey);
-    // this.userInfoCacheKey = {
-    //   auth: "yes",
-    //   city: "海淀",
-    //   country: "中国",
-    //   ctime: 1577683299845,
-    //   headimgurl: "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLT0RMjKNehHtDAyxfSeDTbfVR7YndcydMpJrjQ4mKymDJbgrLu2t3OQWhb3hv8iaKQgp9cAULiaStw/132",
-    //   language: "zh_CN",
-    //   nickname: "💋、 M",
-    //   openid: "o6MrawbFTDdP0ritphk2eMIOdQ5I",
-    //   privilege: Array(0),
-    //   province: "北京",
-    //   sex: 2,
-    //   unionid: "oIMTwwPV1j8ktFlxuPpe7lGkLTYE"
-    // }
-    console.log('mcMethod.info.userId',mcMethod.info.userId);
     if (mcMethod.info.userId != '' && mcMethod.info.userId != undefined && mcMethod.info.userId != null ){//活动模板
       this.queryPortraitInfoById(mcMethod.info.userId)
     }else {
