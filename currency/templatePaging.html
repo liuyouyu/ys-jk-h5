@@ -79,7 +79,8 @@
                 </div>
                 <cube-form-group>
                   <div class="submitBox">
-                    <cube-button type="submit">提交</cube-button>
+                    <cube-button type="submit" v-if="alreadySubmit">立即提交</cube-button>
+                    <cube-button type="submit" v-else style="background: #ccc" :disabled="true">立即提交</cube-button>
                   </div>
                 </cube-form-group>
               </cube-form>
