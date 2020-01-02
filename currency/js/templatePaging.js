@@ -148,6 +148,7 @@ var templateView = {
             modelKey: 'code',
             type: 'input',
             label: '',
+            maxlength: 4,
             props: {
               placeholder: '验证码'
             },
