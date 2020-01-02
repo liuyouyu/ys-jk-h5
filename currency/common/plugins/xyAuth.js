@@ -52,7 +52,7 @@ if(!xyAuth) {
 		 */
 		setShareConfig: function(data) {
 			wx.config({
-				debug: false,
+				debug: true,
 				appId: xyAuth.appId,
 				timestamp: data.timestamp,
 				nonceStr: data.nonceStr,
@@ -99,7 +99,7 @@ if(!xyAuth) {
 				wx.onMenuShareAppMessage({
 					title: xyAuth.shareInfo.title,
 					imgUrl: xyAuth.shareInfo.imgUrl,
-					link: xyAuth.shareInfo.link + "&shareId="+ mcMethod.info.shareId,
+					link: xyAuth.shareInfo.link,
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
 						xyAuth.sharePortrait()
@@ -110,7 +110,7 @@ if(!xyAuth) {
 				wx.onMenuShareTimeline({
 					title: xyAuth.shareInfo.title,
 					imgUrl: xyAuth.shareInfo.imgUrl,
-					link: xyAuth.shareInfo.link + "&shareId="+ mcMethod.info.shareId,
+					link: xyAuth.shareInfo.link,
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
 						// xyAuth.addShareNum();
@@ -164,6 +164,7 @@ if(!xyAuth) {
 				success: function(data) {
 					if(data.code === 0) {
 						var data = data.data;
+						console.log(data,'获取分享参数');
 						this.setShareConfig(data);
 					} else {
 						console.info("获取微信分享配置错误!");
