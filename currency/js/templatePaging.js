@@ -80,7 +80,7 @@ var templateView = {
   // 表单页组件
   empPagingForm: {
     template: '#empPagingForm',
-    props: ['data', 'activityInfo', 'activeIndex', 'index', 'userinfocachekey'],
+    props: ['data', 'activityInfo', 'activeIndex', 'index'],
     data() {
       return {
         bg: '',             // 背景图
@@ -173,8 +173,9 @@ var templateView = {
             messages: {
               required: '请选择意向品牌！'
             }
-          }
-        ]
+          },
+        ],
+        userInfoCacheKey: '',//存储微信授权信息
       }
     },
     mounted() {
@@ -302,13 +303,15 @@ var templateView = {
       },
       // 收集提交表单使用的参数
       getParamsObj() {
+        var self = this
         var jsonObj = {}
         var openid = '';
         var unionid = '';
-        console.log('this.userinfocachekey',this.userinfocachekey);
-        if(this.userinfocachekey != null){
-          openid = this.userinfocachekey.openid
-          unionid = this.userinfocachekey.unionid
+        self.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+        console.log('获取到用户微信信息？？',self.userInfoCacheKey);
+        if(self.userInfoCacheKey != null){
+          openid = self.userInfoCacheKey.openid
+          unionid = self.userInfoCacheKey.unionid
           console.log(openid,unionid, '提交时获取openid，unionid');
           jsonObj['wxOpenId'] = openid
           jsonObj['unionId'] = unionid
@@ -356,7 +359,6 @@ var templateView = {
           data: jsonObj,
           url: mcMethod.url.savePortraitInfo,
           callback: function (res) {
-            console.log('活动报名后', res);
             if(res.code === 0){
               that.portraitId = res.data.id              // 获取潜客id
               that.$createDialog({
@@ -430,7 +432,6 @@ var templateView = {
         })
       },
       clearUrl(url,portraitId){
-        console.log('跳转到vip',url,portraitId)
         var urlArr = url.split('&')
         for(var i = 0; i < urlArr.length; i++){
           if(urlArr[i].indexOf('userId')!=-1){
@@ -465,7 +466,7 @@ var INDEXAPP = new Vue({
     PicImgsData: [],//图集
     videoData: [],//视频
     isDisable: true,//判断是否提交
-    userInfoCacheKey: '',
+
     templateType: "",//模板类型
     mySwiper: {},
     activeIndex: 0,
@@ -658,8 +659,6 @@ var INDEXAPP = new Vue({
     }
   },
   mounted: function () {
-    this.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
-    console.log('获取到用户微信信息？？',this.userInfoCacheKey);
     //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法 
     window.addEventListener("resize", function () {
       if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
