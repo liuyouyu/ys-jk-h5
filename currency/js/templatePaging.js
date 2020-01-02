@@ -154,7 +154,6 @@ var templateView = {
             rules: {
               required: true,
               type:'number',
-              max:4,
             },
             messages: {
               required: '请输入验证码！'
