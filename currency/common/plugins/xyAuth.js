@@ -99,7 +99,7 @@ if(!xyAuth) {
 				wx.onMenuShareAppMessage({
 					title: xyAuth.shareInfo.title,
 					imgUrl: xyAuth.shareInfo.imgUrl,
-					link: xyAuth.shareInfo.link,
+					link: xyAuth.shareInfo.link+"&shareId="+xyAuth.getRequestValue('shareId'),
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
 						xyAuth.sharePortrait()
@@ -110,7 +110,7 @@ if(!xyAuth) {
 				wx.onMenuShareTimeline({
 					title: xyAuth.shareInfo.title,
 					imgUrl: xyAuth.shareInfo.imgUrl,
-					link: xyAuth.shareInfo.link,
+					link: xyAuth.shareInfo.link+"&shareId="+xyAuth.getRequestValue('shareId'),
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
 						// xyAuth.addShareNum();
