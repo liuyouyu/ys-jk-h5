@@ -431,6 +431,7 @@ var templateView = {
         })
       },
       clearUrl(url,portraitId){
+        console.log('跳转到vip',url,portraitId)
         var urlArr = url.split('&')
         for(var i = 0; i < urlArr.length; i++){
           if(urlArr[i].indexOf('userId')!=-1){
