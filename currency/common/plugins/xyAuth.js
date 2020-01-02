@@ -15,7 +15,7 @@ window.addEventListener('message', function (params) {
 	}
 }, false);
 //微信授权信息
-var userInfoCacheKey = ''
+var userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
 if(!xyAuth) {
 	var xyAuth = {
 		//公众号appid
