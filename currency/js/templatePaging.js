@@ -342,7 +342,7 @@ var templateView = {
         // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
         var wxInfo = xyAuth.getCacheUserInfo()
         console.log('微信信息',wxInfo);
-
+        console.log(this.model.sex, "性别？？");
         jsonObj['gender'] = this.model.sex === '男' ? '1' : '2'
         jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
         jsonObj['wxName'] = wxInfo.nickname || ''
