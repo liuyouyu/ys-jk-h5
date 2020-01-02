@@ -176,6 +176,7 @@ var templateView = {
           },
         ],
         userInfoCacheKey: '',//存储微信授权信息
+        alreadySubmit: true,//是否已提交
       }
     },
     mounted() {
@@ -360,6 +361,15 @@ var templateView = {
           url: mcMethod.url.savePortraitInfo,
           callback: function (res) {
             if(res.code === 0){
+              if(res.data.isParticipate == 'yes'){
+                var toast = that.$createToast({
+                  txt: '不能重复提交哦',
+                  time: '2000',
+                  type: 'txt',
+                })
+                toast.show()
+                that.alreadySubmit = false
+              }else{
               that.portraitId = res.data.id              // 获取潜客id
               that.$createDialog({
                 type: 'alert',
@@ -387,46 +397,10 @@ var templateView = {
                     createElement('p', '您的信息已提交成功'),
                     createElement('p', '编码'+res.data.participateInNumber),
                     createElement('p', '获得专属电子VIP卡!')
-                  ]),
-                  // createElement('p', {
-                  //   'class': {
-                  //     'my-content': true
-                  //   },
-                  //   slot: 'content'
-                  // }, '价格仍按快车计算')
+                  ])
                 ]
               }).show()
-              // that.$createDialog({
-              //   type: 'alert',
-              //   confirmBtn: {
-              //     text: '前往查看您的贵宾卡',
-              //     active: true,
-              //     href: that.clearUrl(that.data.successData.skipUrl,that.portraitId) || 'javascript:;'
-              //   }
-              // }, (createElement) => {
-              //   return [
-              //     createElement('div', {
-              //       'class': {
-              //         'my-title': true
-              //       },
-              //       slot: 'title'
-              //     }, [
-              //       createElement('div', {
-              //         'class': {
-              //           'my-title-img': true
-              //         }
-              //       }),
-              //       createElement('p', '您的信息已提交成功'),
-              //       createElement('p', '获得专属电子VIP卡!')
-              //     ]),
-              //     // createElement('p', {
-              //     //   'class': {
-              //     //     'my-content': true
-              //     //   },
-              //     //   slot: 'content'
-              //     // }, '价格仍按快车计算')
-              //   ]
-              // }).show()
+            }
             }
           }
         })
