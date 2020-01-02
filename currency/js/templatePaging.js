@@ -375,12 +375,36 @@ var templateView = {
           callback: function (res) {
             if(res.code === 0){
               if(res.data.isParticipate == 'yes'){
-                var toast = that.$createToast({
-                  txt: '不能重复提交哦',
-                  time: '2000',
-                  type: 'txt',
-                })
-                toast.show()
+                that.portraitId = res.data.id              // 获取潜客id
+                that.$createDialog({
+                  type: 'alert',
+                  // icon: 'cubeic-alert',
+                  showClose: true,
+                  title: '不能重复提交哦！',
+                  confirmBtn: {
+                    text: that.data.successData.btnName || '前往查看您的贵宾卡',
+                    active: true,
+                    href: that.clearUrl(that.data.successData.skipUrl,that.portraitId) || 'javascript:;'
+                  },
+                }, (createElement) => {
+                  // return [
+                  //   createElement('div', {
+                  //     'class': {
+                  //       'my-title': true
+                  //     },
+                  //     slot: 'title'
+                  //   }, [
+                  //     createElement('div', {
+                  //       'class': {
+                  //         'my-title-img': true
+                  //       }
+                  //     }),
+                  //     createElement('p', '您的信息已提交成功'),
+                  //     createElement('p', '编码'+res.data.participateInNumber),
+                  //     createElement('p', '获得专属电子VIP卡!')
+                  //   ])
+                  // ]
+                }).show()
                 that.alreadySubmit = false
               }else{
               that.portraitId = res.data.id              // 获取潜客id
