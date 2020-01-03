@@ -177,8 +177,8 @@ body {
     width: 1.58rem;
     /* height: 22%; */
     position: absolute;
-    top: 3rem;
-    left: 1.12rem;
+    top: 2.82rem;
+    left: 1.16rem;
 }
 
 /*禁止按钮样式*/
@@ -189,9 +189,9 @@ body {
     width: 100%;
     text-align: center;
     position: absolute;
-    top: 2.05rem;
+    top: 1.7rem;
     color: #fff;
-    font-size: 0.18rem;
+    font-size: 0.2rem;
 }
 .gender {
     margin-right: 0.14rem;
