@@ -153,7 +153,7 @@ var templateView = {
             },
             rules: {
               required: true,
-              type:'number',
+              type:'number'
             },
             messages: {
               required: '请输入验证码！'
@@ -177,6 +177,19 @@ var templateView = {
         ],
         userInfoCacheKey: '',//存储微信授权信息
         alreadySubmit: true,//是否已提交
+      }
+    },
+    watch:{
+      'model.code':{
+        handler(newVal){
+          console.log('code输入',newVal)
+          if(newVal.length > 4){
+            newVal = newVal.slice(0, 4)
+            this.$nextTick(() => {
+              this.model.code = newVal
+            })
+          }
+        }
       }
     },
     mounted() {
