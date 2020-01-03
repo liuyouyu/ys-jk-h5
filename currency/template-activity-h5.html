@@ -39,10 +39,10 @@
                       <emp-write-info :userinfocachekey="userInfoCacheKey"></emp-write-info>
                   </div>
                   <!-- 手机号查看会员卡 -->
-                  <div class="bindPhoneWrapper" v-if="bindPhoneFlag">
+                  <div class="bindPhoneWrapper" v-if="bindPhoneFlag" v-cloak>
                       <emp-bind-phone></emp-bind-phone>
                   </div>
-                  <!-- 卡片详情-->
+<!--                   卡片详情-->
                   <div class="vipCardWrapper"  v-if="vipCardFlag" v-cloak>
                       <img src="./common/img/vipcard.png" alt="bg">
                       <p class="vipName"> {{vipName}}
@@ -104,7 +104,7 @@
            </div>
            <div class="tc submit-button">
                <div class="submit-cubeBtn">
-                   <cube-button type="button" :inline="true" @click="handlecheckVip">
+                   <cube-button type="button" :inline="true" @click="handleLooKOverVip">
                        查看vip卡
                    </cube-button>
                </div>

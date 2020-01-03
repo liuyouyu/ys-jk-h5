@@ -51,7 +51,7 @@ mcMethod.info = {
   employeeId: mcMethod.getRequestValue('employeeId') || '',
 };
 mcMethod.data = {
-  userId: mcMethod.getRequestValue('userId') || '',
+  guestId: mcMethod.getRequestValue('guestId') || '',
 };
 mcMethod.query = {};
 mcMethod.query.request = function (option) {

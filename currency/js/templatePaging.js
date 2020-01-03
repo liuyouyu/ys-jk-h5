@@ -429,7 +429,7 @@ var templateView = {
                 confirmBtn: {
                   text: that.data.successData.btnName || '前往查看您的贵宾卡',
                   active: true,
-                  href: that.clearUrl(that.data.successData.skipUrl,that.portraitId) || 'javascript:;'
+                  href: that.clearUrl(that.data.successData.skipUrl,that.portraitId)
                 },
              }, (createElement) => {
                 return [
@@ -456,13 +456,18 @@ var templateView = {
         })
       },
       clearUrl(url,portraitId){
-        var urlArr = url.split('&')
-        for(var i = 0; i < urlArr.length; i++){
-          if(urlArr[i].indexOf('userId')!=-1){
-            urlArr[i] = 'userId='+ portraitId
-          }
+        // var urlArr = url.split('&')
+        // for(var i = 0; i < urlArr.length; i++){
+        //   if(urlArr[i].indexOf('userId')!=-1){
+        //     urlArr[i] = 'userId='+ portraitId
+        //   }
+        // }
+        // return urlArr.join('&')
+        if(url != ''){
+          return url+'&guestId'+ portraitId
+        }else {
+          return 'javascript:;'
         }
-        return urlArr.join('&')
       },
       validateHandler(result) {
         this.validity = result.validity

@@ -326,7 +326,7 @@ var templateView = {
           }
         })
       },
-      handlecheckVip() {
+      handleLooKOverVip() {
         var self = this;
         var phone = this.model.userPhone;
         if(this.model.userPhone == '') {
@@ -362,6 +362,7 @@ var templateView = {
             codeKey: self.phoneCodeKey
           },
           callback: function (data) {
+            console.log('提交验证码',data);
             if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
               self.getVipData()
             } else {
@@ -587,8 +588,8 @@ var INDEXAPP = new Vue({
   created: function () {
     this.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
     console.log('用户授权信息',this.userInfoCacheKey);
-    if (mcMethod.data.userId != '' && mcMethod.data.userId != undefined && mcMethod.data.userId != null ){//活动模板
-      this.queryPortraitInfoById(mcMethod.data.userId)
+    if (mcMethod.data.guestId != '' && mcMethod.data.guestId != undefined && mcMethod.data.guestId != null ){//活动模板
+      this.queryPortraitInfoById(mcMethod.data.guestId)
     }else {
       var openid = this.userInfoCacheKey.openid
       this.queryPortraitInfoByOpenid(openid)
