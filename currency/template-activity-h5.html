@@ -28,21 +28,22 @@
             <div class="content-container">
                 <div class="scroll">
                   <!-- 申请卡片 -->
-                  <div class="immediatelyApplyWrapper" v-if="isApplyFlag && !vipCardFlag">
-                      <div class="carDTips" v-cloak>
-<!--                          <img src="./common/img/applyBg.jpg" alt="">-->
-                      </div>
-                      <div class="immediatelyApplyBtn" v-cloak>
-                          <cube-button :primary="true" @click="handleApply" v-if="isExpireFlag">立即申请</cube-button>
-                          <cube-button :primary="true" :disabled="true" style="background: #ccc" v-else>立即申请</cube-button>
-                      </div>
-                  </div>
-                  <!-- 资料填写 -->
-                  <div class="writeInfoContainer" v-if="!isApplyFlag && !vipCardFlag" v-cloak>
-                      <emp-write-info :userinfocachekey="userInfoCacheKey"></emp-write-info>
-                  </div>
+<!--                  <div class="immediatelyApplyWrapper" v-if="isApplyFlag && !vipCardFlag">-->
+<!--                      <div class="carDTips" v-cloak>-->
+<!--&lt;!&ndash;                          <img src="./common/img/applyBg.jpg" alt="">&ndash;&gt;-->
+<!--                      </div>-->
+<!--                      <div class="immediatelyApplyBtn" v-cloak>-->
+<!--                          <cube-button :primary="true" @click="handleApply" v-if="isExpireFlag">立即申请</cube-button>-->
+<!--                          <cube-button :primary="true" :disabled="true" style="background: #ccc" v-else>立即申请</cube-button>-->
+<!--                      </div>-->
+<!--                  </div>-->
+<!--                  &lt;!&ndash; 资料填写 &ndash;&gt;-->
+<!--                  <div class="writeInfoContainer" v-if="!isApplyFlag && !vipCardFlag" v-cloak>-->
+<!--                      <emp-write-info :userinfocachekey="userInfoCacheKey"></emp-write-info>-->
+<!--                  </div>-->
                   <!-- 卡片详情-->
-                  <div class="vipCardWrapper" v-if="vipCardFlag" v-cloak>
+                  <div class="vipCardWrapper"  v-cloak>
+                      <img src="./common/img/vipcard.png" alt="bg">
                       <p class="vipName"> {{vipName}}
                           <span v-if="gender == '1'" class="gender">先生</span>
                           <span v-if="gender == '2'" class="gender">女士</span>
@@ -105,9 +106,9 @@
   Vue.use(VueLazyload,{
   })
   //粗暴的禁止整个页面的滑动
-  document.body.addEventListener('touchmove', function (e) {
-    e.preventDefault()
-  }, {passive: false})
+  // document.body.addEventListener('touchmove', function (e) {
+  //   e.preventDefault()
+  // }, {passive: false})
 </script>
 
 </body>

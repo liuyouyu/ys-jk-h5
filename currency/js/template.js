@@ -630,7 +630,6 @@ var templateView = {
       }
       this.formList = this.dataInfo
       this.init()
-      console.log(this.fields,'this.fields');
       document.body.addEventListener('focusin', () => {  
         var u = navigator.userAgent;
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
@@ -638,7 +637,7 @@ var templateView = {
           window.scrollTo(0, 0);
         } 
       })
-      document.body.addEventListener('focusout', () => { 
+      document.body.addEventListener('focusout', () => {
         var u = navigator.userAgent;
         var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
         if (isiOS) {

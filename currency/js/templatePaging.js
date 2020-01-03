@@ -153,7 +153,7 @@ var templateView = {
             },
             rules: {
               required: true,
-              type:'number',
+              type:'number'
             },
             messages: {
               required: '请输入验证码！'
@@ -179,11 +179,38 @@ var templateView = {
         alreadySubmit: true,//是否已提交
       }
     },
+    watch:{
+      'model.code':{
+        handler(newVal){
+          console.log('code输入',newVal)
+          if(newVal.length > 4){
+            newVal = newVal.slice(0, 4)
+            this.$nextTick(() => {
+              this.model.code = newVal
+            })
+          }
+        }
+      }
+    },
     mounted() {
       this.bg = this.activityInfo.pagingBg
       this.brands = this.data.brands
       this.faceImg = this.data.faceImg
       console.log('表单页', this.activityInfo, this.data);
+      document.body.addEventListener('focusin', () => {
+        var u = navigator.userAgent;
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isiOS) {
+          window.scrollTo(0, 0);
+        }
+      })
+      document.body.addEventListener('focusout', () => {
+        var u = navigator.userAgent;
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isiOS) {
+          window.scrollTo(0, 0);
+        }
+      })
     },
     methods: {
       getCode() {
@@ -328,8 +355,7 @@ var templateView = {
         // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
         var wxInfo = xyAuth.getCacheUserInfo()
         console.log('微信信息',wxInfo);
-
-        jsonObj['gender'] = this.model.sex === '男' ? '1' : '2'
+        jsonObj['gender'] = this.model.sex === '先生' ? '1' : '2'
         jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
         jsonObj['wxName'] = wxInfo.nickname || ''
         var channelInfo = {
@@ -362,12 +388,36 @@ var templateView = {
           callback: function (res) {
             if(res.code === 0){
               if(res.data.isParticipate == 'yes'){
-                var toast = that.$createToast({
-                  txt: '不能重复提交哦',
-                  time: '2000',
-                  type: 'txt',
-                })
-                toast.show()
+                that.portraitId = res.data.id              // 获取潜客id
+                that.$createDialog({
+                  type: 'alert',
+                  icon: 'cubeic-warn',
+                  showClose: true,
+                  title: '不能重复提交哦！',
+                  confirmBtn: {
+                    text: that.data.successData.btnName || '前往查看您的贵宾卡',
+                    active: true,
+                    href: that.clearUrl(that.data.successData.skipUrl,that.portraitId) || 'javascript:;'
+                  },
+                }, (createElement) => {
+                  // return [
+                  //   createElement('div', {
+                  //     'class': {
+                  //       'my-title': true
+                  //     },
+                  //     slot: 'title'
+                  //   }, [
+                  //     createElement('div', {
+                  //       'class': {
+                  //         'my-title-img': true
+                  //       }
+                  //     }),
+                  //     createElement('p', '您的信息已提交成功'),
+                  //     createElement('p', '编码'+res.data.participateInNumber),
+                  //     createElement('p', '获得专属电子VIP卡!')
+                  //   ])
+                  // ]
+                }).show()
                 that.alreadySubmit = false
               }else{
               that.portraitId = res.data.id              // 获取潜客id
