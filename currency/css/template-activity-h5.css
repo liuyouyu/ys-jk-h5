@@ -183,11 +183,11 @@ body {
 }
 /*二维码位置*/
 .qrewmCode {
-    width: 1.3rem;
+    width: 1.58rem;
     /* height: 22%; */
     position: absolute;
-    top: 2.87rem;
-    left: 1.223rem;
+    top: 3rem;
+    left: 1.12rem;
 }
 
 /*禁止按钮样式*/
