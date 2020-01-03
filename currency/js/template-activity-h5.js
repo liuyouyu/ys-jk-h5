@@ -588,7 +588,7 @@ var INDEXAPP = new Vue({
   mounted: function () {
     var self = this
     self.queryAuthorizeTenantInfo()
-    self.$nextTick(function () {
+    setTimeout(function () {
       self.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
       console.log('用户授权信息',this.userInfoCacheKey);
       if (mcMethod.data.guestId != '' && mcMethod.data.guestId != undefined && mcMethod.data.guestId != null ){//活动模板
@@ -597,7 +597,7 @@ var INDEXAPP = new Vue({
         var openid = this.userInfoCacheKey.openid
         self.queryPortraitInfoByOpenid(openid)
       }
-    })
+    },100)
     document.title = '会员中心'
     //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
     window.addEventListener("resize", function () {
