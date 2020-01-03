@@ -277,14 +277,14 @@ var templateView = {
             console.log('通过手机查看vip卡',data)
             if (data.code == 0) {
               if(data.data.guestExists == true) {
-                self.$parent.vipName = data.data.portraitInfo.name
-                self.$parent.gender = data.data.portraitInfo.gender
-                self.$parent.portraitQRcodeUrl = data.data.portraitQRcodeUrl
-                self.$parent.getQRCode(data.data.portraitQRcodeUrl)
                 self.$parent.bindPhoneFlag = false
                 self.$parent.isApplyFlag= false
                 self.$parent.isWriteInfoFlag= false
                 self.$parent.vipCardFlag = true
+                self.$parent.vipName = data.data.portraitInfo.name
+                self.$parent.gender = data.data.portraitInfo.gender
+                self.$parent.portraitQRcodeUrl = data.data.portraitQRcodeUrl
+                self.$parent.getQRCode(data.data.portraitQRcodeUrl)
               }else {
                 this.$createDialog({
                   type: 'alert',
@@ -441,14 +441,14 @@ var INDEXAPP = new Vue({
           if(data.code == 0 && JSON.stringify(data.data) != {}){
               //已有贵宾卡
               if(data.data.guestExists == true){
-                self.vipName = data.data.portraitInfo.name
-                self.gender = data.data.portraitInfo.gender
-                self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
-                self.getQRCode(self.portraitQRcodeUrl)
                 self.bindPhoneFlag = false
                 self.isApplyFlag= false
                 self.isWriteInfoFlag= false
                 self.vipCardFlag = true
+                self.vipName = data.data.portraitInfo.name
+                self.gender = data.data.portraitInfo.gender
+                self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
+                self.getQRCode(self.portraitQRcodeUrl)
               }else {
                 self.bindPhoneFlag = false
                 self.isApplyFlag= false
@@ -492,16 +492,14 @@ var INDEXAPP = new Vue({
               self.vipCardFlag = false
             }else {
               if(data.data.guestExists == true){
-                self.vipName = data.data.portraitInfo.name
-                self.gender = data.data.portraitInfo.gender
-                self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
-                self.$nextTick(function () {
-                  self.getQRCode(self.portraitQRcodeUrl)
-                })
                 self.bindPhoneFlag = false
                 self.isApplyFlag= false
                 self.isWriteInfoFlag= false
                 self.vipCardFlag = true
+                self.vipName = data.data.portraitInfo.name
+                self.gender = data.data.portraitInfo.gender
+                self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
+                self.getQRCode(self.portraitQRcodeUrl)
               }else {
                 self.bindPhoneFlag = false
                 self.isApplyFlag= true
