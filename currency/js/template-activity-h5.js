@@ -296,6 +296,7 @@ var templateView = {
                 self.$parent.gender = data.data.portraitInfo.gender
                 self.$parent.portraitQRcodeUrl = data.data.portraitQRcodeUrl
                 self.$parent.getQRCode(data.data.portraitQRcodeUrl)
+                self.$forceUpdate();
               }else {
                 this.$createDialog({
                   type: 'alert',
@@ -312,6 +313,7 @@ var templateView = {
                      self.$parent.isApplyFlag= false
                      self.$parent.isWriteInfoFlag= true
                      self.$parent.vipCardFlag = false
+                    self.$forceUpdate();
                   }
                 }).show()
               }

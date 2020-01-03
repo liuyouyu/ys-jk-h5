@@ -28,30 +28,30 @@
             <div class="content-container">
                 <div class="scroll">
                   <!-- 申请卡片 -->
-                  <div class="immediatelyApplyWrapper" v-if="isApplyFlag" v-cloak>
-                      <div class="immediatelyApplyBtn" v-cloak>
-                          <cube-button :primary="true" @click="handleApply" v-if="isExpireFlag">立即申请</cube-button>
-                          <cube-button :primary="true" :disabled="true" style="background: #ccc" v-else>立即申请</cube-button>
-                      </div>
-                  </div>
+<!--                  <div class="immediatelyApplyWrapper" v-if="isApplyFlag" v-cloak>-->
+<!--                      <div class="immediatelyApplyBtn" v-cloak>-->
+<!--                          <cube-button :primary="true" @click="handleApply" v-if="isExpireFlag">立即申请</cube-button>-->
+<!--                          <cube-button :primary="true" :disabled="true" style="background: #ccc" v-else>立即申请</cube-button>-->
+<!--                      </div>-->
+<!--                  </div>-->
                   <!-- 资料填写 -->
-                  <div class="writeInfoContainer" v-if="isWriteInfoFlag" v-cloak>
-                      <emp-write-info :userinfocachekey="userInfoCacheKey"></emp-write-info>
-                  </div>
+<!--                  <div class="writeInfoContainer" v-if="isWriteInfoFlag" v-cloak>-->
+<!--                      <emp-write-info :userinfocachekey="userInfoCacheKey"></emp-write-info>-->
+<!--                  </div>-->
                   <!-- 手机号查看会员卡 -->
-                  <div class="bindPhoneWrapper" v-if="bindPhoneFlag" v-cloak>
+                  <div class="bindPhoneWrapper"  v-cloak>
                       <emp-bind-phone></emp-bind-phone>
                   </div>
 <!--                   卡片详情-->
-                  <div class="vipCardWrapper"  v-if="vipCardFlag" v-cloak>
-                      <img src="./common/img/vipcard.png" alt="bg">
-                      <p class="vipName"> {{vipName}}
-                          <span v-if="gender == '1'" class="gender">先生</span>
-                          <span v-if="gender == '2'" class="gender">女士</span>
-                      </p>
-                      <div id="qrcode" class="qrewmCode"></div>
-                      <div @click="wxOpenLocation">开始导航</div>
-                  </div>
+<!--                  <div class="vipCardWrapper"  v-if="vipCardFlag" v-cloak>-->
+<!--                      <img src="./common/img/vipcard.png" alt="bg">-->
+<!--                      <p class="vipName"> {{vipName}}-->
+<!--                          <span v-if="gender == '1'" class="gender">先生</span>-->
+<!--                          <span v-if="gender == '2'" class="gender">女士</span>-->
+<!--                      </p>-->
+<!--                      <div id="qrcode" class="qrewmCode"></div>-->
+<!--                      <div @click="wxOpenLocation">开始导航</div>-->
+<!--                  </div>-->
                 </div>
             </div>
         </div>
