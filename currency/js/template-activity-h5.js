@@ -588,15 +588,17 @@ var INDEXAPP = new Vue({
   mounted: function () {
     var self = this
     self.queryAuthorizeTenantInfo()
+    self.$nextTick(function () {
+      self.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+      console.log('用户授权信息',this.userInfoCacheKey);
+      if (mcMethod.data.guestId != '' && mcMethod.data.guestId != undefined && mcMethod.data.guestId != null ){//活动模板
+        self.queryPortraitInfoById(mcMethod.data.guestId)
+      }else {
+        var openid = this.userInfoCacheKey.openid
+        self.queryPortraitInfoByOpenid(openid)
+      }
+    })
     document.title = '会员中心'
-    self.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
-    console.log('用户授权信息',this.userInfoCacheKey);
-    if (mcMethod.data.guestId != '' && mcMethod.data.guestId != undefined && mcMethod.data.guestId != null ){//活动模板
-      self.queryPortraitInfoById(mcMethod.data.guestId)
-    }else {
-      var openid = this.userInfoCacheKey.openid
-      self.queryPortraitInfoByOpenid(openid)
-    }
     //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
     window.addEventListener("resize", function () {
       if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
