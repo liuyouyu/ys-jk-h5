@@ -288,6 +288,7 @@ var templateView = {
             console.log('通过手机查看vip卡',data)
             if (data.code == 0) {
               if(data.data.guestExists == true) {
+                console.log('查看vip');
                 self.$parent.bindPhoneFlag = false
                 self.$parent.isApplyFlag= false
                 self.$parent.isWriteInfoFlag= false
