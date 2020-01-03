@@ -32,6 +32,17 @@ var templateView = {
       }
     },
     methods: {
+      wxOpenLocation(){
+        wx.openLocation({
+          // 30.2073900000,120.2194100000
+          latitude: 30.2073900000, // 纬度，浮点数，范围为90 ~ -90
+          longitude: 120.2194100000, // 经度，浮点数，范围为180 ~ -180。
+          name: '杭州百得利捷豹路虎SPACE', // 位置名
+          address: '杭州市滨江区江陵路1780号', // 地址详情说明
+          scale: 28, // 地图缩放级别,整形值,范围从1~28。默认为最大
+          infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+        });
+      },
       handlePhoneChange(val){
         if (CONTENTVAR.rexPhone.test(val)){
           this.isPhone = true
