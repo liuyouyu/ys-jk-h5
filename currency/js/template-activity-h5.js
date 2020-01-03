@@ -276,7 +276,7 @@ var templateView = {
           callback: function (data) {
             console.log('通过手机查看vip卡',data)
             if (data.code == 0) {
-              if(data.data.portraitInfoExists == true) {
+              if(data.data.guestExists == true) {
                 self.$parent.vipName = data.data.portraitInfo.name
                 self.$parent.gender = data.data.portraitInfo.gender
                 self.$parent.portraitQRcodeUrl = data.data.portraitQRcodeUrl
@@ -440,7 +440,7 @@ var INDEXAPP = new Vue({
         callback: function (data) {
           if(data.code == 0 && JSON.stringify(data.data) != {}){
               //已有贵宾卡
-              if(data.data.portraitInfoExists == true){
+              if(data.data.guestExists == true){
                 self.vipName = data.data.portraitInfo.name
                 self.gender = data.data.portraitInfo.gender
                 self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
@@ -491,7 +491,7 @@ var INDEXAPP = new Vue({
               self.isWriteInfoFlag= false
               self.vipCardFlag = false
             }else {
-              if(data.data.portraitInfoExists == true){
+              if(data.data.guestExists == true){
                 self.vipName = data.data.portraitInfo.name
                 self.gender = data.data.portraitInfo.gender
                 self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
