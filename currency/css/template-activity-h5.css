@@ -195,10 +195,11 @@ body {
     border: 0;
 }
 .vipName {
+    width: 100%;
+    text-align: center;
     position: absolute;
-    top: 1.68rem;
+    top: 2.05rem;
     color: #fff;
-    left: 60%;
     font-size: 0.18rem;
 }
 .gender {
