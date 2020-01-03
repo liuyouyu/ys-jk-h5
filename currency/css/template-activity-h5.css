@@ -89,12 +89,12 @@ body {
 .writeInfo_inputWrapper {
     width: 100%;
     position: absolute;
-    top: 38%;
+    top: 33%;
     left: 0.36rem;
     display: block;
 }
 .writeInfo_inputWrapper.bindPhoneVipWrapper {
-    top: 40%;
+    top: 35%;
     left: 0.36rem;
 }
 .writeInfo_inputWrapper .cube-input {
