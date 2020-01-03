@@ -32,17 +32,6 @@ var templateView = {
       }
     },
     methods: {
-      wxOpenLocation(){
-        wx.openLocation({
-          // 30.2073900000,120.2194100000
-          latitude: 30.2073900000, // 纬度，浮点数，范围为90 ~ -90
-          longitude: 120.2194100000, // 经度，浮点数，范围为180 ~ -180。
-          name: '杭州百得利捷豹路虎SPACE', // 位置名
-          address: '杭州市滨江区江陵路1780号', // 地址详情说明
-          scale: 28, // 地图缩放级别,整形值,范围从1~28。默认为最大
-          infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
-        });
-      },
       handlePhoneChange(val){
         if (CONTENTVAR.rexPhone.test(val)){
           this.isPhone = true
@@ -231,6 +220,17 @@ var templateView = {
       }
     },
     methods: {
+      wxOpenLocation(){
+        wx.openLocation({
+          // 30.2073900000,120.2194100000
+          latitude: 30.2073900000, // 纬度，浮点数，范围为90 ~ -90
+          longitude: 120.2194100000, // 经度，浮点数，范围为180 ~ -180。
+          name: '杭州百得利捷豹路虎SPACE', // 位置名
+          address: '杭州市滨江区江陵路1780号', // 地址详情说明
+          scale: 28, // 地图缩放级别,整形值,范围从1~28。默认为最大
+          infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+        });
+      },
       handlePhoneChange(val){
         if (CONTENTVAR.rexPhone.test(val)){
           this.isPhone = true
@@ -289,14 +289,16 @@ var templateView = {
             if (data.code == 0) {
               if(data.data.guestExists == true) {
                 console.log('查看vip');
+                self.$parent.vipCardFlag = true
                 self.$parent.bindPhoneFlag = false
                 self.$parent.isApplyFlag= false
                 self.$parent.isWriteInfoFlag= false
-                self.$parent.vipCardFlag = true
                 self.$parent.vipName = data.data.portraitInfo.name
                 self.$parent.gender = data.data.portraitInfo.gender
                 self.$parent.portraitQRcodeUrl = data.data.portraitQRcodeUrl
-                self.$parent.getQRCode(data.data.portraitQRcodeUrl)
+                self.$nextTick(function () {
+                  self.$parent.getQRCode(data.data.portraitQRcodeUrl)
+                })
                 self.$forceUpdate();
               }else {
                 this.$createDialog({
@@ -365,7 +367,6 @@ var templateView = {
             codeKey: self.phoneCodeKey
           },
           callback: function (data) {
-            console.log('提交验证码',data);
             if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
               self.getVipData()
             } else {
