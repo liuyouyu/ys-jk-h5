@@ -587,8 +587,8 @@ var INDEXAPP = new Vue({
   created: function () {
     this.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
     console.log('用户授权信息',this.userInfoCacheKey);
-    if (mcMethod.info.userId != '' && mcMethod.info.userId != undefined && mcMethod.info.userId != null ){//活动模板
-      this.queryPortraitInfoById(mcMethod.info.userId)
+    if (mcMethod.data.userId != '' && mcMethod.data.userId != undefined && mcMethod.data.userId != null ){//活动模板
+      this.queryPortraitInfoById(mcMethod.data.userId)
     }else {
       var openid = this.userInfoCacheKey.openid
       this.queryPortraitInfoByOpenid(openid)
