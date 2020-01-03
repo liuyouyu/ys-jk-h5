@@ -28,21 +28,22 @@
             <div class="content-container">
                 <div class="scroll">
                   <!-- 申请卡片 -->
-<!--                  <div class="immediatelyApplyWrapper" v-if="isApplyFlag && !vipCardFlag">-->
-<!--                      <div class="carDTips" v-cloak>-->
-<!--&lt;!&ndash;                          <img src="./common/img/applyBg.jpg" alt="">&ndash;&gt;-->
-<!--                      </div>-->
-<!--                      <div class="immediatelyApplyBtn" v-cloak>-->
-<!--                          <cube-button :primary="true" @click="handleApply" v-if="isExpireFlag">立即申请</cube-button>-->
-<!--                          <cube-button :primary="true" :disabled="true" style="background: #ccc" v-else>立即申请</cube-button>-->
-<!--                      </div>-->
-<!--                  </div>-->
-<!--                  &lt;!&ndash; 资料填写 &ndash;&gt;-->
-<!--                  <div class="writeInfoContainer" v-if="!isApplyFlag && !vipCardFlag" v-cloak>-->
-<!--                      <emp-write-info :userinfocachekey="userInfoCacheKey"></emp-write-info>-->
-<!--                  </div>-->
+                  <div class="immediatelyApplyWrapper" v-if="isApplyFlag" v-cloak>
+                      <div class="immediatelyApplyBtn" v-cloak>
+                          <cube-button :primary="true" @click="handleApply" v-if="isExpireFlag">立即申请</cube-button>
+                          <cube-button :primary="true" :disabled="true" style="background: #ccc" v-else>立即申请</cube-button>
+                      </div>
+                  </div>
+                  <!-- 资料填写 -->
+                  <div class="writeInfoContainer" v-if="isWriteInfoFlag" v-cloak>
+                      <emp-write-info :userinfocachekey="userInfoCacheKey"></emp-write-info>
+                  </div>
+                  <!-- 手机号查看会员卡 -->
+                  <div class="bindPhoneWrapper" v-if="bindPhoneFlag">
+                      <emp-bind-phone></emp-bind-phone>
+                  </div>
                   <!-- 卡片详情-->
-                  <div class="vipCardWrapper"  v-cloak>
+                  <div class="vipCardWrapper"  v-if="vipCardFlag" v-cloak>
                       <img src="./common/img/vipcard.png" alt="bg">
                       <p class="vipName"> {{vipName}}
                           <span v-if="gender == '1'" class="gender">先生</span>
@@ -57,9 +58,6 @@
 </div>
 <template class="hide" id="emp_writeInfo">
     <div class="emp_writeInfoTemplate">
-<!--        <div class="emp_writeInfoIntroduce">-->
-<!--            <img src="./common/img/vipImg.jpg" alt="">-->
-<!--        </div>-->
         <div class="writeInfo_inputWrapper">
             <cube-input v-model="submitName" @input="handlePhoneChange" placeholder='姓名'></cube-input>
             <cube-input v-model="model.userPhone" @input="handlePhoneChange" placeholder='手机号'></cube-input>
@@ -80,12 +78,38 @@
                         立即领取
                     </cube-button>
                     <cube-button type="button" :disabled="true" :inline="true" v-else style="background: #ccc">
-                        已提交
+                        已领取
                     </cube-button>
                 </div>
             </div>
         </div>
     </div>
+</template>
+<!-- 手机号查看会员卡 -->
+<template class="hide" id="empBindPhone">
+   <div class="bindPhoneContainer">
+       <div class="writeInfo_inputWrapper bindPhoneVipWrapper">
+           <cube-input v-model="model.userPhone" @input="handlePhoneChange" placeholder='手机号'></cube-input>
+           <div class="get_code_wrap clearfloat" >
+               <cube-input class="get_code_input fl emp_tempInput" maxlength="4" v-model="model.userCode" placeholder='验证码'></cube-input>
+               <span class="get_code fr">
+                    <span v-if="sendAuthCode"
+                          class="c-right"
+                          @click="getCode">获取验证码</span>
+                    <span v-if="!sendAuthCode"
+                          class="c-right">
+                    <span class="auth_text_blue">{{auth_time}}</span>秒后重新获取</span>
+                </span>
+           </div>
+           <div class="tc submit-button">
+               <div class="submit-cubeBtn">
+                   <cube-button type="button" :inline="true" @click="handlecheckVip">
+                       查看vip卡
+                   </cube-button>
+               </div>
+           </div>
+       </div>
+   </div>
 </template>
 <script src="common/plugins/moment.js?$$tempflag$$"></script>
 <script src="//cdn.yunshicloud.com/jquery/3.2.1/jquery.min.js"></script>

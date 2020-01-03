@@ -201,12 +201,200 @@ var templateView = {
         }
       })
     }
+  },
+  'empBindPhone': {
+    template:'#empBindPhone',
+    data: function () {
+      return{
+        isSubmit: true , // 控制提交
+        isPhone: false,
+        model: {
+          userPhone: '',
+          userCode: ''
+        },
+        phoneWaring:false , // 手机号不正确警告
+        sendAuthCode: true,/*布尔值，通过v-show控制显示‘获取按钮’还是‘倒计时’ */
+        phoneCodeKey: '',
+        auth_time: 0, /*倒计时 计数器*/
+        valueCode: '',
+      }
+    },
+    methods: {
+      handlePhoneChange(val){
+        if (CONTENTVAR.rexPhone.test(val)){
+          this.isPhone = true
+          this.phoneWaring = false
+        }else{
+          this.phoneWaring = true
+        }
+      },
+      getCode() {
+        var phone = this.model.userPhone;
+        if (!(CONTENTVAR.rexPhone.test(phone))) {
+          var toast = this.$createToast({
+            txt: '手机号码有误，请重填写',
+            type: 'txt',
+          })
+          toast.show()
+          return false;
+        }
+        var self = this;
+        self.sendAuthCode = false;
+        self.auth_time = 60;
+        var auth_timetimer = setInterval(() => {
+          self.auth_time--;
+          if (self.auth_time <= 0) {
+            self.sendAuthCode = true;
+            clearInterval(auth_timetimer);
+          }
+        }, 1000);
+        mcMethod.query.request({
+          url: mcMethod.url.sendVerificationCode,
+          queryType: 'GET',
+          address: {
+            phone: phone,
+            vCode: ''
+          },
+          callback: function (data) {
+            if (data.code == 0) {
+              self.phoneCodeKey = data.data.codeKey
+            }
+          },
+          errorCallback: function (err) {
+            console.log(err);
+          }
+        })
+      },
+      getVipData() {
+        var self = this
+        var jsonObj = {
+          'phone':self.model.userPhone,
+        }
+        mcMethod.query.request({
+          data: jsonObj,
+          url: mcMethod.url.queryPortraitInfoByPhone,
+          callback: function (data) {
+            console.log('通过手机查看vip卡',data)
+            if (data.code == 0) {
+              if(data.data.portraitInfoExists == true) {
+                self.$parent.vipName = data.data.portraitInfo.name
+                self.$parent.gender = data.data.portraitInfo.gender
+                self.$parent.portraitQRcodeUrl = data.data.portraitQRcodeUrl
+                self.$parent.getQRCode(data.data.portraitQRcodeUrl)
+                self.$parent.bindPhoneFlag = false
+                self.$parent.isApplyFlag= false
+                self.$parent.isWriteInfoFlag= false
+                self.$parent.vipCardFlag = true
+              }else {
+                this.$createDialog({
+                  type: 'alert',
+                  content: '检测到您的手机号尚未注册VIP',
+                  icon: 'cubeic-important',
+                  confirmBtn: {
+                    text: '立即申请',
+                    active: true,
+                    disabled: false,
+                    href: 'javascript:;'
+                  },
+                  onConfirm: () => {
+                     self.$parent.bindPhoneFlag = false
+                     self.$parent.isApplyFlag= false
+                     self.$parent.isWriteInfoFlag= true
+                     self.$parent.vipCardFlag = false
+                  }
+                }).show()
+              }
+            }else {
+              var toast = self.$createToast({
+                txt: '查询vip卡失败!',
+                time: '2000',
+                type: 'txt',
+              })
+              toast.show()
+            }
+          }
+        })
+      },
+      handlecheckVip() {
+        var self = this;
+        var phone = this.model.userPhone;
+        if(this.model.userPhone == '') {
+          var toast = self.$createToast({
+            txt: '请输入手机号!',
+            type: 'txt',
+          })
+          toast.show()
+          return false;
+        }
+        if (!(CONTENTVAR.rexPhone.test(phone))) {
+          var toast = this.$createToast({
+            txt: '请输入有效手机号!',
+            type: 'txt',
+          })
+          toast.show()
+          return false;
+        }
+        if(this.model.userCode == ''){
+          var toast = self.$createToast({
+            txt: '请输入验证码!',
+            type: 'txt',
+          })
+          toast.show()
+          return false;
+        }
+        mcMethod.query.request({
+          url: mcMethod.url.validateCode2,
+          queryType: 'GET',
+          address: {
+            validateCode: self.model.userCode,
+            phone: self.model.userPhone,
+            codeKey: self.phoneCodeKey
+          },
+          callback: function (data) {
+            if (data.code == 0 && data.data.result) { //短信校验成功后走相关提交接口的逻辑，再次之前需要校验字段的相关东西
+              self.getVipData()
+            } else {
+              if(self.model.userCode != ''){
+                var toast = self.$createToast({
+                  txt: '验证码错误!',
+                  type: 'txt',
+                })
+                toast.show()
+              }
+            }
+          },
+          errorCallback: function (err) {
+            var toast = self.$createToast({
+              txt: '验证失败，请稍后再试!',
+              type: 'txt',
+            })
+          }
+        })
+      }
+    },
+    mounted() {
+      document.body.addEventListener('focusin', () => {
+        var u = navigator.userAgent;
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isiOS) {
+          window.scrollTo(0, 0);
+        }
+      })
+      document.body.addEventListener('focusout', () => {
+        var u = navigator.userAgent;
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isiOS) {
+          window.scrollTo(0, 0);
+        }
+      })
+    }
   }
 }
 var INDEXAPP = new Vue({
   el: '#app',
   components: {
-    empWriteInfo: templateView.empWriteInfo
+    empWriteInfo: templateView.empWriteInfo,
+    empBindPhone: templateView.empBindPhone
   },
   data: {
     activityData:[],
@@ -221,18 +409,24 @@ var INDEXAPP = new Vue({
     videoData : [],//视频
     isDisable: true,//判断是否提交
     userInfoCacheKey: '',//用户信息
-    isApplyFlag: true,//资料填写flag
-    vipCardFlag: false,//贵宾卡展示
     portraitQRcodeUrl: '',//二维码链接
     QRCodeMsg: '',
     isExpireFlag: true,//VIP申请
     vipName: '',
-    gender: ''
+    gender: '',
+    isApplyFlag: true,//申请卡片flag
+    isWriteInfoFlag: false,//资料填写flag
+    vipCardFlag: false,//贵宾卡展示
+    bindPhoneFlag: false,//手机号查询vip卡
   },
   methods: {
     //立即申请
     handleApply(){
-      this.isApplyFlag = false
+      var self = this;
+      self.bindPhoneFlag = false
+      self.isApplyFlag= false
+      self.isWriteInfoFlag= true
+      self.vipCardFlag = false
     },
     //根据潜客id查询潜客信息
     queryPortraitInfoById: function(id){
@@ -246,14 +440,20 @@ var INDEXAPP = new Vue({
         callback: function (data) {
           if(data.code == 0 && JSON.stringify(data.data) != {}){
               //已有贵宾卡
-              if(data.data.guestExists == true){
-                self.vipCardFlag = true
-                self.isApplyFlag = false
+              if(data.data.portraitInfoExists == true){
                 self.vipName = data.data.portraitInfo.name
                 self.gender = data.data.portraitInfo.gender
                 self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
                 self.getQRCode(self.portraitQRcodeUrl)
+                self.bindPhoneFlag = false
+                self.isApplyFlag= false
+                self.isWriteInfoFlag= false
+                self.vipCardFlag = true
               }else {
+                self.bindPhoneFlag = false
+                self.isApplyFlag= false
+                self.isWriteInfoFlag= false
+                self.vipCardFlag = true
                 self.isExpireFlag = false;
                 var toast = self.$createToast({
                   txt: 'VIP卡已失效',
@@ -262,7 +462,7 @@ var INDEXAPP = new Vue({
                 })
                 toast.show()
               }
-            // self.queryAuthorizeTenantInfo()
+            self.queryAuthorizeTenantInfo()
           }else {
               var toast = self.$createToast({
                 txt: '查询失败!',
@@ -285,20 +485,29 @@ var INDEXAPP = new Vue({
         url: mcMethod.url.queryPortraitInfoByOpenid,
         callback: function (data) {
           if(data.code == 0 && JSON.stringify(data.data) != {}){
-            //已有贵宾卡
-            if(data.data.guestExists == true){
-              console.log('申请贵宾卡',data);
-              self.vipCardFlag = true
-              self.isApplyFlag = false
-              self.vipName = data.data.portraitInfo.uuserName
-              self.gender = data.data.portraitInfo.gender
-              self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
-              self.getQRCode(self.portraitQRcodeUrl)
-            }else {
+            if(data.data.needConfirmPhone == true){
+              self.bindPhoneFlag = true
+              self.isApplyFlag= false
+              self.isWriteInfoFlag= false
               self.vipCardFlag = false
-              self.isApplyFlag = true
+            }else {
+              if(data.data.portraitInfoExists == true){
+                self.vipName = data.data.portraitInfo.name
+                self.gender = data.data.portraitInfo.gender
+                self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
+                self.getQRCode(self.portraitQRcodeUrl)
+                self.bindPhoneFlag = false
+                self.isApplyFlag= false
+                self.isWriteInfoFlag= false
+                self.vipCardFlag = true
+              }else {
+                self.bindPhoneFlag = false
+                self.isApplyFlag= true
+                self.isWriteInfoFlag= false
+                self.vipCardFlag = false
+              }
             }
-            // self.queryAuthorizeTenantInfo()
+            self.queryAuthorizeTenantInfo()
           }else {
             var toast = self.$createToast({
               txt: '查询失败!',
@@ -313,7 +522,6 @@ var INDEXAPP = new Vue({
     //生成二维码
     getQRCode: function (ewmUrl){
       var self = this;
-      console.log('获取生成二维码',self.portraitQRcodeUrl);
       self.$nextTick(function () {
         var qrcode = new QRCode(document.getElementById("qrcode"), {
           width : 100,

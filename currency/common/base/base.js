@@ -34,7 +34,9 @@ mcMethod.url = {
   //申请VIP卡
   createPortrait:'/api/portraitInfo/v1/createPortrait',
   //活动分享关系记录
-  sharePortrait:'/api/portraitInfo/v1/sharePortrait'
+  sharePortrait:'/api/portraitInfo/v1/sharePortrait',
+  //根据手机号查询vip
+  queryPortraitInfoByPhone:'/api/portraitInfo/v1/queryPortraitInfoByPhone'
 };
 
 mcMethod.info = {
