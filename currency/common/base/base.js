@@ -42,7 +42,7 @@ mcMethod.url = {
 mcMethod.info = {
   companyId: mcMethod.getRequestValue('companyId') || '',
   appCode: mcMethod.getRequestValue('appCode') || 'VLOG_YUNSHI',
-  userId: mcMethod.getRequestValue('userId') || '',
+  userId: mcMethod.getRequestValue('userId') || '5d8dc8ad05a9b43d88fb3b7f',
   serviceCode:mcMethod.getRequestValue('serviceCode') || 'YUNSHI_XSGL',
   versionId: mcMethod.getRequestValue('versionId')  || '1',
   activityId: mcMethod.getRequestValue('activityId') || '',
