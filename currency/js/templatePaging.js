@@ -391,7 +391,7 @@ var templateView = {
                 that.portraitId = res.data.id              // 获取潜客id
                 that.$createDialog({
                   type: 'alert',
-                  // icon: 'cubeic-alert',
+                  icon: 'cubeic-warn',
                   showClose: true,
                   title: '不能重复提交哦！',
                   confirmBtn: {

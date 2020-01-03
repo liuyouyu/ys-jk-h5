@@ -227,7 +227,7 @@ body {
 .cube-dialog-btn  {
   color: #fff !important;
   background: rgb(55,158,220) !important;
-  width: 80% !important;
+  width: 60% !important;
   border-radius: 50px !important;
 }
 /*input框icon*/
@@ -248,3 +248,10 @@ body {
 /*  position: absolute;*/
 /*}*/
 
+/*弹框title*/
+.cube-dialog-title {
+  color: #fff;
+}
+.cube-dialog-btn {
+  padding: 12px 5px;
+}
