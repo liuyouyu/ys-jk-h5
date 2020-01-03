@@ -474,7 +474,6 @@ var INDEXAPP = new Vue({
                 })
                 toast.show()
               }
-            self.queryAuthorizeTenantInfo()
           }else {
               var toast = self.$createToast({
                 txt: '查询失败!',
@@ -519,7 +518,6 @@ var INDEXAPP = new Vue({
                 self.vipCardFlag = false
               }
             }
-            self.queryAuthorizeTenantInfo()
           }else {
             var toast = self.$createToast({
               txt: '查询失败!',
@@ -548,7 +546,7 @@ var INDEXAPP = new Vue({
     getAuthUserInfo(){
       xyAuth.getAuthUserInfo()
     },
-    // 微信分享
+    // 微信
     queryAuthorizeTenantInfo: function () {
       var that = this;
       var url = CONFIG.apiHost + mcMethod.url.queryAuthorizeTenantInfo + "?companyId="+mcMethod.info.companyId+"&appCode="+mcMethod.info.appCode+"&userId="+mcMethod.info.userId+"&serviceCode="+mcMethod.info.serviceCode;
@@ -586,17 +584,19 @@ var INDEXAPP = new Vue({
     },
   },
   created: function () {
-    this.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
-    console.log('用户授权信息',this.userInfoCacheKey);
-    if (mcMethod.data.guestId != '' && mcMethod.data.guestId != undefined && mcMethod.data.guestId != null ){//活动模板
-      this.queryPortraitInfoById(mcMethod.data.guestId)
-    }else {
-      var openid = this.userInfoCacheKey.openid
-      this.queryPortraitInfoByOpenid(openid)
-    }
   },
   mounted: function () {
+    var self = this
+    self.queryAuthorizeTenantInfo()
     document.title = '会员中心'
+    self.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+    console.log('用户授权信息',this.userInfoCacheKey);
+    if (mcMethod.data.guestId != '' && mcMethod.data.guestId != undefined && mcMethod.data.guestId != null ){//活动模板
+      self.queryPortraitInfoById(mcMethod.data.guestId)
+    }else {
+      var openid = this.userInfoCacheKey.openid
+      self.queryPortraitInfoByOpenid(openid)
+    }
     //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
     window.addEventListener("resize", function () {
       if (document.activeElement.tagName == "INPUT" || document.activeElement.tagName == "TEXTAREA") {
