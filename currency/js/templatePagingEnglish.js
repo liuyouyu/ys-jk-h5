@@ -446,7 +446,7 @@ var templateView = {
                     }),
                     createElement('p', 'Your personal information'),
                     createElement('p', 'coding'+res.data.participateInNumber),
-                    createElement('p', 'have been submittedsuccessfully')
+                    createElement('p', 'have been submitted successfully')
                   ])
                 ]
               }).show()
