@@ -265,7 +265,10 @@ body {
 .cube-dialog-btn {
   padding: 12px 5px;
 }
-
+.cube-dialog-icon i {
+  color: rgb(55,158,220);
+  background-color: transparent;
+}
 /*inputIcon*/
 .cubeic-person,.cubeic-mobile-phone,.cubeic-unlock{
   color: #fff;
