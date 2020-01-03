@@ -495,7 +495,9 @@ var INDEXAPP = new Vue({
                 self.vipName = data.data.portraitInfo.name
                 self.gender = data.data.portraitInfo.gender
                 self.portraitQRcodeUrl = data.data.portraitQRcodeUrl
-                self.getQRCode(self.portraitQRcodeUrl)
+                self.$nextTick(function () {
+                  self.getQRCode(self.portraitQRcodeUrl)
+                })
                 self.bindPhoneFlag = false
                 self.isApplyFlag= false
                 self.isWriteInfoFlag= false
@@ -521,6 +523,7 @@ var INDEXAPP = new Vue({
     },
     //生成二维码
     getQRCode: function (ewmUrl){
+      console.log('生成二维码',ewmUrl);
       var self = this;
       self.$nextTick(function () {
         var qrcode = new QRCode(document.getElementById("qrcode"), {
