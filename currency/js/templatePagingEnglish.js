@@ -106,7 +106,7 @@ var templateView = {
             modelKey: 'name',
             label: '',
             props: {
-              placeholder: '您的姓名'
+              placeholder: 'Name'
             },
             rules: {
               required: true,
@@ -118,7 +118,7 @@ var templateView = {
             type: 'radio-group',
             label: '',
             props: {
-              options:['先生','女士'],
+              options:['Sir','Madam'],
               placeholder: ''
             },
             rules: {
@@ -133,7 +133,7 @@ var templateView = {
             modelKey: 'phone',
             label: '',
             props: {
-              placeholder: '您的电话'
+              placeholder: 'Mobile Number'
             },
             rules: {
               required: true,
@@ -149,7 +149,7 @@ var templateView = {
             type: 'input',
             label: '',
             props: {
-              placeholder: '验证码'
+              placeholder: 'Verification Code'
             },
             rules: {
               required: true,
@@ -355,7 +355,7 @@ var templateView = {
         // 新增  增加渠道id 渠道名称 用户微信openid 微信头像 微信名称等数据
         var wxInfo = xyAuth.getCacheUserInfo()
         console.log('微信信息',wxInfo);
-        jsonObj['gender'] = this.model.sex === '先生' ? '1' : '2'
+        jsonObj['gender'] = this.model.sex === 'Sir' ? '1' : '2'
         jsonObj['wxHeadImgUrl'] = wxInfo.headimgurl || ''
         jsonObj['wxName'] = wxInfo.nickname || ''
         var channelInfo = {
@@ -444,9 +444,9 @@ var templateView = {
                         'my-title-img': true
                       }
                     }),
-                    createElement('p', '您的信息已提交成功'),
-                    createElement('p', '编码'+res.data.participateInNumber),
-                    createElement('p', '获得专属电子VIP卡!')
+                    createElement('p', 'Your personal information'),
+                    createElement('p', 'coding'+res.data.participateInNumber),
+                    createElement('p', 'have been submitted successfully')
                   ])
                 ]
               }).show()

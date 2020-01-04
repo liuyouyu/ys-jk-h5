@@ -32,17 +32,6 @@ var templateView = {
       }
     },
     methods: {
-      wxOpenLocation(){
-        wx.openLocation({
-          // 30.2073900000,120.2194100000
-          latitude: 30.2073900000, // 纬度，浮点数，范围为90 ~ -90
-          longitude: 120.2194100000, // 经度，浮点数，范围为180 ~ -180。
-          name: '杭州百得利捷豹路虎SPACE', // 位置名
-          address: '杭州市滨江区江陵路1780号', // 地址详情说明
-          scale: 28, // 地图缩放级别,整形值,范围从1~28。默认为最大
-          infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
-        });
-      },
       handlePhoneChange(val){
         if (CONTENTVAR.rexPhone.test(val)){
           this.isPhone = true
@@ -288,14 +277,18 @@ var templateView = {
             console.log('通过手机查看vip卡',data)
             if (data.code == 0) {
               if(data.data.guestExists == true) {
+                console.log('查看vip');
+                self.$parent.vipCardFlag = true
                 self.$parent.bindPhoneFlag = false
                 self.$parent.isApplyFlag= false
                 self.$parent.isWriteInfoFlag= false
-                self.$parent.vipCardFlag = true
                 self.$parent.vipName = data.data.portraitInfo.name
                 self.$parent.gender = data.data.portraitInfo.gender
                 self.$parent.portraitQRcodeUrl = data.data.portraitQRcodeUrl
-                self.$parent.getQRCode(data.data.portraitQRcodeUrl)
+                setTimeout(function () {
+                  self.$parent.getQRCode(data.data.portraitQRcodeUrl)
+                },100)
+                self.$forceUpdate();
               }else {
                 this.$createDialog({
                   type: 'alert',
@@ -312,6 +305,7 @@ var templateView = {
                      self.$parent.isApplyFlag= false
                      self.$parent.isWriteInfoFlag= true
                      self.$parent.vipCardFlag = false
+                    self.$forceUpdate();
                   }
                 }).show()
               }
@@ -326,7 +320,7 @@ var templateView = {
           }
         })
       },
-      handlecheckVip() {
+      handleLooKOverVip() {
         var self = this;
         var phone = this.model.userPhone;
         if(this.model.userPhone == '') {
@@ -431,6 +425,17 @@ var INDEXAPP = new Vue({
     bindPhoneFlag: false,//手机号查询vip卡
   },
   methods: {
+    wxOpenLocation(){
+      wx.openLocation({
+        // 30.2073900000,120.2194100000
+        latitude: 30.2073900000, // 纬度，浮点数，范围为90 ~ -90
+        longitude: 120.2194100000, // 经度，浮点数，范围为180 ~ -180。
+        name: '杭州百得利捷豹路虎SPACE', // 位置名
+        address: '杭州市滨江区江陵路1780号', // 地址详情说明
+        scale: 28, // 地图缩放级别,整形值,范围从1~28。默认为最大
+        infoUrl: '' // 在查看位置界面底部显示的超链接,可点击跳转
+      });
+    },
     //立即申请
     handleApply(){
       var self = this;
@@ -473,7 +478,6 @@ var INDEXAPP = new Vue({
                 })
                 toast.show()
               }
-            self.queryAuthorizeTenantInfo()
           }else {
               var toast = self.$createToast({
                 txt: '查询失败!',
@@ -518,7 +522,6 @@ var INDEXAPP = new Vue({
                 self.vipCardFlag = false
               }
             }
-            self.queryAuthorizeTenantInfo()
           }else {
             var toast = self.$createToast({
               txt: '查询失败!',
@@ -547,7 +550,7 @@ var INDEXAPP = new Vue({
     getAuthUserInfo(){
       xyAuth.getAuthUserInfo()
     },
-    // 微信分享
+    // 微信
     queryAuthorizeTenantInfo: function () {
       var that = this;
       var url = CONFIG.apiHost + mcMethod.url.queryAuthorizeTenantInfo + "?companyId="+mcMethod.info.companyId+"&appCode="+mcMethod.info.appCode+"&userId="+mcMethod.info.userId+"&serviceCode="+mcMethod.info.serviceCode;
@@ -585,16 +588,20 @@ var INDEXAPP = new Vue({
     },
   },
   created: function () {
-    this.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
-    console.log('用户授权信息',this.userInfoCacheKey);
-    if (mcMethod.info.userId != '' && mcMethod.info.userId != undefined && mcMethod.info.userId != null ){//活动模板
-      this.queryPortraitInfoById(mcMethod.info.userId)
-    }else {
-      var openid = this.userInfoCacheKey.openid
-      this.queryPortraitInfoByOpenid(openid)
-    }
   },
   mounted: function () {
+    var self = this
+    self.queryAuthorizeTenantInfo()
+    setTimeout(function () {
+      self.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+      console.log('用户授权信息',this.userInfoCacheKey);
+      if (mcMethod.data.guestId != '' && mcMethod.data.guestId != undefined && mcMethod.data.guestId != null ){//活动模板
+        self.queryPortraitInfoById(mcMethod.data.guestId)
+      }else {
+        var openid = this.userInfoCacheKey.openid
+        self.queryPortraitInfoByOpenid(openid)
+      }
+    },100)
     document.title = '会员中心'
     //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
     window.addEventListener("resize", function () {

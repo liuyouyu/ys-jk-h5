@@ -50,7 +50,9 @@ mcMethod.info = {
   shareId: mcMethod.getRequestValue('shareId') || '',
   employeeId: mcMethod.getRequestValue('employeeId') || '',
 };
-
+mcMethod.data = {
+  guestId: mcMethod.getRequestValue('guestId') || '',
+};
 mcMethod.query = {};
 mcMethod.query.request = function (option) {
   if (this instanceof mcMethod.query.request) {
