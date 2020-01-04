@@ -10,11 +10,11 @@ var INDEXAPP = new Vue({
   //   empCarouselImg: templateView.empCarouselImg
   // },
   data: {
-    showPage: 0, //默认扫码签到
+    showPage: 00, //默认扫码签到
     returnTimer: null,
     messageQue: [],
     messageQueIndex: -1,
-    userName: '待签到',
+    userName: '',
     count: 0,
   },
   watch: {
@@ -87,11 +87,15 @@ var INDEXAPP = new Vue({
       //等同于socket = new WebSocket("ws://localhost:8888/api/websocket/25");
       // var socketUrl = "wss://bs.yunshicloud.com/api/websocket/5dea74006282c959b1ddedd1/5dea74006282c959b1ddedd1";
       // var socketUrl = "wss://alpha-jk.yunshicloud.com/api/websocket/" + deviceNumber;
-      var socketUrl = CONFIG.cloudUrl + "websocket/" + deviceNumber;
+      var socketUrl = CONFIG.cloudUrl +"websocket/" + deviceNumber;
       socketUrl = socketUrl.replace("https", "wss").replace("http", "ws");
+      
+      if (typeof (WebSocket) == "undefined") {
+        alert("您的浏览器不支持websocket")
+        return 
+      }
       chapterDiscussScoket = new WebSocket(socketUrl);
       //打开事件
-
       chapterDiscussScoket.onopen = function () {
         // console.log("websocket已打开");
         // var count = 0;
@@ -118,7 +122,7 @@ var INDEXAPP = new Vue({
         console.log("获取消息")
         var messageData = JSON.parse(msg.data)
         console.log(messageData.msg, msg.data)
-        that.messageQueIndex += 1;
+        that.messageQueIndex+=1;
         that.messageQue.push(messageData.msg)
 
         // if (that.count >= 20) {
@@ -129,8 +133,8 @@ var INDEXAPP = new Vue({
           clearTimeout(that.returnTimer)
         }
         that.returnTimer = setTimeout(function () {
-          that.showPage = 0
-          that.userName = '待签到'
+          that.showPage = 00
+          that.userName= ''
 
           // 6s回待签到页面
         }, 6000)
@@ -182,6 +186,7 @@ var INDEXAPP = new Vue({
           that.userName='尊敬的'+messageData.userName+'先生（女士）'
           that.showPage = 9
         }
+        
       };
       //关闭事件
       chapterDiscussScoket.onclose = function () {
@@ -203,5 +208,6 @@ var INDEXAPP = new Vue({
   created: function () {
     this.connectSocket()
   },
-  mounted: function () {}
+  mounted: function () {
+  }
 })

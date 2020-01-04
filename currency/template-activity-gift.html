@@ -8,14 +8,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="og:description" content="" />
   <script src="common/plugins/vue.min.js?$$tempflag$$"></script>
-  <script src="common/plugins/vue-lazyload.js?$$tempflag$$"></script>
-  <link rel="stylesheet" href="common/plugins/cube.min.css?$$tempflag$$">
   <script src="common/plugins/cube.min.js?$$tempflag$$"></script>
-  <link rel="stylesheet" href="common/font/iconfont.css?$$tempflag$$">
   <link rel="stylesheet" href="common/base/base.css?$$tempflag$$">
   <link rel="stylesheet" href="css/template-activity-gift.css?$$tempflag$$">
   <!-- 引入文稿组件样式 -->
-  <link rel="stylesheet" href="common/components/catalogue/catalogue.css?$$tempflag$$">
   <title></title>
 </head>
 <body>
@@ -59,36 +55,58 @@
         that.showPage = 9
       }
     }; -->
-    <div class="imgContainer" v-if='showPage==0'><img src="common/img/activityImg/00.png" alt="" srcset=""><div class="name" v-text="userName"></div></div>
-    <div class="imgContainer" v-if='showPage==1'><img src="common/img/activityImg/1.png" alt="" srcset=""><div class="name" v-text="userName"></div></div>
-    <div class="imgContainer" v-if='showPage==2'><img src="common/img/activityImg/2.png" alt="" srcset=""><div class="name" v-text="userName"></div></div>
-    <div class="imgContainer" v-if='showPage==3'><img src="common/img/activityImg/3.png" alt="" srcset=""><div class="name" v-text="userName"></div></div>
-    <div class="imgContainer" v-if='showPage==4'><img src="common/img/activityImg/4.png" alt="" srcset=""><div class="name" v-text="userName"></div></div>
-    <div class="imgContainer" v-if='showPage==5'><img src="common/img/activityImg/5.png" alt="" srcset=""><div class="name" v-text="userName"></div></div>
-    <div class="imgContainer" v-if='showPage==6'><img src="common/img/activityImg/6.png" alt="" srcset=""><div class="name" v-text="userName"></div></div>
-    <div class="imgContainer" v-if='showPage==7'><img src="common/img/activityImg/7.png" alt="" srcset=""><div class="name" v-text="userName"></div></div>
-    <div class="imgContainer" v-if='showPage==8'><img src="common/img/activityImg/8.png" alt="" srcset=""><div class="name" v-text="userName"></div></div>
-    <div class="imgContainer" v-if='showPage==9'><img src="common/img/activityImg/9.png" alt="" srcset=""><div class="name" v-text="userName"></div></div>
-</div>
+      <div class="imgContainer" v-if='showPage==0'>
+        <div class="textImg">请您出示二维码领取礼品》</div>
+        <!-- <img class="textImg" src="./common/img/activityImg/screenStaus/0.svg" alt="" srcset=""> -->
+        <img class="statusImg" src="./common/img/activityImg/screenStaus/00.svg" alt="" srcset="">
+      </div>
+      <div class="imgContainer" v-if='showPage==1'>
+        <div class="textImg">亲！您的二维码无效！</div>
+        <img class="statusImg" src="./common/img/activityImg/screenStaus/0001.svg" alt="" srcset="">
+      </div>
+      <div class="imgContainer" v-if='showPage==2'>
+        <div class="textImg">亲！扫码器异常</div>
+        <img class="statusImg" src="./common/img/activityImg/screenStaus/0002.svg" alt="" srcset="">
+      </div>
+      <div class="imgContainer" v-if='showPage==3'>
+        <div class="textImg">欢迎某某先生开启JLR&nbsp;SAPCE体验之旅！》</div>
+        <div class="customerText"></div>
+        <img class="statusImg" src="./common/img/activityImg/screenStaus/0003.svg" alt="" srcset="">
+      </div>
+      <div class="imgContainer" v-if='showPage==4'>
+        <div class="textImg">亲！网络异常！</div>
+        <img class="statusImg" src="./common/img/activityImg/screenStaus/0004.svg" alt="" srcset="">
+      </div>
+      <div class="imgContainer" v-if='showPage==5'>
+        <div class="textImg">亲！您已签到-切勿重复签到哦！</div>
+        <img class="statusImg" src="./common/img/activityImg/screenStaus/0005.svg" alt="" srcset="">
+      </div>
+      <div class="imgContainer" v-if='showPage==6'>
+        <div class="textImg">亲！活动已结束！</div>
 
-<script src="common/plugins/moment.js?$$tempflag$$"></script>
+        <img class="statusImg" src="./common/img/activityImg/screenStaus/0006.svg" alt="" srcset="">
+      </div>
+      <div class="imgContainer" v-if='showPage==7'>
+        <div class="textImg">某先生，期待与您再次相遇》</div>
+        <div class="customerText"></div>
+        <img class="statusImg" src="./common/img/activityImg/screenStaus/0007.svg" alt="" srcset="">
+      </div>
+      <div class="imgContainer" v-if='showPage==8'>
+        <div class="textImg">亲！网络异常！</div>
+        <img class="statusImg" src="./common/img/activityImg/screenStaus/0008.svg" alt="" srcset="">
+      </div>
+      <div class="imgContainer" v-if='showPage==9'>
+        <div class="textImg">亲！您已领取礼物-切勿重复领取礼物哦</div>
+        <img class="statusImg" src="./common/img/activityImg/screenStaus/0009.svg" alt="" srcset="">
+      </div>
+
+  </div>
+
 <script src="//cdn.yunshicloud.com/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://unpkg.com/larkplayer@latest/dist/larkplayer.js"></script>
-<script src="https://unpkg.com/larkplayer-ui@latest/dist/larkplayer-ui.js"></script>
-<script src="//cdn.yunshicloud.com/axios/0.18.0/axios.min.js"></script>
-<script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script src="config/config.js?$$tempflag$$"></script>
 <!-- 文稿组件 -->
-<script src="common/components/catalogue/catalogue.js?$$tempflag$$"></script>
+<script src="config/config.js?$$tempflag$$"></script>
 <script src="common/common/common.js?$$tempflag$$"></script>
-<script src="common/plugins/xyAuth.js?$$tempflag$$"></script>
 <script src="common/base/base.js?$$tempflag$$"></script>
 <script src="js/template-activity-gift.js?$$tempflag$$"></script>
-
-<script>
-  Vue.use(VueLazyload,{
-  })
-</script>
-
 </body>
 </html>

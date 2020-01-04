@@ -1,37 +1,98 @@
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body,
+div,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+pre,
+code,
+form,
+fieldset,
+legend,
+input,
+button,
+textarea,
+p,
+blockquote,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+
 html{
+  width:100%;
   height: 100%;
 }
 body {
-  height: 100%;
-  overflow: hidden;
+  width:1920px;
+  height:1080px;
+  overflow: auto;
 }
-
 #app{
-    width:100%;
-    height:100%;
-}
-.imgContainer{
-    width:100%;
-    height:100%;
+  width:1920px;
+  height:1080px;
+    background: url(../common/img/activityImg/0.png) no-repeat;
     position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
-.imgContainer img{
-    width:100%;
-    height:100%;
-}
-.name{
+.text{
   position: absolute;
   background: transparent;
   color: #fff;
-  font-size: 50px;
+  font-size: 60px;
   width: 100%;
   height: 200px;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   align-items: center;
-  bottom: 0
+  bottom: 200px;
+  left:75px;
 }
 
+.wrapper .statusImg{
+  width:100px;
+  height:100px;
+  position: absolute;
+  bottom:50px;
+  right:50px;
+}
+.wrapper .textImg{
+  width:100px;
+  height:100px;
+  position: absolute;
+  bottom:350px;
+  left:50px;
+}
+.wrapper div.textImg{
+  width:1800px;
+  height:100px;
+  font-size:60px;
+  color:#fff;
+  position: absolute;
+  bottom:350px;
+  left:116px;
+  letter-spacing: 15px;
+}
+.wrapper .customerText{
+  position: absolute;
+  bottom:250px;
+  height:60px;
+  width: 1800px;
+  left:116px;
+  background: url(../common/img/activityImg/screenStaus/customerText.svg) no-repeat;
+}
