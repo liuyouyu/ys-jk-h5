@@ -64,7 +64,7 @@
           <img v-if="bg !== '' " class="bg" :src="bg">
           <img v-if="faceImg !== '' " class="bg" :src="faceImg">
           <transition>
-            <div v-if="activeIndex == index" class="transitionBox">
+            <div v-if="activeIndex == index" v-show="showForm" class="transitionBox">
               <cube-form :model="model"  :immediate-validate="false" @validate="validateHandler" @submit="submitHandler">
                 <div class="inputBox">
                   <cube-form-group>

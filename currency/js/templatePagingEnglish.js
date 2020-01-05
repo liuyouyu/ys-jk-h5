@@ -93,6 +93,7 @@ var templateView = {
         countDown: 60,      // 默认60s重新获取
         codeKey:'',         // 验证码校验码
         timer:'',
+        showForm:true,
         portraitId:'',      // 报名成功后拿到的潜客id
         model: {
           name: '',
@@ -389,6 +390,7 @@ var templateView = {
           timeout : 10000, //超时时间设置，单位毫秒
           callback: function (res) {
             if(res.code === 0){
+              that.showForm=false;//隐藏表单
               if(res.data.isParticipate == 'yes'){
                 that.portraitId = res.data.id              // 获取潜客id
                 that.$createDialog({
@@ -396,6 +398,9 @@ var templateView = {
                   icon: 'cubeic-warn',
                   showClose: true,
                   title: 'Please do not submit twice',
+                  onClose: () => {
+                    that.showForm=true;
+                  },
                   confirmBtn: {
                     text: that.data.successData.btnName || '前往查看您的贵宾卡',
                     active: true,
@@ -427,6 +432,9 @@ var templateView = {
                 type: 'alert',
                 // icon: 'cubeic-alert',
                 showClose: true,
+                onClose: () => {
+                  that.showForm=true;
+                },
                 title: 'Congratulation!  You have been successfully signed up for the event',
                 confirmBtn: {
                   text: that.data.successData.btnName || 'Go to my exclusive VIP card',
