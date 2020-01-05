@@ -222,7 +222,7 @@ var templateView = {
         if(!(/^1[3456789]\d{9}$/.test(phone))){ 
           this.$createToast({
             type:'error',
-            txt:'手机号码格式不正确！'
+            txt:'Incorrect mobile phone number'
           }).show()
           return
         }
@@ -239,7 +239,7 @@ var templateView = {
               that.codeKey = res.data.codeKey     // 存储校验码
               that.$createToast({
                 type:'correct',
-                txt:'发送成功，请注意接收'
+                txt:'Successfully send, Please check your message'
               }).show()
               that.canGetCode = false
               if(that.timer === ''){
@@ -256,7 +256,7 @@ var templateView = {
             }else{
               that.$createToast({
                 type:'error',
-                txt:'获取验证码失败'
+                txt:'Failure getting verification code'
               }).show()
             }
           }
@@ -268,7 +268,7 @@ var templateView = {
         if(this.codeKey === ''){
           this.$createToast({
             type:'error',
-            txt:'验证码已过期，请重新获取'
+            txt:'Please verify again'
           }).show()
         }
         mcMethod.query.request({
@@ -285,13 +285,13 @@ var templateView = {
             }else{
               that.$createToast({
                 type:'error',
-                txt:'验证码不正确'
+                txt:'Incorrect verification code'
               }).show()
             }
           },
           errorCallback: function (err) {
             that.$createToast({
-              txt: '验证失败，请稍后再试!',
+              txt: 'Verify failure, please try again',
               type: 'txt',
             }).show()
           }
@@ -303,7 +303,7 @@ var templateView = {
             type: 'alert',
             icon: 'cubeic-alert',
             showClose: false,
-            title: '活动已结束',
+            title: 'Event closed',
             onClose: () => {
             }
           }).show()
@@ -313,7 +313,7 @@ var templateView = {
             type: 'alert',
             icon: 'cubeic-alert',
             showClose: false,
-            title: '活动未发布',
+            title: 'Event not published',
             onClose: () => {
             }
           }).show()
@@ -393,7 +393,7 @@ var templateView = {
                   type: 'alert',
                   icon: 'cubeic-warn',
                   showClose: true,
-                  title: '不能重复提交哦！',
+                  title: 'Please do not submit twice',
                   confirmBtn: {
                     text: that.data.successData.btnName || '前往查看您的贵宾卡',
                     active: true,
@@ -425,9 +425,9 @@ var templateView = {
                 type: 'alert',
                 // icon: 'cubeic-alert',
                 showClose: true,
-                title: '恭喜您已经报名成功！',
+                title: 'Congratulation!  You have been successfully signed up for the event',
                 confirmBtn: {
-                  text: that.data.successData.btnName || '前往查看您的贵宾卡',
+                  text: that.data.successData.btnName || 'Go to my exclusive VIP card',
                   active: true,
                   href: that.clearUrl(that.data.successData.skipUrl,that.portraitId)
                 },
@@ -542,7 +542,7 @@ var INDEXAPP = new Vue({
                     type: 'alert',
                     icon: 'cubeic-alert',
                     showClose: false,
-                    title: '活动已结束',
+                    title: 'Event closed',
                     onClose: () => {
                       this.$createToast({
                         type: 'warn',
@@ -566,7 +566,7 @@ var INDEXAPP = new Vue({
                 type: 'alert',
                 icon: 'cubeic-alert',
                 showClose: false,
-                title: '活动已下架',
+                title: 'Event closed',
                 onConfirm: () => {
                   WeixinJSBridge.call('closeWindow');//IOS
                   document.addEventListener('WeixinJSBridgeReady', function () { WeixinJSBridge.call('closeWindow'); }, false) //安卓
