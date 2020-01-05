@@ -68,8 +68,8 @@ body {
   width:100px;
   height:100px;
   position: absolute;
-  bottom:50px;
-  right:50px;
+  bottom:80px;
+  right:80px;
 }
 .wrapper .textImg{
   width:100px;
@@ -88,9 +88,12 @@ body {
   left:116px;
   letter-spacing: 15px;
 }
+.wrapper div.textImg span{
+  letter-spacing: -16px;
+}
 .wrapper .customerText{
   position: absolute;
-  bottom:250px;
+  bottom:280px;
   height:60px;
   width: 1800px;
   left:116px;

@@ -10,11 +10,11 @@ var INDEXAPP = new Vue({
   //   empCarouselImg: templateView.empCarouselImg
   // },
   data: {
-    showPage: 0, //默认扫码签到
+    showPage: 3, //默认扫码签到
     returnTimer: null,
     messageQue: [],
     messageQueIndex: -1,
-    userName: '',
+    userName: 'xx(先生/女士)',
     count: 0,
   },
   watch: {
@@ -157,33 +157,33 @@ var INDEXAPP = new Vue({
           console.log("无效码")
           that.showPage = 1
           that.userName = "无效码"
-        } else if (messageData.statusCode === "0002") {
+        } else if (messageData.statusCode === "0002") { 
           console.log("无效设备")
           that.userName = "无效设备"
           that.showPage = 2
         } else if (messageData.statusCode === "0003") {
-          that.userName='尊敬的'+messageData.userName+'先生（女士）'
+          that.userName=messageData.userName+'(先生/女士)'
           that.showPage = 3
         } else if (messageData.statusCode === "0004") {
           console.log("签到失败")
           that.userName = "签到失败"
           that.showPage = 4
         } else if (messageData.statusCode === "0005") {
-          that.userName='尊敬的'+messageData.userName+'先生（女士）'
+          that.userName=messageData.userName+'(先生/女士)'
           that.showPage = 5
         } else if (messageData.statusCode === "0006") {
           console.log("活动已失效")
           that.userName = "活动已失效"
           that.showPage = 5
         } else if (messageData.statusCode === "0007") {
-          that.userName='尊敬的'+messageData.userName+'先生（女士）'
+          that.userName=messageData.userName+'(先生/女士)'
           that.showPage = 7
         } else if (messageData.statusCode === "0008") {
           console.log("领取礼物失败")
           that.userName = "领取礼物失败"
           that.showPage = 8
         } else if (messageData.statusCode === "0009") {
-          that.userName='尊敬的'+messageData.userName+'先生（女士）'
+          that.userName=messageData.userName+'(先生/女士)'
           that.showPage = 9
         }
         

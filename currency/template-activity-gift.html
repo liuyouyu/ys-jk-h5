@@ -55,50 +55,57 @@
         that.showPage = 9
       }
     }; -->
-      <div class="imgContainer" v-if='showPage==0'>
-        <div class="textImg">请您出示二维码领取礼品》</div>
-        <!-- <img class="textImg" src="./common/img/activityImg/screenStaus/0.svg" alt="" srcset=""> -->
-        <img class="statusImg" src="./common/img/activityImg/screenStaus/00.svg" alt="" srcset="">
-      </div>
-      <div class="imgContainer" v-if='showPage==1'>
-        <div class="textImg">亲！您的二维码无效！</div>
-        <img class="statusImg" src="./common/img/activityImg/screenStaus/0001.svg" alt="" srcset="">
-      </div>
-      <div class="imgContainer" v-if='showPage==2'>
-        <div class="textImg">亲！扫码器异常</div>
-        <img class="statusImg" src="./common/img/activityImg/screenStaus/0002.svg" alt="" srcset="">
-      </div>
-      <div class="imgContainer" v-if='showPage==3'>
-        <div class="textImg">欢迎某某先生开启JLR&nbsp;SAPCE体验之旅！》</div>
-        <div class="customerText"></div>
-        <img class="statusImg" src="./common/img/activityImg/screenStaus/0003.svg" alt="" srcset="">
-      </div>
-      <div class="imgContainer" v-if='showPage==4'>
-        <div class="textImg">亲！网络异常！</div>
-        <img class="statusImg" src="./common/img/activityImg/screenStaus/0004.svg" alt="" srcset="">
-      </div>
-      <div class="imgContainer" v-if='showPage==5'>
-        <div class="textImg">亲！您已签到-切勿重复签到哦！</div>
-        <img class="statusImg" src="./common/img/activityImg/screenStaus/0005.svg" alt="" srcset="">
-      </div>
-      <div class="imgContainer" v-if='showPage==6'>
-        <div class="textImg">亲！活动已结束！</div>
-
-        <img class="statusImg" src="./common/img/activityImg/screenStaus/0006.svg" alt="" srcset="">
-      </div>
-      <div class="imgContainer" v-if='showPage==7'>
-        <div class="textImg">某先生，期待与您再次相遇》</div>
-        <div class="customerText"></div>
-        <img class="statusImg" src="./common/img/activityImg/screenStaus/0007.svg" alt="" srcset="">
-      </div>
-      <div class="imgContainer" v-if='showPage==8'>
-        <div class="textImg">亲！网络异常！</div>
-        <img class="statusImg" src="./common/img/activityImg/screenStaus/0008.svg" alt="" srcset="">
-      </div>
-      <div class="imgContainer" v-if='showPage==9'>
-        <div class="textImg">亲！您已领取礼物-切勿重复领取礼物哦</div>
-        <img class="statusImg" src="./common/img/activityImg/screenStaus/0009.svg" alt="" srcset="">
-      </div>
+    <div class="imgContainer" v-if='showPage==0'>
+      <div class="textImg">请您出示二维码签到<span>>></span> </div>
+      <div class="customerText"></div>
+      <!-- <img class="textImg" src="./common/img/activityImg/screenStaus/0.svg" alt="" srcset=""> -->
+      <img class="statusImg" src="./common/img/activityImg/screenStaus/0.svg" alt="" srcset="">
+    </div>
+    <div class="imgContainer" v-if='showPage==1'>
+      <div class="textImg">亲！您的二维码无效！</div>
+      <div class="customerText"></div>
+      <img class="statusImg" src="./common/img/activityImg/screenStaus/0001.svg" alt="" srcset="">
+    </div>
+    <div class="imgContainer" v-if='showPage==2'>
+      <div class="textImg">亲！扫码器异常</div>
+      <div class="customerText"></div>
+      <img class="statusImg" src="./common/img/activityImg/screenStaus/0002.svg" alt="" srcset="">
+    </div>
+    <div class="imgContainer" v-if='showPage==3'>
+      <div class="textImg">欢迎{{userName}}开启JLR&nbsp;SAPCE体验之旅！<span>>></span></div>
+      <div class="customerText"></div>
+      <img class="statusImg" src="./common/img/activityImg/screenStaus/0003.svg" alt="" srcset="">
+    </div>
+    <div class="imgContainer" v-if='showPage==4'>
+      <div class="textImg">亲！网络异常！</div>
+      <div class="customerText"></div>
+      <img class="statusImg" src="./common/img/activityImg/screenStaus/0004.svg" alt="" srcset="">
+    </div>
+    <div class="imgContainer" v-if='showPage==5'>
+      <div class="textImg">亲！您已签到-切勿重复签到哦！</div>
+      <div class="customerText"></div>
+      <img class="statusImg" src="./common/img/activityImg/screenStaus/0005.svg" alt="" srcset="">
+    </div>
+    <div class="imgContainer" v-if='showPage==6'>
+      <div class="textImg">亲！活动已结束！</div>
+      <div class="customerText"></div>
+      <img class="statusImg" src="./common/img/activityImg/screenStaus/0006.svg" alt="" srcset="">
+    </div>
+    <div class="imgContainer" v-if='showPage==7'>
+      <div class="textImg">{{userName}}，期待与您再次相遇<span>>></span></div>
+      <div class="customerText"></div>
+      <img class="statusImg" src="./common/img/activityImg/screenStaus/0007.svg" alt="" srcset="">
+    </div>
+    <div class="imgContainer" v-if='showPage==8'>
+      <div class="textImg">亲！网络异常！</div>
+      <div class="customerText"></div>
+      <img class="statusImg" src="./common/img/activityImg/screenStaus/0008.svg" alt="" srcset="">
+    </div>
+    <div class="imgContainer" v-if='showPage==9'>
+      <div class="textImg">亲！您已领取礼物-切勿重复领取礼物哦！</div>
+      <div class="customerText"></div>
+      <img class="statusImg" src="./common/img/activityImg/screenStaus/0009.svg" alt="" srcset="">
+    </div>
 
   </div>
 
