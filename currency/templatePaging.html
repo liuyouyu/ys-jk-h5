@@ -34,7 +34,7 @@
             <emp_paging :active-index= "activeIndex" :activity-info="activityInfo" :data="items" :index = "index"></emp_paging>
           </div>
           <div style="width:100%;height: 100%;" v-else-if="items.templateType === 9">
-            <emp-paging-form :active-index= "activeIndex" :activity-info="activityInfo" :data="items" :index = "index"></emp-paging-form>
+            <emp-paging-form  :active-index= "activeIndex" :activity-info="activityInfo" :data="items" :index = "index"></emp-paging-form>
           </div>
 
         </div>
@@ -64,7 +64,7 @@
           <img v-if="bg !== '' " class="bg" :src="bg">
           <img v-if="faceImg !== '' " class="bg" :src="faceImg">
           <transition>
-            <div v-if="activeIndex == index" class="transitionBox">
+            <div v-if="activeIndex == index" v-show="showForm" class="transitionBox">
               <cube-form :model="model"  :immediate-validate="false" @validate="validateHandler" @submit="submitHandler">
                 <div class="inputBox">
                   <cube-form-group>

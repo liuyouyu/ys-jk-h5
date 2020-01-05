@@ -94,6 +94,7 @@ var templateView = {
         codeKey:'',         // 验证码校验码
         timer:'',
         portraitId:'',      // 报名成功后拿到的潜客id
+        showForm:true,
         model: {
           name: '',
           sex:'',
@@ -389,12 +390,16 @@ var templateView = {
           timeout : 10000, //超时时间设置，单位毫秒
           callback: function (res) {
             if(res.code === 0){
+              that.showForm=false;//隐藏表单
               if(res.data.isParticipate == 'yes'){
                 that.portraitId = res.data.id              // 获取潜客id
                 that.$createDialog({
                   type: 'alert',
                   icon: 'cubeic-warn',
                   showClose: true,
+                  onClose: () => {
+                    that.showForm=true;
+                  },
                   title: '不能重复提交哦！',
                   confirmBtn: {
                     text: that.data.successData.btnName || '前往查看您的贵宾卡',
@@ -428,6 +433,9 @@ var templateView = {
                 // icon: 'cubeic-alert',
                 showClose: true,
                 title: '恭喜您已经报名成功！',
+                onClose: () => {
+                  that.showForm=true;
+                },
                 confirmBtn: {
                   text: that.data.successData.btnName || '前往查看您的贵宾卡',
                   active: true,
