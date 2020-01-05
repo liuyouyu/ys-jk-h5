@@ -679,6 +679,82 @@ var INDEXAPP = new Vue({
     },
   },
   created: function () {
+    // this.$createDialog({
+    //   type: 'alert',
+    //   icon: 'cubeic-alert',
+    //   showClose: true,
+    //   title: '活动已结束',
+    //   onClose: () => {
+    //     this.$createToast({
+    //       type: 'warn',
+    //       time: 1000,
+    //       txt: '点击关闭按钮'
+    //     }).show()
+    //   }
+    // }).show()
+    // this.$createDialog({
+    //   type: 'alert',
+    //   icon: 'cubeic-warn',
+    //   showClose: true,
+    //   title: '不能重复提交哦！',
+    //   confirmBtn: {
+    //     text:  '前往查看您的贵宾卡',
+    //     active: true,
+    //     href:  'javascript:;'
+    //   }
+    // }).show()
+    // this.$createDialog({
+    //   type: 'alert',
+    //   icon: 'cubeic-alert',
+    //   showClose: false,
+    //   title: '活动已结束',
+    //   onClose: () => {
+    //   }
+    // }).show()
+    // this.$createDialog({
+    //   type: 'alert',
+    //   icon: 'cubeic-alert',
+    //   showClose: true,
+    //   title: '恭喜您已经报名成功！',
+    //   confirmBtn: {
+    //     text: '前往查看您的贵宾卡',
+    //     active: true,
+    //     href:  'javascript:;'
+    //   }}).show()
+    //   this.$createDialog({
+    //     type: 'alert',
+    //     // icon: 'cubeic-alert',
+    //     showClose: true,
+    //     title: '恭喜您已经报名成功！',
+    //     confirmBtn: {
+    //       text: ''|| '前往查看您的贵宾卡',
+    //       active: true,
+    //       href: ''
+    //     },
+    //  }, (createElement) => {
+    //     return [
+    //       createElement('div', {
+    //         'class': {
+    //           'my-title': true
+    //         },
+    //         slot: 'title'
+    //       }, [
+    //         createElement('div', {
+    //           'class': {
+    //             'my-title-img': true
+    //           }
+    //         }),
+    //         createElement('p', '您的信息已提交成功'),
+    //         createElement('p', '编码'),
+    //         createElement('p', '获得专属电子VIP卡!')
+    //       ])
+    //     ]
+    //   }).show()
+
+
+
+
+
     if (mcMethod.info.activityTemplateId != '' && mcMethod.info.activityId == '') {//活动模板
       CONTENTVAR.isActivityTemplateId = 1
       this.findActivityTemplateById()
