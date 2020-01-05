@@ -455,7 +455,7 @@ var templateView = {
                       }
                     }),
                     createElement('p', '您的信息已提交成功'),
-                    createElement('p', '编码'+res.data.participateInNumber),
+                    createElement('p', '编码:'+res.data.participateInNumber),
                     createElement('p', '获得专属电子VIP卡!')
                   ])
                 ]
