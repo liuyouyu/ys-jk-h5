@@ -235,29 +235,30 @@ var templateView = {
           },
           callback(res) {
             // console.log(res);
+            that.canGetCode = false
+            if(that.timer === ''){
+              that.timer = setInterval(() => {
+                that.countDown --
+                if(that.countDown <= 0) {
+                  clearInterval(that.timer)
+                  that.countDown = 60
+                  that.canGetCode = true
+                  that.timer = ''
+                }
+              },1000)
+            }
             if(res.code === 0){ 
               that.codeKey = res.data.codeKey     // 存储校验码
-              that.$createToast({
-                type:'correct',
-                txt:'发送成功，请注意接收'
-              }).show()
-              that.canGetCode = false
-              if(that.timer === ''){
-                that.timer = setInterval(() => {
-                  that.countDown --
-                  if(that.countDown <= 0) {
-                    clearInterval(that.timer)
-                    that.countDown = 60
-                    that.canGetCode = true
-                    that.timer = ''
-                  }
-                },1000)
-              }
+              // that.$createToast({
+              //   type:'correct',
+              //   txt:'发送成功，请注意接收'
+              // }).show()
             }else{
-              that.$createToast({
-                type:'error',
-                txt:'获取验证码失败'
-              }).show()
+              // that.$createToast({
+              //   type:'error',
+              //   txt:'获取验证码失败'
+              // }).show()
+              console.log(err);
             }
           }
         })
@@ -382,9 +383,10 @@ var templateView = {
         }
         Object.assign(jsonObj,this.getParamsObj())    // 合并参数
         console.log('发送的表单数据',jsonObj);
-        mcMethod.query.request({
+        var ajaxTimeOut = mcMethod.query.request({
           data: jsonObj,
           url: mcMethod.url.savePortraitInfo,
+          timeout : 10000, //超时时间设置，单位毫秒
           callback: function (res) {
             if(res.code === 0){
               if(res.data.isParticipate == 'yes'){
@@ -451,6 +453,20 @@ var templateView = {
                 ]
               }).show()
             }
+            }
+          },
+          complete : function(XMLHttpRequest,status){ //请求完成后最终执行参数
+            if(status=='timeout'){//超时,status还有success,error等值的情况
+              ajaxTimeOut.abort(); //取消请求
+              this.$createDialog({
+                type: 'alert',
+                icon: 'cubeic-alert',
+                showClose: false,
+                title: '网络超时',
+                onClose: () => {
+                }
+              }).show()
+              return false
             }
           }
         })

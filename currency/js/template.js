@@ -22,6 +22,9 @@ var datePick = {
   data: function () {
     return {
       dateValue: '',
+      rules: {
+        required: true
+      }
     }
   },
   methods: {
@@ -201,6 +204,7 @@ var templateView = {
             if (this.fields[i]['rules'] && this.fields[i]['rules']['required']) {
               if (this.birData == ''){
                 this.iswaring = true
+                return
               }else {
                 this.iswaring = false
               }
@@ -385,8 +389,9 @@ var templateView = {
               case 'city' : obj.props.placeholder ='所在城市';break;
               case 'wechat' : obj.props.placeholder ='微信';break;
               case 'qq' : obj.props.placeholder ='QQ';break;
+              case 'address' : obj.props.placeholder ='收件地址';break;
+              case 'likecar' : obj.props.placeholder ='意向品牌';break;
             }
-
           }
 
         }

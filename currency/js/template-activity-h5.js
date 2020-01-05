@@ -94,7 +94,7 @@ var templateView = {
           callback: function (data) {
             console.log('申请VIP',data)
             if (data.code == 0) {
-              this.$createDialog({
+              self.$createDialog({
                 type: 'alert',
                 content: '恭喜您，申请成功！',
                 icon: 'cubeic-ok',
