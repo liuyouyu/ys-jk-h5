@@ -94,7 +94,7 @@ var templateView = {
           callback: function (data) {
             console.log('申请VIP',data)
             if (data.code == 0) {
-              this.$createDialog({
+              self.$createDialog({
                 type: 'alert',
                 content: '恭喜您，申请成功！',
                 icon: 'cubeic-ok',
@@ -605,16 +605,30 @@ var INDEXAPP = new Vue({
   mounted: function () {
     var self = this
     self.queryAuthorizeTenantInfo()
-    setTimeout(function () {
-      self.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
-      console.log('用户授权信息',this.userInfoCacheKey);
-      if (mcMethod.data.guestId != '' && mcMethod.data.guestId != undefined && mcMethod.data.guestId != null ){//活动模板
-        self.queryPortraitInfoById(mcMethod.data.guestId)
-      }else {
+    this.userInfoCacheKey = {
+      auth: "yes",
+      city: "海淀",
+      country: "中国",
+      ctime: 1578219256551,
+      headimgurl: "http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTLT0RMjKNehHtDAyxfSeDTbfVR7YndcydMpJrjQ4mKymDJbgrLu2t3OQWhb3hv8iaKQgp9cAULiaStw/132",
+      language: "zh_CN",
+      nickname: "💋、 M",
+      openid: "o6MrawbFTDdP0ritphk2eMIOdQ51",
+      privilege: [],
+      province: "北京",
+      sex: 2,
+      unionid: "oIMTwwPV1j8ktFlxuPpe7lGkLTYE",
+    }
+    // setTimeout(function () {
+    //   self.userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+    //   console.log('用户授权信息',this.userInfoCacheKey);
+    //   if (mcMethod.data.guestId != '' && mcMethod.data.guestId != undefined && mcMethod.data.guestId != null ){//活动模板
+    //     self.queryPortraitInfoById(mcMethod.data.guestId)
+    //   }else {
         var openid = this.userInfoCacheKey.openid
         self.queryPortraitInfoByOpenid(openid)
-      }
-    },100)
+      // }
+    // },100)
     document.title = '会员中心'
     //微信内置浏览器浏览H5页面弹出的键盘遮盖文本框的解决办法
     window.addEventListener("resize", function () {
