@@ -312,12 +312,12 @@ body {
 @keyframes webSwipeTipAfter {
   from {
     opacity: 1;
-    top: 5.5rem
+    top: 5.85rem
   }
 
   to {
     opacity: 0;
-    top: 5.3rem
+    top: 5.6rem
   }
 }
 
