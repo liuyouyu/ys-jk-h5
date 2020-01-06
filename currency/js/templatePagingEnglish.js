@@ -227,6 +227,18 @@ var templateView = {
           }).show()
           return
         }
+        that.canGetCode = false
+        if(that.timer === ''){
+          that.timer = setInterval(() => {
+            that.countDown --
+            if(that.countDown <= 0) {
+              clearInterval(that.timer)
+              that.countDown = 60
+              that.canGetCode = true
+              that.timer = ''
+            }
+          },1000)
+        }
         mcMethod.query.request({
           queryType: 'GET',
           url: mcMethod.url.sendVerificationCode,
@@ -235,18 +247,6 @@ var templateView = {
             vCode: ''
           },
           callback(res) {
-            that.canGetCode = false
-            if(that.timer === ''){
-              that.timer = setInterval(() => {
-                that.countDown --
-                if(that.countDown <= 0) {
-                  clearInterval(that.timer)
-                  that.countDown = 60
-                  that.canGetCode = true
-                  that.timer = ''
-                }
-              },1000)
-            }
             // console.log(res);
             if(res.code === 0){ 
               that.codeKey = res.data.codeKey     // 存储校验码
