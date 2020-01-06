@@ -137,7 +137,7 @@ if(!xyAuth) {
 				objQuery['cname'] = userInfoCacheKey.nickname
 			}
 			if(mcMethod.info.shareId != '' && mcMethod.info.shareId != undefined && mcMethod.info.shareId != null){
-				objQuery['pid'] = userInfoCacheKey.shareId
+				objQuery['pid'] = mcMethod.info.shareId
 			}else {
 				objQuery['pid'] = mcMethod.info.employeeId
 			}
