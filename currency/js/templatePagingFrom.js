@@ -98,8 +98,9 @@ var templateView = {
         model: {
           name: '',
           sex:'',
+          address: '',
           phone: '',
-          code: ''
+          code: '',
         },
         fields: [
           {
