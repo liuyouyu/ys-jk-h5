@@ -83,6 +83,13 @@ if(!xyAuth) {
 					'scanQRCode' //调起微信扫一扫接口
 				]
 			});
+			var linkUrl = ''
+			if(mcMethod.info.shareId != '' && mcMethod.info.shareId != undefined && mcMethod.info.shareId != null){
+				mcMethod.info.shareId = userInfoCacheKey.openid
+				linkUrl = xyAuth.shareInfo.link
+			}else {
+				linkUrl = xyAuth.shareInfo.link+"&shareId="+userInfoCacheKey.openid
+			}
 			wx.ready(function() {
 				// 要隐藏的菜单项，所有menu项见附录3
 				wx.hideMenuItems({
@@ -100,7 +107,7 @@ if(!xyAuth) {
 				wx.onMenuShareAppMessage({
 					title: xyAuth.shareInfo.title,
 					imgUrl: xyAuth.shareInfo.imgUrl,
-					link: xyAuth.shareInfo.link+"&shareId="+userInfoCacheKey.openid,
+					link: linkUrl,
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
 						xyAuth.sharePortrait()
@@ -111,7 +118,7 @@ if(!xyAuth) {
 				wx.onMenuShareTimeline({
 					title: xyAuth.shareInfo.title,
 					imgUrl: xyAuth.shareInfo.imgUrl,
-					link: xyAuth.shareInfo.link+"&shareId="+userInfoCacheKey.openid,
+					link: linkUrl,
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
 						// xyAuth.addShareNum();
