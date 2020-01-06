@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="og:description" content="" />
+  <script src="common/plugins/vue.min.js?$$tempflag$$"></script>
+  <script src="common/plugins/vue-lazyload.js?$$tempflag$$"></script>
+  <link rel="stylesheet" href="common/plugins/cube.min.css?$$tempflag$$">
+    <script src="common/plugins/cube.min.js?$$tempflag$$"></script>
+  <!-- <link rel="stylesheet" href="common/plugins/element-ui/element-2.13.0.css">
+  <script src="common/plugins/element-ui/element-2.13.0.js"></script> -->
+  <link rel="stylesheet" href="common/font/iconfont.css?$$tempflag$$">
+  <link rel="stylesheet" href="common/base/base.css?$$tempflag$$">
+  <link rel="stylesheet" href="css/templatePaging.css?$$tempflag$$">
+  <link rel="stylesheet" href="common/plugins/swiper.min.css?$$tempflag$$">
+  <script src="common/plugins/swiper.min.js?$$tempflag$$"></script>
+  <!-- 引入文稿组件样式 -->
+  <link rel="stylesheet" href="common/components/catalogue/catalogue.css?$$tempflag$$">
+  <title></title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="content swiper-container" id="pagingContent">
+      <!-- 通用页:8 表单页:9 -->
+      <div v-if="activityData.length" class="swiper-wrapper">
+        <div v-for="(items,index) in activityData" :key="index" class="swiper-slide">
+          <div style="width:100%;height: 100%;" v-if="items.templateType === 8">
+            <emp_paging :active-index= "activeIndex" :activity-info="activityInfo" :data="items" :index = "index"></emp_paging>
+          </div>
+          <div style="width:100%;height: 100%;" v-else-if="items.templateType === 9">
+            <emp-paging-form  :active-index= "activeIndex" :activity-info="activityInfo" :data="items" :index = "index"></emp-paging-form>
+          </div>
+
+        </div>
+        <!-- 推荐内容 -->
+        <catalogue :isshow=CONFIG.showCatalogue :showlist='8'></catalogue>
+      </div>
+    </div>
+  </div>
+
+  <!-- 翻页活动通用页 -->
+  <template class="hide" id="emp_paging">
+    <div class="paging">
+      <div class="imgBox">
+        <img v-if="bg !== '' " class="bg" :src="bg">
+        <transition>
+          <img v-if="pic!='' && activeIndex == index" :src="pic">
+        </transition>
+      </div>
+    </div>
+  </template>
+
+  <!-- 翻页活动表单页 -->
+  <template class="hide" id="empPagingForm">
+    <div class="pagingForm">
+      <div class="paging">
+        <div class="imgBox">
+          <img v-if="bg !== '' " class="bg" :src="bg">
+          <transition>
+            <div v-if="activeIndex == index" v-show="showForm" class="transitionBox">
+              <img v-if="faceImg !== '' " class="bg" :src="faceImg">
+              <cube-form :model="model"  :immediate-validate="false" @validate="validateHandler" @submit="submitHandler">
+                <div class="inputBox">
+                  <cube-form-group>
+                    <i class="cubeic-person"></i><cube-form-item class="formItem" :field="fields[0]"></cube-form-item>
+                    <cube-form-item class="formItem" :field="fields[1]"></cube-form-item>
+                    <i class="cubeic-person"></i><cube-form-item class="formItem" :field="fields[2]"></cube-form-item>
+                    <i class="cubeic-mobile-phone"></i><cube-form-item class="formItem" :field="fields[3]"></cube-form-item>
+                    <i class="cubeic-unlock"></i><cube-form-item class="formItem" :field="fields[4]"></cube-form-item>
+<!--                    <cube-form-item class="formItem" :field="fields[4]"></cube-form-item>--><!--意向品牌-->
+                    <span class="getCode" v-if="canGetCode" @click="getCode">获取验证码</span>
+                    <span class="getCode" v-else >{{countDown}}s</span>
+                  </cube-form-group>
+                </div>
+                <cube-form-group>
+                  <div class="submitBox">
+                    <cube-button type="submit">立即提交</cube-button>
+<!--                    <cube-button type="submit" v-else style="background: #ccc" :disabled="true">立即提交</cube-button>-->
+                  </div>
+                </cube-form-group>
+              </cube-form>
+            </div>
+          </transition>
+        </div>
+      </div>           
+    </div>
+  </template>
+  
+  <template class="hide" id="datePick">
+    <div>
+      {{modelKey.title}}
+      <cube-button :class="dateValue?'dateShowStyle':''" class="button-date" @click="showDatePicker">
+        {{dateValue || tit}}
+      </cube-button>
+      <span class="emp_waring" v-if="isshowwaring"></span>
+      <date-picker ref="datePicker"></date-picker>
+    </div>
+  </template>
+  <script src="common/plugins/moment.js?$$tempflag$$"></script>
+  <script src="//cdn.yunshicloud.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/larkplayer@latest/dist/larkplayer.js"></script>
+  <script src="https://unpkg.com/larkplayer-ui@latest/dist/larkplayer-ui.js"></script>
+  <script src="//cdn.yunshicloud.com/axios/0.18.0/axios.min.js"></script>
+  <script src="//res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+  <script src="config/config.js?$$tempflag$$"></script>
+  <!-- 文稿组件 -->
+  <script src="common/components/catalogue/catalogue.js?$$tempflag$$"></script>
+  <script src="common/common/common.js?$$tempflag$$"></script>
+  <script src="common/base/base.js?$$tempflag$$"></script>
+  <script src="common/plugins/xyAuth.js?$$tempflag$$"></script>
+  <script src="js/templatePagingFrom.js?$$tempflag$$"></script>
+
+  <script>
+    Vue.use(VueLazyload, {})
+  </script>
+
+</body>
+
+</html>
