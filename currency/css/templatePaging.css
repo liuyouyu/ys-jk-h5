@@ -276,7 +276,7 @@ body {
   background-color: transparent;
 }
 /*inputIcon*/
-.cubeic-person,.cubeic-mobile-phone,.cubeic-unlock{
+.cubeic-person,.cubeic-mobile-phone,.cubeic-unlock,cubeic-location{
   color: #fff;
   font-size: 0.16rem;
   position: absolute;
