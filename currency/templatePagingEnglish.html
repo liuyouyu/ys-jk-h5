@@ -39,9 +39,10 @@
 
         </div>
         <!-- 推荐内容 -->
-        <catalogue :isshow=CONFIG.showCatalogue :showlist='8'></catalogue>
+<!--        <catalogue :isshow=CONFIG.showCatalogue :showlist='8'></catalogue>-->
       </div>
     </div>
+      <img id="silidImg" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAASCAYAAABB7B6eAAAC0ElEQVQ4jZWUv2slVRTHP/fOyPqyUWEjsqzuCllIs4JNikBaQSs7t7Dzf9gUCWwXCMR022hY0hjLrQJbvHKrBU0VYopgIVooO3nhPZ25v+dY7M3wEudl8cBl4N5zvt/vfO85FwARuXZ577+t69pNJhMZj8dS13Xw3v/wprourkuy1n5tjLHOOQkhSIxRnHNijHHOuW/eRKAuCPoixjgXY/xNKfV+WZYopTpBMUaAqiiKj8uybPrqlVLoXuQcKaWhUmqhLEsA2ralbVsA8t5CSml4HcZMghDCYxFZ0VqrmcVaKxFZCSE8npXTa5Ex5oFS6qXWer4oiv8UiUhnV0qJtm3/EZGVwWBwfAl8lkVa62dKqavgrfe+Sik1WutOUVEUKKXmtdbPerGubnjvd0VkaRpcKdWORqPDvb299cPDw92maf4A2mkSEVny3u/2kXRt5Zx7aIxx3nuJMUqMUVJKcn5+/gvwCXB/eXn50+3t7a9Go9FRjLG9yPPeX7Tuw945CCHcNcZUzrlL4M65v7e2tr4EbgPv7Ozs3Ac+Wltb+9xaO0kpdfl5PqoQwt1LBCGEOWvtC2NMpyiveHx8vAvcAd4+ODi4AZTAHHDn5OTkaXwdXY0xprXWvgghzHUE1tonTdOki0nN6tuqqn5eXV19AMwDOqtS+e5uLi4uLlVV9VNKqRMWQpCmaZK19kl3h8aY5qo1xphXGxsbnwG3gLLnGSiBW5ubm18YY171WNVkMZTT4FmFHw6Hj7LvNwDVQ6Dy2e3hcPgohOCmMZxzbRbBIMaYpg7b09PTH4F72Wt9zWOmgZvAvaOjo++mcUIIDhhooHDO/Q6IUoq6rn/d399/CowBJyJdv/e0dwtYYLy+vv59VVUvlVICpLOzs+dAobKCD4GF/Ntj4K/8DbPAr8RbwLvAB8B7QAIq4M8igypAAAOcA5P/AU6uTbye7gQ0WaD5F7AA15A3PNDTAAAAAElFTkSuQmCC" class="slideIcon" alt="上滑">
   </div>
 
   <!-- 翻页活动通用页 -->
@@ -62,9 +63,9 @@
       <div class="paging">
         <div class="imgBox">
           <img v-if="bg !== '' " class="bg" :src="bg">
-          <img v-if="faceImg !== '' " class="bg" :src="faceImg">
           <transition>
             <div v-if="activeIndex == index" v-show="showForm" class="transitionBox">
+                <img v-if="faceImg !== '' " class="bg" :src="faceImg">
               <cube-form :model="model"  :immediate-validate="false" @validate="validateHandler" @submit="submitHandler">
                 <div class="inputBox">
                   <cube-form-group>

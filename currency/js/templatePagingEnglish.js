@@ -534,6 +534,13 @@ var INDEXAPP = new Vue({
           on: {
             transitionEnd: function () {
               that.activeIndex = this.activeIndex
+              console.log('滑动', that.activeIndex,that.activityData.length - 1)
+              if(that.activeIndex == that.activityData.length - 1){
+                console.log($('#silidImg'),'找到滑动元素');
+                $('#silidImg').addClass('hiddenImg')
+              }else {
+                $('#silidImg').removeClass('hiddenImg')
+              }
             },
           },
         })
