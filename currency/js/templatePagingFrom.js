@@ -392,7 +392,7 @@ var templateView = {
         var jsonObj = {
           name: this.model.name,
           phone: this.model.phone,
-          address: this.model.address
+          postalAddress: this.model.address
         }
         Object.assign(jsonObj,this.getParamsObj())    // 合并参数
         console.log('发送的表单数据',jsonObj);
