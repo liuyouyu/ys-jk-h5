@@ -15,8 +15,10 @@ window.addEventListener('message', function (params) {
 	}
 }, false);
 //微信授权信息
-var userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
-console.log( '授权信息',userInfoCacheKey);
+setTimeout(function () {
+	var userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+	console.log( '授权信息',userInfoCacheKey);
+},100)
 if(!xyAuth) {
 	var xyAuth = {
 		//公众号appid
@@ -113,6 +115,7 @@ if(!xyAuth) {
 					link: linkUrl,
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
+						console.log('更改地址栏',xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', userInfoCacheKey.openid));
 						xyAuth.sharePortrait()
 					}, // 已分享;
 					cancel: function(res) {}, // 已取消
@@ -132,6 +135,23 @@ if(!xyAuth) {
 				});
 			});
 		},
+		//更改地址栏参数,url：地址；arg:要变更的参数名；arg_val:要变更的参数值
+		changeURLArg: function (url,arg,arg_val){
+		var pattern=arg+'=([^&]*)';
+		var replaceText=arg+'='+arg_val;
+		if(url.match(pattern)){
+			var tmp='/('+ arg+'=)([^&]*)/gi';
+			tmp=url.replace(eval(tmp),replaceText);
+			return tmp;
+		}else{
+			if(url.match('[\?]')){
+				return url+'&'+replaceText;
+			}else{
+				return url+'?'+replaceText;
+			}
+		}
+		return url+'\n'+arg+'\n'+arg_val;
+	},
 		//获取地址栏参数
 		getRequestValue: function (name) {
 			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
