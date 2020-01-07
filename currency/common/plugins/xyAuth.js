@@ -16,7 +16,7 @@ window.addEventListener('message', function (params) {
 }, false);
 //微信授权信息
 setTimeout(function () {
-	var userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+	var userInfoCacheKey = ''
 	console.log( '授权信息',userInfoCacheKey);
 },100)
 if(!xyAuth) {
