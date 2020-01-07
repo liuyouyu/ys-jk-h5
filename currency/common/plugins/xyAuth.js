@@ -16,6 +16,7 @@ window.addEventListener('message', function (params) {
 }, false);
 //微信授权信息
 var userInfoCacheKey = ''
+var shareUrl = ''
 if(!xyAuth) {
 	var xyAuth = {
 		//公众号appid
@@ -88,9 +89,11 @@ if(!xyAuth) {
 			var shareId = xyAuth.getRequestValue('shareId')
 			var linkUrl = ''
 			if(shareId != '' && shareId != undefined && shareId != null){
-				linkUrl = xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', urlOpenid)
+				setTimeout(function () {
+					linkUrl = shareUrl
+				},100)
 			}else {
-				linkUrl = xyAuth.shareInfo.link+"&shareId="+urlOpenid
+				linkUrl = xyAuth.shareInfo.link+"&shareId="+ urlOpenid
 			}
 			wx.ready(function() {
 				// 要隐藏的菜单项，所有menu项见附录3
@@ -279,7 +282,8 @@ if(!xyAuth) {
             this.setUserInfo(data);
 						userInfoCacheKey = data
 						console.log('更改URL参数',xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', userInfoCacheKey.openid));
-//						xyAuth.loginFansByWechat();
+						shareUrl = xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', userInfoCacheKey.openid)
+						//						xyAuth.loginFansByWechat();
 					} else {
 						console.info("获取微信授权用户信息错误!");
 					}
