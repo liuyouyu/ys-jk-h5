@@ -83,7 +83,7 @@ if(!xyAuth) {
 					'scanQRCode' //调起微信扫一扫接口
 				]
 			});
-			console.log('分享链接',xyAuth.shareInfo.link);
+			console.log('分享链接',xyAuth.shareInfo.link,'openID',userInfoCacheKey.openid);
 			var shareId = xyAuth.getRequestValue('shareId')
 			var linkUrl = ''
 			if(shareId != '' && shareId != undefined && shareId != null){
