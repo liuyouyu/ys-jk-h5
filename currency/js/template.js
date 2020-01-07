@@ -567,32 +567,42 @@ var templateView = {
           callback: function (data) {
             var message = ""
             if (data.code == 0) {
-              if(self.templatetype == "template.html" || self.templatetype == "template4.html") {
-                message = "参与成功"
-              }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
+              if(data.data.isParticipate == 'yes'){
+                var toast = self.$createToast({
+                  txt: '不能重复提交哦',
+                  type: 'txt',
+                  time: '2000',
+                })
+                toast.show();
+                self.alreadySubmit = false;
+              }else {
+                if(self.templatetype == "template.html" || self.templatetype == "template4.html") {
+                  message = "参与成功"
+                }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
                   message = "领取成功!"
-              }else if(self.templatetype == "templateSignIn1.html" || self.templatetype == "templateSignIn2.html"){
-                message = "签到成功!"
-              }else if(self.templatetype == "template5.html"){
-                message = "报名成功"
-              }
-              console.log(message, "签到信息");
-
-              var toast = self.$createToast({
-                txt: message,
-                type: 'txt',
-                time: '2000',
-              })
-              toast.show();
-                if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] != ''){
-                    console.log("2222222")
-                    var url = self.islinkUrl.typetitle
-                    self.islinkUrl = {}
-                    window.location.href = url
-                }else {
-                    console.log("3333333----------------------333333")
-                    self.alreadySubmit = false;
+                }else if(self.templatetype == "templateSignIn1.html" || self.templatetype == "templateSignIn2.html"){
+                  message = "签到成功!"
+                }else if(self.templatetype == "template5.html"){
+                  message = "报名成功"
                 }
+                console.log(message, "签到信息");
+
+                var toast = self.$createToast({
+                  txt: message,
+                  type: 'txt',
+                  time: '2000',
+                })
+                toast.show();
+                if(JSON.stringify(self.islinkUrl) != {} && self.islinkUrl.typetitle != undefined && self.islinkUrl['typetitle'] != ''){
+                  console.log("2222222")
+                  var url = self.islinkUrl.typetitle
+                  self.islinkUrl = {}
+                  window.location.href = url
+                }else {
+                  console.log("3333333----------------------333333")
+                  self.alreadySubmit = false;
+                }
+              }
             }else {
               var message = ""
               if(self.templatetype == "template.html" || self.templatetype == "template4.html") {
