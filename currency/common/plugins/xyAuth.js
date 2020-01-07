@@ -15,7 +15,7 @@ window.addEventListener('message', function (params) {
 	}
 }, false);
 //微信授权信息
-var userInfoCacheKey = ''
+var userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
 var shareUrl = ''
 if(!xyAuth) {
 	var xyAuth = {
@@ -52,6 +52,7 @@ if(!xyAuth) {
 		 * 设置微信分享配置
 		 * @param data
 		 */
+
 		setShareConfig: function(data) {
 			wx.config({
 				debug: false,
@@ -84,10 +85,11 @@ if(!xyAuth) {
 					'scanQRCode' //调起微信扫一扫接口
 				]
 			});
-			console.log('分享链接',xyAuth.shareInfo.link,'openID',userInfoCacheKey.openid);
-			shareUrl = xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', userInfoCacheKey.openid)
+			var userInfoauthorization = JSON.parse(localStorage.getItem('_user'))
+			console.log('分享链接',xyAuth.shareInfo.link,'openID',userInfoauthorization.openid);
+			shareUrl = xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', userInfoauthorization.openid)
 			console.log('更改分享的链接参数',shareUrl);
-			var urlOpenid = userInfoCacheKey.openid
+			var urlOpenid = userInfoauthorization.openid
 			var shareId = xyAuth.getRequestValue('shareId')
 			var linkUrl = ''
 			if(shareId != '' && shareId != undefined && shareId != null){
