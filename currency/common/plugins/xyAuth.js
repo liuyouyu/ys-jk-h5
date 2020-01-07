@@ -51,6 +51,7 @@ if(!xyAuth) {
 		 * 设置微信分享配置
 		 * @param data
 		 */
+
 		setShareConfig: function(data) {
 			wx.config({
 				debug: false,
@@ -129,8 +130,18 @@ if(!xyAuth) {
 				});
 			});
 		},
+		//获取地址栏参数
+		getRequestValue: function (name) {
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+			var r = window.location.href.substr(
+				window.location.href.indexOf("?") + 1).match(reg);
+			if (r != null)
+				return decodeURIComponent(r[2]);
+			return null;
+		},
 		//活动-分享关系记录
 		sharePortrait: function(){
+			var shareId = xyAuth.getRequestValue('shareId')
 			console.log(userInfoCacheKey, '授权信息');
 			var objQuery = {
 				'activityId': mcMethod.info.activityId,
@@ -143,8 +154,8 @@ if(!xyAuth) {
 				objQuery['cid'] = userInfoCacheKey.openid
 				objQuery['cname'] = userInfoCacheKey.nickname
 			}
-			if(mcMethod.info.shareId != '' && mcMethod.info.shareId != undefined && mcMethod.info.shareId != null){
-				objQuery['pid'] = mcMethod.info.shareId
+			if(shareId != '' && shareId != undefined && shareId != null){
+				objQuery['pid'] = shareId
 			}else {
 				objQuery['pid'] = mcMethod.info.employeeId
 			}
