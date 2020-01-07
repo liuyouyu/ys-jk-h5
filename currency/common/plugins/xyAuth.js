@@ -278,8 +278,7 @@ if(!xyAuth) {
 						history.replaceState({}, document.title, nowHref);
             this.setUserInfo(data);
 						userInfoCacheKey = data
-						console.log(userInfoCacheKey, '授权信息');
-            console.log('用户登录授权信息',data);
+						console.log('更改URL参数',xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', userInfoCacheKey.openid));
 //						xyAuth.loginFansByWechat();
 					} else {
 						console.info("获取微信授权用户信息错误!");
