@@ -568,8 +568,19 @@ var templateView = {
             var message = ""
             if (data.code == 0) {
               if(data.data.isParticipate == 'yes'){
+                if(self.templatetype == "template.html" || self.templatetype == "template4.html") {
+                  message = "不能重复参与哦！"
+                }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
+                  message = "不能重复领取哦！"
+                }else if(self.templatetype == "templateSignIn1.html" || self.templatetype == "templateSignIn2.html"){
+                  message = "不能重复签到哦！"
+                }else if(self.templatetype == "template5.html"){
+                  message = "不能重复报名哦！"
+                }
+                console.log(message, "签到信息");
+
                 var toast = self.$createToast({
-                  txt: '不能重复提交哦',
+                  txt: message,
                   type: 'txt',
                   time: '2000',
                 })
@@ -579,9 +590,9 @@ var templateView = {
                 if(self.templatetype == "template.html" || self.templatetype == "template4.html") {
                   message = "参与成功"
                 }else if(self.templatetype == "template2.html" || self.templatetype == "template3.html"){
-                  message = "领取成功!"
+                  message = "领取成功"
                 }else if(self.templatetype == "templateSignIn1.html" || self.templatetype == "templateSignIn2.html"){
-                  message = "签到成功!"
+                  message = "签到成功"
                 }else if(self.templatetype == "template5.html"){
                   message = "报名成功"
                 }
