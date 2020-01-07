@@ -15,10 +15,7 @@ window.addEventListener('message', function (params) {
 	}
 }, false);
 //微信授权信息
-setTimeout(function () {
-	var userInfoCacheKey = ''
-	console.log( '授权信息',userInfoCacheKey);
-},100)
+var userInfoCacheKey = ''
 if(!xyAuth) {
 	var xyAuth = {
 		//公众号appid
@@ -162,7 +159,7 @@ if(!xyAuth) {
 		//活动-分享关系记录
 		sharePortrait: function(){
 			var shareId = xyAuth.getRequestValue('shareId')
-			console.log(userInfoCacheKey, '授权信息');
+
 			var objQuery = {
 				'activityId': mcMethod.info.activityId,
 				'circulateType': 'wechat'
@@ -280,6 +277,7 @@ if(!xyAuth) {
 						history.replaceState({}, document.title, nowHref);
             this.setUserInfo(data);
 						userInfoCacheKey = data
+						console.log(userInfoCacheKey, '授权信息');
             console.log('用户登录授权信息',data);
 //						xyAuth.loginFansByWechat();
 					} else {
