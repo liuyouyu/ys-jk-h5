@@ -419,7 +419,7 @@ var INDEXAPP = new Vue({
     isExpireFlag: true,//VIP申请
     vipName: '',
     gender: '',
-    isApplyFlag: true,//申请卡片flag
+    isApplyFlag: false,//申请卡片flag
     isWriteInfoFlag: false,//资料填写flag
     vipCardFlag: false,//贵宾卡展示
     bindPhoneFlag: false,//手机号查询vip卡
