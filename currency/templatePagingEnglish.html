@@ -49,7 +49,7 @@
   <template class="hide" id="emp_paging">
     <div class="paging">
       <div class="imgBox">
-        <img v-if="bg !== '' " class="bg" :src="bg">
+        <img v-if="bg !== '' " class="bg" :src="bg" style="height: 100%">
         <transition>
           <img v-if="pic!='' && activeIndex == index" :src="pic">
         </transition>
@@ -62,7 +62,7 @@
     <div class="pagingForm">
       <div class="paging">
         <div class="imgBox">
-          <img v-if="bg !== '' " class="bg" :src="bg">
+          <img v-if="bg !== '' " class="bg" :src="bg" style="height: 100%">
           <transition>
             <div v-if="activeIndex == index" v-show="showForm" class="transitionBox">
                 <img v-if="faceImg !== '' " class="bg" :src="faceImg">
