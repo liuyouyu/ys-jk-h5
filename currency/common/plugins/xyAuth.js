@@ -16,6 +16,7 @@ window.addEventListener('message', function (params) {
 }, false);
 //微信授权信息
 var userInfoCacheKey = JSON.parse(localStorage.getItem('_user'))
+console.log( '授权信息',userInfoCacheKey);
 if(!xyAuth) {
 	var xyAuth = {
 		//公众号appid
@@ -84,8 +85,9 @@ if(!xyAuth) {
 					'scanQRCode' //调起微信扫一扫接口
 				]
 			});
+			var shareId = xyAuth.getRequestValue('shareId')
 			var linkUrl = ''
-			if(mcMethod.info.shareId != '' && mcMethod.info.shareId != undefined && mcMethod.info.shareId != null){
+			if(shareId != '' && shareId != undefined && shareId != null){
 				mcMethod.info.shareId = userInfoCacheKey.openid
 				linkUrl = xyAuth.shareInfo.link
 			}else {
