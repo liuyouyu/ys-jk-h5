@@ -84,12 +84,13 @@ if(!xyAuth) {
 				]
 			});
 			console.log('分享链接',xyAuth.shareInfo.link,'openID',userInfoCacheKey.openid);
+			var urlOpenid = userInfoCacheKey.openid
 			var shareId = xyAuth.getRequestValue('shareId')
 			var linkUrl = ''
 			if(shareId != '' && shareId != undefined && shareId != null){
-				linkUrl = xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', userInfoCacheKey.openid)
+				linkUrl = xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', urlOpenid)
 			}else {
-				linkUrl = xyAuth.shareInfo.link+"&shareId="+userInfoCacheKey.openid
+				linkUrl = xyAuth.shareInfo.link+"&shareId="+urlOpenid
 			}
 			wx.ready(function() {
 				// 要隐藏的菜单项，所有menu项见附录3
