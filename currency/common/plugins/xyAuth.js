@@ -90,8 +90,7 @@ if(!xyAuth) {
 			var shareId = xyAuth.getRequestValue('shareId')
 			var linkUrl = ''
 			if(shareId != '' && shareId != undefined && shareId != null){
-				mcMethod.info.shareId = userInfoCacheKey.openid
-				linkUrl = xyAuth.shareInfo.link
+				linkUrl = xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', userInfoCacheKey.openid)
 			}else {
 				linkUrl = xyAuth.shareInfo.link+"&shareId="+userInfoCacheKey.openid
 			}
@@ -115,7 +114,6 @@ if(!xyAuth) {
 					link: linkUrl,
 					desc: xyAuth.shareInfo.desc,
 					success: function(res) {
-						console.log('更改地址栏',xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', userInfoCacheKey.openid));
 						xyAuth.sharePortrait()
 					}, // 已分享;
 					cancel: function(res) {}, // 已取消
