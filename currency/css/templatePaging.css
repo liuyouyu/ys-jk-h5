@@ -138,6 +138,11 @@ body {
 .pagingForm .inputBox .formItem {
   width: 100%;
   /*margin-bottom: .2rem;*/
+  border-bottom: 0.1px solid #ebebeb;
+  border-radius: 0;
+}
+.border-bottom-1px:after {
+  border:0;
 }
 .pagingForm .cube-form_standard .cube-input input {
   padding: 13px 0 0;
