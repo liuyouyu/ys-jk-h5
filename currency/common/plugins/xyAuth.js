@@ -85,13 +85,13 @@ if(!xyAuth) {
 				]
 			});
 			console.log('分享链接',xyAuth.shareInfo.link,'openID',userInfoCacheKey.openid);
+			shareUrl = xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', userInfoCacheKey.openid)
+			console.log('更改分享的链接参数',shareUrl);
 			var urlOpenid = userInfoCacheKey.openid
 			var shareId = xyAuth.getRequestValue('shareId')
 			var linkUrl = ''
 			if(shareId != '' && shareId != undefined && shareId != null){
-				setTimeout(function () {
-					linkUrl = shareUrl
-				},100)
+				linkUrl = shareUrl
 			}else {
 				linkUrl = xyAuth.shareInfo.link+"&shareId="+ urlOpenid
 			}
@@ -282,7 +282,6 @@ if(!xyAuth) {
             this.setUserInfo(data);
 						userInfoCacheKey = data
 						console.log('更改URL参数',xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', userInfoCacheKey.openid));
-						shareUrl = xyAuth.changeURLArg(xyAuth.shareInfo.link, 'shareId', userInfoCacheKey.openid)
 						//						xyAuth.loginFansByWechat();
 					} else {
 						console.info("获取微信授权用户信息错误!");
