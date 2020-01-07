@@ -115,9 +115,11 @@
   <script src="common/base/base.js?$$tempflag$$"></script>
   <script src="common/plugins/xyAuth.js?$$tempflag$$"></script>
   <script src="js/templatePagingFrom.js?$$tempflag$$"></script>
-
+  <script src="path/to/vconsole.min.js"></script>
   <script>
     Vue.use(VueLazyload, {})
+    var vConsole = new VConsole();
+    console.log('Hello world');
   </script>
 
 </body>
