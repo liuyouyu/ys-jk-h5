@@ -52,7 +52,6 @@ if(!xyAuth) {
 		 * 设置微信分享配置
 		 * @param data
 		 */
-
 		setShareConfig: function(data) {
 			wx.config({
 				debug: false,
@@ -85,6 +84,7 @@ if(!xyAuth) {
 					'scanQRCode' //调起微信扫一扫接口
 				]
 			});
+			console.log('分享链接',xyAuth.shareInfo.link);
 			var shareId = xyAuth.getRequestValue('shareId')
 			var linkUrl = ''
 			if(shareId != '' && shareId != undefined && shareId != null){
