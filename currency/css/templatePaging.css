@@ -83,7 +83,7 @@ body {
   left: 0px;
   z-index: -10;
   width: 100%;
-  height: auto;
+  height: 100%;
 }
 
 .pagingForm .transitionBox {
@@ -316,13 +316,13 @@ body {
 /* Standard syntax */
 @keyframes webSwipeTipAfter {
   from {
-    opacity: 1;
-    top: 5.85rem
+    opacity: 0;
+    bottom: 0.2rem
   }
 
   to {
-    opacity: 0;
-    top: 5.6rem
+    opacity: 1;
+    bottom: 0.3rem
   }
 }
 
