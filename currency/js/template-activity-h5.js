@@ -31,6 +31,17 @@ var templateView = {
         alreadySubmit: true
       }
     },
+    watch: {
+      submitName(newVal){
+        console.log('姓名输入',newVal.length);
+        if(newVal.length > 50){
+          newVal = newVal.slice(0, 50)
+          this.$nextTick(() => {
+            this.submitName = newVal
+          })
+        }
+      }
+    },
     methods: {
       handlePhoneChange(val){
         if (CONTENTVAR.rexPhone.test(val)){

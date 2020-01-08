@@ -202,6 +202,17 @@ var templateView = {
             })
           }
         }
+      },
+      'model.name': {
+        handler(newVal){
+          console.log('姓名输入',newVal.length);
+          if(newVal.length > 50){
+            newVal = newVal.slice(0, 50)
+            this.$nextTick(() => {
+              this.model.name = newVal
+            })
+          }
+        }
       }
     },
     mounted() {

@@ -111,7 +111,6 @@ var templateView = {
             },
             rules: {
               required: true,
-              max:10,
             }
           },
           {
@@ -188,6 +187,17 @@ var templateView = {
             newVal = newVal.slice(0, 4)
             this.$nextTick(() => {
               this.model.code = newVal
+            })
+          }
+        }
+      },
+      'model.name': {
+        handler(newVal){
+          console.log('姓名输入',newVal.length);
+          if(newVal.length > 50){
+            newVal = newVal.slice(0, 50)
+            this.$nextTick(() => {
+              this.model.name = newVal
             })
           }
         }
