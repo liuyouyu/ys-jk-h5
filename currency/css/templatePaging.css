@@ -315,13 +315,15 @@ body {
 
 /* Standard syntax */
 @keyframes webSwipeTipAfter {
-  from {
+  0% {
     opacity: 0;
     bottom: 0.2rem
   }
-
-  to {
-    opacity: 1;
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0.8;
     bottom: 0.3rem
   }
 }
