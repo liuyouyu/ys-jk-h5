@@ -10,11 +10,11 @@ var INDEXAPP = new Vue({
   //   empCarouselImg: templateView.empCarouselImg
   // },
   data: {
-    showPage: 3, //默认扫码签到
+    showPage: 0, //默认扫码签到
     returnTimer: null,
     messageQue: [],
     messageQueIndex: -1,
-    userName: '(先生/女士)',
+    userName: 'xx(先生/女士)',
     count: 0,
   },
   watch: {
