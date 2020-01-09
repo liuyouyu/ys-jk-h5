@@ -137,11 +137,10 @@ var templateView = {
             },
             rules: {
               required: true,
-              type:'tel',
+              type:'number',
             },
             messages: {
               required: '请输入电话号码！',
-              type:'请输入正确的电话号码！'
             }
           },
           {
@@ -230,7 +229,7 @@ var templateView = {
         }
         var that = this
         var phone = this.model.phone
-        if(!(/^1[3456789]\d{9}$/.test(phone))){ 
+        if(!(/^1[3456789]\d{9}$/.test(phone))){
           this.$createToast({
             type:'error',
             txt:'手机号码格式不正确！'

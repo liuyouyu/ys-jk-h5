@@ -137,7 +137,7 @@ var templateView = {
             },
             rules: {
               required: true,
-              type:'tel',
+              type:'number',
             },
             messages: {
               required: '请输入电话号码！',
