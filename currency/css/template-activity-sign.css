@@ -84,8 +84,8 @@ body {
   font-size:56px;
   color:#fff;
   position: absolute;
-  bottom:350px;
   left:116px;
+  top:600px;
   letter-spacing: 12px;
 }
 .wrapper div.textImg span{
@@ -93,9 +93,39 @@ body {
 }
 .wrapper .customerText{
   position: absolute;
-  bottom:280px;
   height:56px;
   width: 1800px;
   left:116px;
+  top:716px;
   background: url(../common/img/activityImg/screenStaus/customerText.svg) no-repeat;
+}
+.imgContainer2{
+
+}
+/* 文字过长特殊处理 */
+.text-container{
+  width:1600px;
+  height: 360px;
+  overflow: hidden;
+  position: absolute;
+  left:116px;
+  top:600px;
+}
+.textImg2{
+  float:left;
+  height: 80px;
+  line-height:80px;
+  font-size:56px;
+  color:#fff;
+  letter-spacing: 12px;
+}
+.customerText2{
+  margin-top:39px;
+  float: left;
+  height:56px;
+  width: 1800px;
+  background: url(../common/img/activityImg/screenStaus/customerText.svg) no-repeat;
+}
+ div.textImg2 span{
+  letter-spacing: -16px;
 }
