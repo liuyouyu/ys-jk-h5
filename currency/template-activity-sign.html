@@ -55,6 +55,24 @@
         that.showPage = 9
       }
     }; -->
+    <!-- 签到环节文字展示：
+    1、待签到，文字：请您出示二维码签到
+    2、首次签到成功，文字：欢迎xxx（先生/女士）开启JLR SPACE体验之旅
+    3、重复签到，文字：亲！您已签到，期待与您再次相遇
+    4、无效码，文字：亲！您的二维码无效！
+    5、扫码器异常，文字：亲！我生病了，请帮我联系店员。
+    6、网络异常，文字：亲！路不够通畅，请帮我联系店员。
+    7、活动失效，文字：亲！活动已结束！
+    
+    领礼环节文字展示：
+    1、待领礼物，文字：请您出示二维码领取礼品 
+    2、领取成功，文字：xxx（先生/女士），礼物领取成功，期待与您再次相遇
+    3、重复领取，文字：亲！您已领取礼物-期待与您再次相遇
+    4、无效码，文字：亲！您的二维码无效！
+    5、扫码器异常，文字：亲！我生病了，请帮我联系店员。
+    6、网络异常，文字：亲！路不够通畅，请帮我联系店员。
+    7、活动失效，文字：亲！活动已结束！ -->
+
       <div class="imgContainer" v-if='showPage==0'>
         <div class="textImg">请您出示二维码签到<span>>></span> </div>
         <div class="customerText"></div>
@@ -67,22 +85,24 @@
         <img class="statusImg" src="./common/img/activityImg/screenStaus/0001.svg" alt="" srcset="">
       </div>
       <div class="imgContainer" v-if='showPage==2'>
-        <div class="textImg">亲！扫码器异常</div>
+        <div class="textImg">亲！我生病了，请帮我联系店员。</div>
         <div class="customerText"></div>
         <img class="statusImg" src="./common/img/activityImg/screenStaus/0002.svg" alt="" srcset="">
       </div>
-      <div class="imgContainer" v-if='showPage==3'>
-        <div class="textImg">欢迎{{userName}}开启JLR&nbsp;SPACE体验之旅！<span>>></span></div>
-        <div class="customerText"></div>
+      <div class="imgContainer2" v-if='showPage==3'>
+        <div class="text-container">
+          <div class="textImg2">欢迎{{userName}}</div><div class="textImg2">开启JLR&nbsp;SPACE体验之旅<span>>></span></div>
+          <div class="customerText2"></div>
+        </div>
         <img class="statusImg" src="./common/img/activityImg/screenStaus/0003.svg" alt="" srcset="">
       </div>
       <div class="imgContainer" v-if='showPage==4'>
-        <div class="textImg">亲！网络异常！</div>
+        <div class="textImg">亲！路不够通畅，请帮我联系店员。</div>
         <div class="customerText"></div>
         <img class="statusImg" src="./common/img/activityImg/screenStaus/0004.svg" alt="" srcset="">
       </div>
       <div class="imgContainer" v-if='showPage==5'>
-        <div class="textImg">亲！您已签到-切勿重复签到哦！</div>
+        <div class="textImg">亲！您已签到，期待与您再次相遇!</div>
         <div class="customerText"></div>
         <img class="statusImg" src="./common/img/activityImg/screenStaus/0005.svg" alt="" srcset="">
       </div>
@@ -91,18 +111,20 @@
         <div class="customerText"></div>
         <img class="statusImg" src="./common/img/activityImg/screenStaus/0006.svg" alt="" srcset="">
       </div>
-      <div class="imgContainer" v-if='showPage==7'>
-        <div class="textImg">{{userName}}，期待与您再次相遇<span>>></span></div>
-        <div class="customerText"></div>
-        <img class="statusImg" src="./common/img/activityImg/screenStaus/0007.svg" alt="" srcset="">
+      <div class="imgContainer2" v-if='showPage==7'>
+        <div class="text-container">
+          <div class="textImg2">{{userName}}，</div><div class="textImg2">礼物领取成功，期待与您再次相遇<span>>></span></div>
+          <div class="customerText2"></div>
+        </div>
+        <img class="statusImg" src="./common/img/activityImg/screenStaus/0003.svg" alt="" srcset="">
       </div>
       <div class="imgContainer" v-if='showPage==8'>
-        <div class="textImg">亲！网络异常！</div>
+        <div class="textImg">亲！路不够通畅，请帮我联系店员。</div>
         <div class="customerText"></div>
         <img class="statusImg" src="./common/img/activityImg/screenStaus/0008.svg" alt="" srcset="">
       </div>
       <div class="imgContainer" v-if='showPage==9'>
-        <div class="textImg">亲！您已领取礼物-切勿重复领取礼物哦！</div>
+        <div class="textImg">亲！您已领取礼物-期待与您再次相遇！</div>
         <div class="customerText"></div>
         <img class="statusImg" src="./common/img/activityImg/screenStaus/0009.svg" alt="" srcset="">
       </div>
